@@ -1,0 +1,378 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES
+   These are the single source of truth for all
+   values that Tailwind classes can't cover.
+═══════════════════════════════════════════════ */
+
+:root {
+  /* Background grid lines */
+  --grid-color-light: rgba(107, 63, 160, 0.04);
+  --grid-color-dark:  rgba(107, 63, 160, 0.07);
+  --grid-size:        44px;
+
+  /* Brand colour at various opacities */
+  --brand:            #6B3FA0;
+  --brand-08:         rgba(107, 63, 160, 0.08);
+  --brand-12:         rgba(107, 63, 160, 0.12);
+  --brand-20:         rgba(107, 63, 160, 0.20);
+
+  /* All borders use this */
+  --border:           rgba(107, 63, 160, 0.08);
+  --border-mid:       rgba(107, 63, 160, 0.14);
+
+  /* Shadow levels — always brand-tinted */
+  --shadow-1: 0 2px 8px rgba(107, 63, 160, 0.06);
+  --shadow-2: 0 8px 40px rgba(107, 63, 160, 0.10);
+  --shadow-3: 0 -8px 40px rgba(107, 63, 160, 0.06),
+              0 -24px 80px rgba(107, 63, 160, 0.04);
+}
+
+/* ═══════════════════════════════════════════════
+   BASE STYLES
+═══════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F9F8FF;
+  background-image:
+    linear-gradient(var(--grid-color-light) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color-light) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY UTILITY CLASSES
+═══════════════════════════════════════════════ */
+
+.text-display-hero {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-size: clamp(52px, 6.5vw, 80px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+}
+
+.text-display-section {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.text-data-xl {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: clamp(64px, 9vw, 88px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+}
+
+.text-data-md {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+}
+
+.text-data-sm {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.text-label {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #A0A0A0;
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT UTILITIES
+═══════════════════════════════════════════════ */
+
+.section-container {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.section-padding {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   CARD UTILITIES
+═══════════════════════════════════════════════ */
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.card-hover {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+}
+
+/* ═══════════════════════════════════════════════
+   STATUS PILL UTILITIES
+═══════════════════════════════════════════════ */
+
+.pill-green  { background: #D1FAE5; color: #065F46; }
+.pill-amber  { background: #FEF3C7; color: #92400E; }
+.pill-red    { background: #FEE2E2; color: #991B1B; }
+.pill-purple { background: #EDE9FE; color: #5B21B6; }
+.pill-grey   { background: #F3F4F6; color: #6B7280; }
+.pill-blue   { background: #DBEAFE; color: #1D4ED8; }
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════
+   DARK SECTION (Scope section only)
+═══════════════════════════════════════════════ */
+
+.dark-section {
+  background-color: #0A0A0A;
+  background-image:
+    linear-gradient(var(--grid-color-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+/* ═══════════════════════════════════════════════
+   BROWSER FRAME (product UI panels)
+═══════════════════════════════════════════════ */
+
+.browser-chrome {
+  height: 36px;
+  background: #F9F8FF;
+  border-bottom: 1px solid #EEEBFA;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.browser-dots {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-red    { background: #FECACA; }
+.dot-yellow { background: #FDE68A; }
+.dot-green  { background: #BBF7D0; }
+
+.browser-url {
+  flex: 1;
+  max-width: 280px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  color: #9CA3AF;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════
+   BUTTON BASE STYLES
+═══════════════════════════════════════════════ */
+
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 13px 26px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #6B3FA0;
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(107, 63, 160, 0.35);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #0A0A0A;
+  border: 1px solid rgba(107, 63, 160, 0.18);
+}
+.btn-ghost:hover {
+  border-color: rgba(107, 63, 160, 0.40);
+}
+
+.btn-ghost .arrow-icon {
+  transition: transform 200ms ease;
+  display: inline-block;
+}
+.btn-ghost:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════════
+   EYEBROW PILL (above hero headline)
+═══════════════════════════════════════════════ */
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: #6B3FA0;
+  background: rgba(107, 63, 160, 0.07);
+  border: 1px solid rgba(107, 63, 160, 0.15);
+  padding: 5px 13px;
+  border-radius: 999px;
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6B3FA0;
+  flex-shrink: 0;
+  animation: eyebrow-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes eyebrow-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+/* ═══════════════════════════════════════════════
+   NAV LINK UNDERLINE SLIDE
+═══════════════════════════════════════════════ */
+
+.nav-link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link-underline:hover::after { transform: scaleX(1); }
+
+/* ═══════════════════════════════════════════════
+   TRUST BAR MARQUEE
+═══════════════════════════════════════════════ */
+
+.trust-marquee {
+  animation: marquee 30s linear infinite;
+}
+.trust-marquee:hover { animation-play-state: paused; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLLBAR (subtle, brand-tinted)
+═══════════════════════════════════════════════ */
+
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(107, 63, 160, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 63, 160, 0.4);
+}
+
+/* ═══════════════════════════════════════════════
+   LENIS SMOOTH SCROLL OVERRIDE
+═══════════════════════════════════════════════ */
+
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
