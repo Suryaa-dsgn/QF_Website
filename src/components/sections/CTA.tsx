@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import BookDemoButton from '@/components/BookDemoButton'
 
 export default function CTA() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -69,9 +70,9 @@ export default function CTA() {
 
           {/* CTAs */}
           <div className="cta-animate flex flex-col sm:flex-row items-center justify-center gap-3 mb-7">
-            <Link href="/demo" className="btn-base btn-primary">
+            <BookDemoButton className="btn-base btn-primary">
               Book a demo
-            </Link>
+            </BookDemoButton>
             <Link href="/contact" className="btn-base btn-ghost group">
               Talk to sales
               <ArrowRight size={14} className="arrow-icon text-ink3 group-hover:text-ink" />

@@ -118,7 +118,7 @@ export default function Scope() {
             color:         'rgba(196, 181, 253, 0.5)',
           }}
         >
-          The platform — in three numbers
+          The platform — at a glance
         </p>
 
         {/* Stat grid — 3-col desktop, 1-col mobile */}
@@ -134,10 +134,10 @@ export default function Scope() {
             style={{ borderColor: 'rgba(255,255,255,0.06)' }}
           >
             <ScopeStat
-              value={11}
-              suffix=""
-              descriptor="AI agents"
-              duration={1.5}
+              value={30}
+              suffix="+"
+              descriptor="AI agents live"
+              duration={1.6}
             />
           </div>
 
@@ -149,16 +149,16 @@ export default function Scope() {
               value={15}
               suffix="+"
               descriptor="industries served"
-              duration={1.6}
+              duration={1.5}
             />
           </div>
 
           <div className="py-10 lg:py-16">
             <ScopeStat
-              value={2}
-              suffix=""
-              descriptor="verticals"
-              duration={1.2}
+              value={72}
+              suffix="hr"
+              descriptor="from contract to first agent live"
+              duration={1.4}
             />
           </div>
         </div>
@@ -172,7 +172,7 @@ export default function Scope() {
             letterSpacing: '0.01em',
           }}
         >
-          Workforce Operations and Financial Operations — one platform, one interface, one team.
+          Workforce and financial operations — one platform, deployed in weeks, not quarters.
         </p>
 
       </div>

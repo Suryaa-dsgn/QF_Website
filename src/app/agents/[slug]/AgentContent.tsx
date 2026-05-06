@@ -7,6 +7,7 @@ import type { Agent } from '@/data/agents'
 import { agents } from '@/data/agents'
 import CTA    from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
+import BookDemoButton from '@/components/BookDemoButton'
 
 // ── Workforce panels ──────────────────────────────────────────────
 import BurnoutPanel       from '@/components/ui/panels/BurnoutPanel'
@@ -221,9 +222,9 @@ function AgentHero({ agent }: { agent: Agent }) {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-start gap-3">
-              <Link href="/demo" className="btn-base btn-primary">
+              <BookDemoButton className="btn-base btn-primary">
                 Book a demo
-              </Link>
+              </BookDemoButton>
               <Link href="#how-it-works" className="btn-base btn-ghost group">
                 See how it works
                 <ArrowRight size={14} className="arrow-icon text-ink3 group-hover:text-ink" />

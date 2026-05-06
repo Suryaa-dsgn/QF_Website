@@ -1,157 +1,385 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { industries } from '@/data/industries'
-import type { Industry } from '@/data/industries'
+import Link from 'next/link'
+import {
+  Home, Heart, Users, Building2, Plane,
+  Truck, Factory, ShoppingBag, GraduationCap, Coffee,
+  Activity, Landmark, Package, Laptop, Briefcase,
+  ArrowRight,
+} from 'lucide-react'
 
-// ─── FILTER TABS ──────────────────────────────────────────────────
+// ─── COUNT-UP ─────────────────────────────────────────────────────
 
-const tabs = ['All', 'Workforce', 'Financial'] as const
-type Tab = typeof tabs[number]
+function CountUp({ value, duration = 1.6 }: { value: number; duration?: number }) {
+  const [display, setDisplay] = useState(0)
+  const [started, setStarted] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
 
-function FilterTabs({
-  active,
-  onChange,
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true)
+          if (prefersReduced) { setDisplay(value); return }
+          const start = performance.now()
+          const ms = duration * 1000
+          function tick(now: number) {
+            const p = Math.min((now - start) / ms, 1)
+            const eased = 1 - Math.pow(1 - p, 3)
+            setDisplay(Math.floor(eased * value))
+            if (p < 1) requestAnimationFrame(tick)
+            else setDisplay(value)
+          }
+          requestAnimationFrame(tick)
+        }
+      },
+      { threshold: 0.5 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [started, value, duration])
+
+  return <span ref={ref}>{display}</span>
+}
+
+// ─── DATA ─────────────────────────────────────────────────────────
+
+const workforceIndustries = [
+  { icon: Home,           name: 'Home Health & Hospice'        },
+  { icon: Heart,          name: 'Hospitals & Health Systems'   },
+  { icon: Users,          name: 'Staffing Agencies'            },
+  { icon: Building2,      name: 'Skilled Nursing Facilities'   },
+  { icon: Plane,          name: 'Airports & Aviation'          },
+  { icon: Truck,          name: 'Logistics & Warehousing'      },
+  { icon: Factory,        name: 'Manufacturing & Plants'       },
+  { icon: ShoppingBag,    name: 'Retail & Hospitality'         },
+  { icon: GraduationCap,  name: 'Education & Childcare'        },
+  { icon: Coffee,         name: 'Food Service & Catering'      },
+]
+
+const financialIndustries = [
+  { icon: Activity,   name: 'Healthcare Revenue Cycle'       },
+  { icon: Landmark,   name: 'REITs & Real Estate'            },
+  { icon: Package,    name: 'Logistics & Operations Finance' },
+  { icon: Laptop,     name: 'SaaS Companies'                 },
+  { icon: Briefcase,  name: 'Staffing & Services Finance'    },
+]
+
+// ─── INDUSTRY CAROUSEL ────────────────────────────────────────────
+
+function IndustryCarousel({
+  items,
+  label,
+  accent,
 }: {
-  active: Tab
-  onChange: (t: Tab) => void
+  items: { icon: React.ElementType; name: string }[]
+  label: string
+  accent: string
 }) {
+  const [idx, setIdx]       = useState(0)
+  const [paused, setPaused] = useState(false)
+  const ref = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    if (paused) return
+    ref.current = setInterval(() => setIdx((i) => (i + 1) % items.length), 2600)
+    return () => { if (ref.current) clearInterval(ref.current) }
+  }, [paused, items.length])
+
+  const Icon = items[idx].icon
+
   return (
-    <div className="relative flex items-center gap-1 p-1 bg-white border border-[--border] rounded-pill w-fit mx-auto">
-      {tabs.map((tab) => (
-        <button
-          key={tab}
-          onClick={() => onChange(tab)}
-          className="relative px-5 py-1.5 text-[13px] font-medium font-ui z-10 transition-colors duration-150 rounded-pill"
-          style={{ color: active === tab ? '#fff' : '#6B6B6B' }}
+    <div
+      className="h-full flex flex-col p-6"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-5">
+        <p
+          className="font-ui font-semibold"
+          style={{ fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: accent }}
         >
-          {/* Sliding pill background */}
-          {active === tab && (
-            <motion.div
-              layoutId="tab-pill"
-              className="absolute inset-0 bg-brand rounded-pill"
-              transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-              style={{ zIndex: -1 }}
-            />
-          )}
-          {tab}
-        </button>
-      ))}
+          {label}
+        </p>
+        <span className="text-[11px] font-mono text-ink4">
+          {String(idx + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* Animated industry display */}
+      <div className="flex-1 flex flex-col items-center justify-center text-center">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={idx}
+            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Icon ring */}
+            <div
+              className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+              style={{ background: accent + '12', border: `1.5px solid ${accent}28` }}
+            >
+              <Icon size={26} style={{ color: accent }} />
+            </div>
+            <p
+              className="font-display font-bold text-ink leading-tight"
+              style={{ fontSize: 'clamp(17px, 1.6vw, 21px)', letterSpacing: '-0.025em' }}
+            >
+              {items[idx].name}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Progress dots */}
+      <div className="flex items-center justify-center gap-[5px] mt-5">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => { setIdx(i); setPaused(true) }}
+            aria-label={`Industry ${i + 1}`}
+            className="rounded-full transition-all duration-200"
+            style={{
+              width:      i === idx ? '16px' : '6px',
+              height:     '6px',
+              background: i === idx ? accent : accent + '28',
+            }}
+          />
+        ))}
+      </div>
     </div>
   )
 }
 
-// ─── INDUSTRY CARD ────────────────────────────────────────────────
+// ─── BENTO CARD WRAPPER ───────────────────────────────────────────
 
-function IndustryCard({ industry }: { industry: Industry }) {
-  const isWorkforce = industry.vertical === 'workforce'
+function BentoCard({
+  children,
+  className = '',
+  style = {},
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
+  delay?: number
+}) {
   return (
-    <Link
-      href={`/industries/${industry.slug}`}
-      className="card card-hover block group"
-      style={{ padding: '20px 22px' }}
+    <motion.div
+      className={`rounded-[20px] overflow-hidden border border-[--border] ${className}`}
+      style={style}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Icon + vertical badge row */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="w-8 h-8 rounded-[8px] bg-[--brand-08] flex items-center justify-center flex-shrink-0">
-          <industry.icon size={16} className="text-brand" />
-        </div>
-        <span
-          className="text-[9px] font-semibold font-ui uppercase tracking-[0.06em] mt-0.5"
-          style={{ color: isWorkforce ? '#0284C7' : '#059669' }}
-        >
-          {isWorkforce ? 'WORKFORCE' : 'FINANCIAL'}
-        </span>
-      </div>
-
-      {/* Name */}
-      <p className="text-[14px] font-semibold text-ink font-ui mb-1 leading-snug">
-        {industry.name}
-      </p>
-
-      {/* Descriptor */}
-      <p className="text-[12px] text-ink4 font-ui mb-3 leading-snug">
-        {industry.descriptor}
-      </p>
-
-      {/* Agent count */}
-      <p className="text-[12px] font-medium text-brand font-ui">
-        {industry.agentCount} →
-      </p>
-    </Link>
+      {children}
+    </motion.div>
   )
 }
 
-// ─── MAIN COMPONENT ───────────────────────────────────────────────
+// ─── MAIN SECTION ─────────────────────────────────────────────────
 
 export default function Industries() {
-  const [activeTab, setActiveTab] = useState<Tab>('All')
-
-  const filtered = industries.filter((ind) => {
-    if (activeTab === 'All')       return true
-    if (activeTab === 'Workforce') return ind.vertical === 'workforce'
-    if (activeTab === 'Financial') return ind.vertical === 'financial'
-    return true
-  })
-
   return (
     <section className="section-padding">
-      <div className="section-container">
+      <div className="max-w-[1120px] mx-auto px-10">
 
-        {/* Section header */}
-        <div className="text-center mb-10">
+        {/* ── Section header ── */}
+        <motion.div
+          className="text-center max-w-[580px] mx-auto mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
           <p className="text-label mb-4">INDUSTRIES</p>
           <h2
-            className="font-display font-bold text-ink mb-5"
-            style={{
-              fontSize:      'clamp(28px, 3.5vw, 44px)',
-              letterSpacing: '-0.03em',
-              lineHeight:    '1.05',
-            }}
+            className="font-display font-bold text-ink mb-4"
+            style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', letterSpacing: '-0.03em', lineHeight: '1.05' }}
           >
             Built for the industries that{' '}
             <span className="italic text-brand">can&apos;t afford downtime.</span>
           </h2>
-          <p className="text-[15px] text-ink3 font-ui max-w-[480px] mx-auto leading-relaxed mb-8">
-            Quickflows agents are pre-configured for the operational patterns of
-            15 industries across workforce and financial operations.
+          <p className="text-[15px] text-ink3 font-ui leading-relaxed">
+            30+ pre-configured AI agents across two operational verticals —
+            each shaped to the workflows, compliance rules, and data patterns
+            of its industry.
           </p>
-
-          {/* Filter tabs */}
-          <FilterTabs active={activeTab} onChange={setActiveTab} />
-        </div>
-
-        {/* Card grid */}
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"
-          layout
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((industry, i) => (
-              <motion.div
-                key={industry.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2, delay: i * 0.04 }}
-              >
-                <IndustryCard industry={industry} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
         </motion.div>
 
-        {/* Bottom note */}
-        <p className="text-center text-[13px] text-ink4 font-ui mt-8">
-          Don&apos;t see your industry?{' '}
-          <Link href="/demo" className="text-brand font-medium hover:underline">
-            Talk to us →
-          </Link>
-        </p>
+        {/* ── BENTO GRID ── */}
+        {/*
+          Desktop 3-col layout:
+          Row 1: [Card 1 — 2col dark stat] [Card 2 — 1col tinted stat]
+          Row 2: [Card 3 — 1col carousel, rows 2-3] [Card 4 — 1col stat] [Card 5 — 1col carousel]
+          Row 3:                                     [Card 6 — 2col tagline]
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
 
+          {/* ── Card 1: 30+ Agents — brand purple, wide ── */}
+          <BentoCard
+            className="lg:col-span-2 relative overflow-hidden"
+            style={{ minHeight: '190px', background: '#6B3FA0' }}
+            delay={0}
+          >
+            {/* Subtle white dot-grid overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px)',
+                backgroundSize: '28px 28px',
+              }}
+            />
+            {/* Soft radial glow bottom-right */}
+            <div
+              className="absolute -bottom-10 -right-10 w-56 h-56 rounded-full pointer-events-none"
+              style={{ background: 'rgba(255,255,255,0.07)', filter: 'blur(32px)' }}
+            />
+            <div className="relative z-10 p-8 h-full flex flex-col justify-between">
+              <p
+                className="font-ui font-medium"
+                style={{ fontSize: '10px', letterSpacing: '0.09em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}
+              >
+                AI Agents Live
+              </p>
+              <div>
+                <div
+                  className="font-mono font-bold text-white leading-none"
+                  style={{ fontSize: 'clamp(64px, 8vw, 96px)', letterSpacing: '-0.04em' }}
+                >
+                  <CountUp value={30} duration={1.6} />
+                  <span style={{ fontSize: '40%', color: 'rgba(255,255,255,0.45)', marginLeft: '2px' }}>+</span>
+                </div>
+                <p
+                  className="font-ui mt-2"
+                  style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', letterSpacing: '0.01em' }}
+                >
+                  Deployed across workforce &amp; financial operations
+                </p>
+              </div>
+            </div>
+          </BentoCard>
+
+          {/* ── Card 2: 72hr — brand-tinted ── */}
+          <BentoCard
+            className="bg-white"
+            style={{ minHeight: '190px', background: 'var(--brand-08)' }}
+            delay={0.08}
+          >
+            <div className="p-8 h-full flex flex-col justify-between">
+              <p
+                className="font-ui font-medium"
+                style={{ fontSize: '10px', letterSpacing: '0.09em', textTransform: 'uppercase', color: 'rgba(107,63,160,0.5)' }}
+              >
+                Time to first live agent
+              </p>
+              <div>
+                <div
+                  className="font-mono font-bold text-brand leading-none"
+                  style={{ fontSize: 'clamp(52px, 6vw, 76px)', letterSpacing: '-0.04em' }}
+                >
+                  <CountUp value={72} duration={1.4} />
+                  <span style={{ fontSize: '38%', color: 'rgba(107,63,160,0.45)', marginLeft: '2px' }}>hr</span>
+                </div>
+                <p className="text-[13px] text-ink3 font-ui mt-2">
+                  From contract signed to agent in production
+                </p>
+              </div>
+            </div>
+          </BentoCard>
+
+          {/* ── Card 3: Workforce carousel — tall (spans 2 rows) ── */}
+          <BentoCard
+            className="lg:row-span-2 bg-white"
+            style={{ minHeight: '300px' }}
+            delay={0.05}
+          >
+            <IndustryCarousel
+              items={workforceIndustries}
+              label="Workforce Operations"
+              accent="#0284C7"
+            />
+          </BentoCard>
+
+          {/* ── Card 4: 15+ industries stat ── */}
+          <BentoCard
+            className="bg-white"
+            style={{ minHeight: '155px' }}
+            delay={0.12}
+          >
+            <div className="p-7 h-full flex flex-col justify-between">
+              <p
+                className="font-ui font-medium"
+                style={{ fontSize: '10px', letterSpacing: '0.09em', textTransform: 'uppercase', color: '#059669' }}
+              >
+                Industries Served
+              </p>
+              <div>
+                <div
+                  className="font-mono font-bold text-ink leading-none"
+                  style={{ fontSize: 'clamp(44px, 5vw, 64px)', letterSpacing: '-0.04em' }}
+                >
+                  <CountUp value={15} duration={1.5} />
+                  <span style={{ fontSize: '40%', color: '#05966988', marginLeft: '1px' }}>+</span>
+                </div>
+                <p className="text-[12px] text-ink4 font-ui mt-1">
+                  New verticals added quarterly
+                </p>
+              </div>
+            </div>
+          </BentoCard>
+
+          {/* ── Card 5: Financial carousel ── */}
+          <BentoCard
+            className="bg-white"
+            style={{ minHeight: '155px' }}
+            delay={0.16}
+          >
+            <IndustryCarousel
+              items={financialIndustries}
+              label="Financial Operations"
+              accent="#059669"
+            />
+          </BentoCard>
+
+          {/* ── Card 6: Tagline + CTA — wide, brand-tinted ── */}
+          <BentoCard
+            className="lg:col-span-2"
+            style={{ minHeight: '130px', background: 'var(--brand-08)' }}
+            delay={0.2}
+          >
+            <div className="p-7 h-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+              <div>
+                <p
+                  className="font-display font-bold text-ink mb-1"
+                  style={{ fontSize: 'clamp(18px, 2vw, 24px)', letterSpacing: '-0.025em', lineHeight: '1.15' }}
+                >
+                  Deployed in weeks.{' '}
+                  <span className="italic text-brand">Not quarters.</span>
+                </p>
+                <p className="text-[13px] text-ink3 font-ui">
+                  Don&apos;t see your industry?{' '}
+                  We&apos;re likely building it — or we can scope it together.
+                </p>
+              </div>
+              <Link href="/contact" className="btn-base btn-primary flex-shrink-0 group">
+                Talk to us
+                <ArrowRight size={14} className="arrow-icon" />
+              </Link>
+            </div>
+          </BentoCard>
+
+        </div>
       </div>
     </section>
   )

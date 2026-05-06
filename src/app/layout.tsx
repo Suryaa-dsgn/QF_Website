@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import { Bricolage_Grotesque } from 'next/font/google'
 import { LenisProvider } from '@/components/LenisProvider'
 import Navigation from '@/components/Navigation'
+import DemoModal  from '@/components/DemoModal'
 import './globals.css'
 
 // Bricolage Grotesque — display only.
@@ -35,6 +36,7 @@ export default function RootLayout({
         <LenisProvider>
           <Navigation />
           <main>{children}</main>
+          <DemoModal />
         </LenisProvider>
       </body>
     </html>

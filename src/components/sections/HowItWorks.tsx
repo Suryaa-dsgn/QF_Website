@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import BookDemoButton from '@/components/BookDemoButton'
 import { cn } from '@/lib/utils'
 
 // ─── STEP 1: INTEGRATION LOGO GRID ───────────────────────────────
@@ -348,31 +349,31 @@ function StepBlock({ number, title, description, detail, isReversed, visual }: S
 const steps = [
   {
     number: 1,
-    title: 'Connect your systems',
+    title: 'Quick requirements gathering',
     description:
-      'Quickflows integrates with your existing stack in hours — not months. No rip-and-replace required.',
+      'One discovery call. We map your workflows, pain points, and existing stack — no lengthy onboarding or months-long consulting engagements.',
     detail:
-      'Works with Epic, Workday, QuickBooks, Salesforce, SAP, AthenaHealth, NetSuite, Rippling, and more.',
+      'Works with Epic, Workday, QuickBooks, Salesforce, SAP, AthenaHealth, NetSuite, Rippling, and more. We connect to what you already use.',
     isReversed: false,
     visual: <IntegrationGrid />,
   },
   {
     number: 2,
-    title: 'Agents learn your operations',
+    title: 'Fast configuration & build',
     description:
-      'Import your staff, policies, and historical data. Agents configure themselves to your operational patterns automatically.',
+      'Agents are trained on your data and configured to your operational patterns in days. No scripts, no custom dev sprints — patterns emerge from your own data.',
     detail:
-      'No custom configuration scripts — patterns emerge directly from your own operational data.',
+      'Your staff, policies, and historical records feed the agents directly. The result is a system that behaves exactly like your best operators would.',
     isReversed: true,
     visual: <LogFeed />,
   },
   {
     number: 3,
-    title: 'Operations run themselves',
+    title: 'Deployed in weeks, not quarters',
     description:
-      'Once live, agents handle exceptions, escalations, and routine tasks your team used to manage manually.',
+      'Your agents go live handling real exceptions, escalations, and routine tasks — within weeks of signing. Full visibility, full control, all the time.',
     detail:
-      'You see everything. You change anything. Agents do the work.',
+      'You see everything. You change anything. Agents do the work. And as your operations evolve, the agents adapt.',
     isReversed: false,
     visual: <LiveFeed />,
   },
@@ -383,8 +384,8 @@ export default function HowItWorks() {
     <section className="section-padding">
 
       {/* Section header */}
-      <div className="text-center max-w-[600px] mx-auto px-10 mb-4">
-        <p className="text-label mb-4">HOW IT WORKS</p>
+      <div className="text-center max-w-[640px] mx-auto px-10 mb-4">
+        <p className="text-label mb-4">OUR PROCESS</p>
         <h2
           className="font-display font-bold text-ink"
           style={{
@@ -393,9 +394,13 @@ export default function HowItWorks() {
             lineHeight:    '1.05',
           }}
         >
-          Up and running in 72 hours.{' '}
-          <span className="italic text-brand">Not 72 weeks.</span>
+          From first call to{' '}
+          <span className="italic text-brand">agents in production.</span>
         </h2>
+        <p className="text-[16px] text-ink3 font-ui leading-relaxed mt-5 max-w-[480px] mx-auto">
+          Most enterprise software takes months to deploy. Quickflows takes weeks —
+          because we built the process to move at the speed of operations.
+        </p>
       </div>
 
       {/* Step blocks */}
@@ -419,9 +424,9 @@ export default function HowItWorks() {
           >
             From contract signed to first agent live: 72 hours.
           </p>
-          <Link href="/demo" className="btn-base btn-primary flex-shrink-0">
+          <BookDemoButton className="btn-base btn-primary flex-shrink-0">
             Book a demo
-          </Link>
+          </BookDemoButton>
         </div>
       </div>
 

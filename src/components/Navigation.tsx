@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
+import BookDemoButton from '@/components/BookDemoButton'
 import {
   Users, DollarSign, Heart, TrendingUp, Zap,
   Menu, X, ChevronDown,
@@ -255,7 +256,7 @@ function MobileDrawer({
               {/* Simple nav links */}
               {[
                 { label: 'How It Works', href: '/how-it-works' },
-                { label: 'Pricing', href: '/pricing' },
+                { label: 'Contact Us', href: '/contact' },
               ].map(({ label, href }) => (
                 <Link
                   key={label}
@@ -277,13 +278,9 @@ function MobileDrawer({
               >
                 Sign in
               </Link>
-              <Link
-                href="/demo"
-                onClick={onClose}
-                className="btn-base btn-primary w-full text-center"
-              >
+              <BookDemoButton className="btn-base btn-primary w-full text-center">
                 Book a demo
-              </Link>
+              </BookDemoButton>
             </div>
           </motion.div>
         </>
@@ -380,7 +377,7 @@ export default function Navigation() {
             </div>
 
             <NavLink href="/how-it-works">How It Works</NavLink>
-            <NavLink href="/pricing">Pricing</NavLink>
+            <NavLink href="/contact">Contact Us</NavLink>
           </nav>
 
           {/* ── Desktop CTAs ── */}
@@ -391,12 +388,9 @@ export default function Navigation() {
             >
               Sign in
             </Link>
-            <Link
-              href="/demo"
-              className="btn-base btn-primary !py-[9px] !px-[18px] !text-[14px]"
-            >
+            <BookDemoButton className="btn-base btn-primary !py-[9px] !px-[18px] !text-[14px]">
               Book a demo
-            </Link>
+            </BookDemoButton>
           </div>
 
           {/* ── Mobile hamburger ── */}

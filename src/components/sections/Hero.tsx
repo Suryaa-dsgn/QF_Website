@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import HeroPanel from '@/components/ui/HeroPanel'
+import BookDemoButton from '@/components/BookDemoButton'
 
 // ─── ROTATING PHRASES ─────────────────────────────────────────────
 
@@ -210,22 +211,16 @@ export default function Hero() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-start gap-3">
-              <Link
-                href="/demo"
-                className="hero-cta-primary btn-base btn-primary"
-              >
+              <BookDemoButton className="hero-cta-primary btn-base btn-primary">
                 Book a 20-min demo
-              </Link>
-              <Link
-                href="/demo#video"
-                className="hero-cta-ghost btn-base btn-ghost group"
-              >
+              </BookDemoButton>
+              <BookDemoButton className="hero-cta-ghost btn-base btn-ghost group">
                 See it in action
                 <ArrowRight
                   size={15}
                   className="arrow-icon text-ink3 group-hover:text-ink"
                 />
-              </Link>
+              </BookDemoButton>
             </div>
 
           </div>
