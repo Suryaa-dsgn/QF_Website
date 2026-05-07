@@ -309,3 +309,29 @@ Import trace:
     at <unknown> (Error: (./src/components/sections/Hero.tsx:223:22)
 ✓ Compiled in 91ms
  GET / 200 in 366ms (next.js: 132ms, application-code: 234ms)
+ GET / 200 in 381ms (next.js: 13ms, application-code: 368ms)
+ GET /contact 200 in 1269ms (next.js: 1135ms, application-code: 134ms)
+ GET /contact 200 in 75ms (next.js: 8ms, application-code: 67ms)
+✓ Compiled in 193ms
+ GET /contact 200 in 425ms (next.js: 193ms, application-code: 232ms)
+ GET /contact 200 in 177ms (next.js: 3ms, application-code: 174ms)
+ GET /contact 200 in 233ms (next.js: 66ms, application-code: 167ms)
+ GET /contact 200 in 233ms (next.js: 104ms, application-code: 129ms)
+ GET /contact 200 in 235ms (next.js: 8ms, application-code: 227ms)
+ GET /contact 200 in 204ms (next.js: 56ms, application-code: 148ms)
+ GET /contact 200 in 206ms (next.js: 33ms, application-code: 173ms)
+ GET /contact 200 in 207ms (next.js: 4ms, application-code: 203ms)
+ GET /contact 200 in 150ms (next.js: 57ms, application-code: 92ms)
+ GET /contact 200 in 152ms (next.js: 3ms, application-code: 149ms)
+ GET /contact 200 in 153ms (next.js: 33ms, application-code: 120ms)
+ GET /contact 200 in 43ms (next.js: 3ms, application-code: 40ms)
+✓ Compiled in 117ms
+ GET /contact 200 in 150ms (next.js: 99ms, application-code: 50ms)
+✓ Compiled in 90ms
+ GET /contact 200 in 114ms (next.js: 73ms, application-code: 41ms)
+ GET / 200 in 310ms (next.js: 229ms, application-code: 81ms)
+ GET / 200 in 634ms (next.js: 3ms, application-code: 631ms)
+ GET /about 200 in 839ms (next.js: 781ms, application-code: 58ms)
+ GET /about 200 in 78ms (next.js: 11ms, application-code: 67ms)
+ GET / 200 in 32ms (next.js: 5ms, application-code: 27ms)
+✓ Compiled in 124ms

@@ -200,6 +200,15 @@ function MobileDrawer({
             {/* Drawer links */}
             <div className="flex-1 overflow-y-auto px-4 py-4">
 
+              {/* About link — before Offerings */}
+              <Link
+                href="/about"
+                onClick={onClose}
+                className="flex items-center px-3 py-3.5 text-[16px] font-medium text-ink hover:bg-[--brand-08] rounded-[8px] transition-colors"
+              >
+                About
+              </Link>
+
               {/* Offerings accordion */}
               <button
                 onClick={() => setOfferingsOpen(!offeringsOpen)}
@@ -256,7 +265,7 @@ function MobileDrawer({
               {/* Simple nav links */}
               {[
                 { label: 'How It Works', href: '/how-it-works' },
-                { label: 'Contact Us', href: '/contact' },
+                { label: 'Contact Us',   href: '/contact' },
               ].map(({ label, href }) => (
                 <Link
                   key={label}
@@ -348,6 +357,8 @@ export default function Navigation() {
 
           {/* ── Desktop nav links ── */}
           <nav className="hidden lg:flex items-center gap-7">
+
+            <NavLink href="/about">About</NavLink>
 
             {/* Offerings with hover dropdown */}
             <div
