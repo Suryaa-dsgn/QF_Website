@@ -154,9 +154,9 @@ export default function ProofRow() {
               maxWidth:      '580px',
             }}
           >
-            What efficient operations look like —
-            <br className="hidden sm:block" />
-            {' '}and what we build toward.
+            What efficient operations
+            <br className="hidden md:block" />
+            {' '}look like.
           </h2>
           {/* Framing note — signals intellectual honesty to compliance/investor readers */}
           <p

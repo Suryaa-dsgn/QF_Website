@@ -277,12 +277,13 @@ interface StepBlockProps {
   number: number
   title: string
   description: string
+  descriptionMobileHidden?: string
   detail: string
   isReversed: boolean
   visual: React.ReactNode
 }
 
-function StepBlock({ number, title, description, detail, isReversed, visual }: StepBlockProps) {
+function StepBlock({ number, title, description, descriptionMobileHidden, detail, isReversed, visual }: StepBlockProps) {
   return (
     <div className="py-20 border-t border-[--border] max-w-[1120px] mx-auto px-10">
       <div className="grid md:grid-cols-2 gap-16 lg:gap-20 items-center">
@@ -312,9 +313,12 @@ function StepBlock({ number, title, description, detail, isReversed, visual }: S
 
           <p className="text-[15px] text-ink3 font-ui mb-3 leading-relaxed max-w-[360px]">
             {description}
+            {descriptionMobileHidden && (
+              <span className="hidden md:inline">{' '}{descriptionMobileHidden}</span>
+            )}
           </p>
 
-          <p className="text-[13px] font-medium font-ui leading-relaxed max-w-[360px]" style={{ color: '#A0A0A0' }}>
+          <p className="hidden md:block text-[13px] font-medium font-ui leading-relaxed max-w-[360px]" style={{ color: '#A0A0A0' }}>
             {detail}
           </p>
         </motion.div>
@@ -360,7 +364,9 @@ const steps = [
     number: 2,
     title: 'Agents learn your operations. Not a generic template.',
     description:
-      'Your staff records, shift history, contract terms, and compliance rules feed the agents directly. The result behaves like your best operator — not a generic automation.',
+      'Your staff records, shift history, contract terms, and compliance rules feed the agents directly.',
+    descriptionMobileHidden:
+      'The result behaves like your best operator — not a generic automation.',
     detail: 'No manual scripting. No custom dev sprint.',
     isReversed: true,
     visual: <LogFeed />,
@@ -369,7 +375,9 @@ const steps = [
     number: 3,
     title: 'You see everything. Agents handle the rest.',
     description:
-      'From day one, your team has full visibility into every decision the agents make. You set the rules. The agents do the work.',
+      'From day one, your team has full visibility into every decision the agents make.',
+    descriptionMobileHidden:
+      'You set the rules. The agents do the work.',
     detail: 'Full audit trail. Every action logged.',
     isReversed: false,
     visual: <LiveFeed />,
@@ -381,14 +389,14 @@ export default function HowItWorks() {
     <section className="section-padding">
 
       {/* Section header */}
-      <div className="text-center max-w-[640px] mx-auto px-10 mb-4">
+      <div className="text-center max-w-[860px] mx-auto px-10 mb-4">
         <p className="text-label mb-4">WHAT HAPPENS NEXT</p>
         <h2
           className="font-display font-bold text-ink"
           style={{
-            fontSize:      'clamp(28px, 4vw, 46px)',
+            fontSize:      'clamp(24px, 3.4vw, 40px)',
             letterSpacing: '-0.03em',
-            lineHeight:    '1.1',
+            lineHeight:    '1.2',
           }}
         >
           From first conversation to

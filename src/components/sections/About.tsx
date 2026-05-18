@@ -37,11 +37,11 @@ function TeamCard({
       {/* Initials avatar */}
       <div
         className="w-16 h-16 rounded-full flex items-center justify-center mb-4 flex-shrink-0"
-        style={{ background: 'var(--brand)' }}
+        style={{ background: '#E5E7EB' }}
       >
         <span
-          className="font-display font-bold text-white"
-          style={{ fontSize: '18px', letterSpacing: '-0.02em' }}
+          className="font-display font-bold"
+          style={{ fontSize: '18px', letterSpacing: '-0.02em', color: '#6B6B6B' }}
         >
           {initials}
         </span>
@@ -85,14 +85,13 @@ export default function About() {
               lineHeight:    '1.05',
             }}
           >
-            Built by operators,{' '}
-            <span className="italic text-brand">for operators.</span>
+            A team that has been on both sides of operational drag.
           </h2>
           <p className="text-[16px] text-ink3 font-ui leading-relaxed">
-            Quickflows.ai is an AI-powered operations platform built for the healthcare,
+            Quickflows.ai is an operations automation platform built for healthcare,
             staffing, and financial teams that keep essential services running. We automate
             the high-volume, time-critical work — shift coverage, credentialing, billing
-            reconciliation — so your team can focus on what humans do best.
+            reconciliation — so your team can focus on work that actually moves the business.
           </p>
         </motion.div>
 
@@ -123,7 +122,7 @@ export default function About() {
             </p>
           </div>
           <BookDemoButton className="btn-base btn-ghost group flex-shrink-0">
-            See it in action
+            Watch it run
             <ArrowRight size={14} className="arrow-icon text-ink3 group-hover:text-ink" />
           </BookDemoButton>
         </motion.div>

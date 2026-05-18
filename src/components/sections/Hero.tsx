@@ -174,7 +174,7 @@ export default function Hero() {
             {/* H1 — each line needs overflow-hidden for curtain clip */}
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[1.05] text-ink mb-4"
-              style={{ fontSize: 'clamp(36px, 3.2vw, 56px)' }}
+              style={{ fontSize: 'clamp(32px, 3.0vw, 56px)' }}
             >
               <div className="overflow-hidden leading-[1.1]">
                 {splitLine('When operations break,')}
@@ -203,13 +203,11 @@ export default function Hero() {
               </AnimatePresence>
             </div>
 
-            {/* Subhead — each line is temporal, one vertical per sentence */}
-            <p className="hero-subhead text-[15px] lg:text-[16px] text-ink3 leading-[1.75] max-w-[440px] mb-6">
+            {/* Subhead */}
+            <p className="hero-subhead text-[15px] lg:text-[16px] text-ink3 leading-[1.8] max-w-[440px] mb-10">
               Shift gaps filled before your team wakes up.
               <br className="hidden sm:block" />
-              Invoices matched before your AR team starts their day.
-              <br className="hidden sm:block" />
-              Credentials renewed before the audit notice arrives.
+              {' '}Invoices matched before your AR team starts their day.
             </p>
 
             {/* CTAs */}
@@ -218,7 +216,7 @@ export default function Hero() {
                 Book a 20-min demo
               </BookDemoButton>
               <BookDemoButton className="hero-cta-ghost btn-base btn-ghost group">
-                See it in action
+                Watch it run
                 <ArrowRight
                   size={15}
                   className="arrow-icon text-ink3 group-hover:text-ink"

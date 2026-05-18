@@ -185,7 +185,7 @@ export default function TheProblem() {
   }, [])
 
   return (
-    <section className="section-padding bg-bg">
+    <section className="section-padding bg-bg" style={{ paddingBottom: '100px' }}>
       <div className="max-w-[1120px] mx-auto px-6 sm:px-10">
 
         {/* Label */}
@@ -194,22 +194,17 @@ export default function TheProblem() {
         {/* Headline — flat, no colour accent (intentional) */}
         <AnimatedHeadline />
 
-        {/* Sub-copy — two paragraphs, line breaks hidden on mobile */}
+        {/* Sub-copy — single flowing paragraph, no forced line breaks */}
         <div
           ref={subRef}
           className="text-center mx-auto mt-6 mb-14"
-          style={{ maxWidth: '500px' }}
+          style={{ maxWidth: '520px' }}
         >
-          <p className="text-[16px] text-ink3 font-ui" style={{ lineHeight: '1.75' }}>
-            It looks like your coordinator on hold at 6:03am.
-            <br className="hidden sm:block" />
-            An invoice sitting in manual review for four days.
-            <br className="hidden sm:block" />
-            A credential renewal that almost slipped through.
-          </p>
-          <p className="text-[16px] text-ink3 font-ui mt-4" style={{ lineHeight: '1.75' }}>
-            None of it is failing. It&apos;s just costing more than it should,
-            every single day.
+          <p className="text-[16px] text-ink3 font-ui" style={{ lineHeight: '1.8' }}>
+            A coordinator on the phone at 6am trying to fill one shift. An invoice in manual
+            review for the fourth day running. A physician credential expiring in eleven days
+            with nothing initiated. Not crises — just what operations costs when coordination
+            still runs on calls, inboxes, and whoever notices first.
           </p>
         </div>
 
@@ -262,8 +257,7 @@ export default function TheProblem() {
           className="text-center mx-auto mt-10 text-[15px] text-ink4 font-ui"
           style={{ maxWidth: '460px', lineHeight: '1.7' }}
         >
-          None of these are emergencies. But they happen every day.
-          And across a workforce or a receivables stack, they add up fast.
+          Multiply this across a hundred shifts, a thousand invoices, and a compliance calendar that nobody owns — and the cost becomes structural.
         </p>
 
       </div>

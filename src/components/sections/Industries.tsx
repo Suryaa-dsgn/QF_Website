@@ -195,7 +195,7 @@ export default function Industries() {
 
         {/* ── Section header ── */}
         <motion.div
-          className="text-center max-w-[580px] mx-auto mb-10"
+          className="text-center max-w-[820px] mx-auto mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -204,13 +204,13 @@ export default function Industries() {
           <p className="text-label mb-4">INDUSTRIES</p>
           <h2
             className="font-display font-bold text-ink mb-4"
-            style={{ fontSize: 'clamp(28px, 3.5vw, 46px)', letterSpacing: '-0.035em', lineHeight: '1.05' }}
+            style={{ fontSize: 'clamp(24px, 3.2vw, 38px)', letterSpacing: '-0.035em', lineHeight: '1.2' }}
           >
             Healthcare, finance, and compliance
             <br className="hidden sm:block" />
             {' '}don&apos;t get second chances.
           </h2>
-          <p className="text-[15px] text-ink3 font-ui leading-relaxed" style={{ maxWidth: '500px' }}>
+          <p className="text-[15px] text-ink3 font-ui leading-relaxed mx-auto" style={{ maxWidth: '500px' }}>
             Built for the workflows, compliance requirements, and edge cases
             of each sector — not adapted from a general-purpose platform.
           </p>
@@ -364,7 +364,7 @@ export default function Industries() {
                   className="font-display font-bold text-ink mb-1"
                   style={{ fontSize: 'clamp(18px, 2vw, 24px)', letterSpacing: '-0.025em', lineHeight: '1.15' }}
                 >
-                  Deployed in weeks. Not quarters.
+                  Standard environments live in 72 hours.
                 </p>
                 <p className="text-[13px] text-ink3 font-ui">
                   Don&apos;t see your industry?{' '}

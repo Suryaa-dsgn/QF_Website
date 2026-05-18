@@ -179,7 +179,7 @@ export default function VerticalCards() {
   }, [])
 
   return (
-    <section className="section-padding bg-bg" style={{ paddingTop: '80px' }}>
+    <section className="section-padding" style={{ paddingTop: '52px', background: 'rgba(255, 255, 255, 0.55)' }}>
       <div className="max-w-[1120px] mx-auto px-6 sm:px-10">
 
         {/* Label */}
@@ -190,10 +190,10 @@ export default function VerticalCards() {
           ref={headlineRef}
           className="font-display font-bold text-ink text-center mx-auto mb-12"
           style={{
-            fontSize: 'clamp(26px, 3.5vw, 42px)',
+            fontSize: 'clamp(22px, 2.8vw, 34px)',
             letterSpacing: '-0.03em',
-            lineHeight: '1.1',
-            maxWidth: '520px',
+            lineHeight: '1.2',
+            maxWidth: '820px',
           }}
         >
           One platform. Two operational verticals.{' '}
