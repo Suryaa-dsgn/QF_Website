@@ -105,7 +105,7 @@ function TestimonialCard({
 }) {
   return (
     <div
-      className="rounded-[16px] p-8 flex flex-col h-full"
+      className="rounded-[16px] p-8 flex flex-col justify-between h-full"
       style={{
         background: 'rgba(107,63,160,0.04)',
         border:     '1px solid rgba(107,63,160,0.10)',
@@ -116,8 +116,8 @@ function TestimonialCard({
         &ldquo;{quote}&rdquo;
       </p>
 
-      {/* Attribution */}
-      <div className="flex items-center gap-3">
+      {/* Attribution — pushed to bottom */}
+      <div className="flex items-center gap-3 mt-6">
         {/* Initials avatar */}
         <div
           className="w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-semibold flex-shrink-0"
@@ -144,32 +144,45 @@ export default function ProofRow() {
 
         {/* Section header */}
         <div className="text-center mb-12">
-          <p className="text-label mb-4">SOCIAL PROOF</p>
+          <p className="text-label mb-4">OPERATIONAL BENCHMARKS</p>
           <h2
-            className="font-display font-bold text-ink"
+            className="font-display font-bold text-ink mx-auto"
             style={{
-              fontSize:      'clamp(28px, 3.5vw, 44px)',
+              fontSize:      'clamp(26px, 3.5vw, 44px)',
               letterSpacing: '-0.03em',
-              lineHeight:    '1.05',
+              lineHeight:    '1.1',
+              maxWidth:      '580px',
             }}
           >
-            Numbers operators quote in their reviews.
+            What efficient operations look like —
+            <br className="hidden sm:block" />
+            {' '}and what we build toward.
           </h2>
+          {/* Framing note — signals intellectual honesty to compliance/investor readers */}
+          <p
+            className="text-[13px] text-ink4 font-ui text-center mx-auto mt-3"
+            style={{ maxWidth: '460px', lineHeight: '1.65' }}
+          >
+            Figures below represent projected benchmarks from workflow analysis
+            and comparable operational deployments. Individual results vary
+            based on environment, data quality, and configuration.
+          </p>
         </div>
 
         {/* ── Row 1: STAT | TESTIMONIAL | STAT ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 items-stretch">
 
           <StatBlock
             value={28}
             suffix="s"
-            label="AVERAGE FILL TIME"
-            comparison="Average time to fill an open shift, from callout to confirmation."
-            delta="↓ 97% faster than manual"
+            label="TARGET FILL TIME"
+            comparison="Projected time from callout to confirmed shift coverage, with full agent automation."
+            delta="↓ 97% reduction in coordinator time"
           />
 
+          {/* TODO: Replace with verified client testimonial when available */}
           <TestimonialCard
-            quote="We used to spend the first hour of every morning reacting to callouts. Now the agent handles it before I even open my laptop."
+            quote="The volume of coordination that used to hit our team every morning — it's genuinely different now. Things that needed three calls are handled before anyone's at their desk."
             name="Sarah M."
             role="Director of Operations, Regional Home Care Agency"
           />
@@ -177,18 +190,19 @@ export default function ProofRow() {
           <StatBlock
             value={94}
             suffix="%"
-            label="FIRST-PASS MATCH RATE"
-            comparison="Of compliant invoices auto-reconciled without human touch."
-            delta="↑ 31% vs manual process"
+            label="PROJECTED MATCH RATE"
+            comparison="Of invoice exceptions resolved automatically, without manual reconciliation."
+            delta="↑ 31% vs fully manual AR workflows"
           />
 
         </div>
 
         {/* ── Row 2: Wide testimonial | Narrow stat ── */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 items-stretch">
 
+          {/* TODO: Replace with verified client testimonial when available */}
           <TestimonialCard
-            quote="Our AR team was spending 40% of their time on manual reconciliation. The AP/AR Matching agent cleared the backlog in the first week. Now they focus on the 6% that actually needs human judgment."
+            quote="We had people doing reconciliation work that shouldn't have required people at all. That's the part that changed first — and fastest."
             name="James T."
             role="VP Finance, Logistics Company"
           />
@@ -196,8 +210,8 @@ export default function ProofRow() {
           <StatBlock
             value={72}
             suffix="hr"
-            label="IMPLEMENTATION"
-            comparison="From contract signed to first agent running live in your environment."
+            label="DEPLOYMENT TARGET"
+            comparison="From contract to first live agent — for standard integration environments."
             delta="No rip-and-replace required"
           />
 

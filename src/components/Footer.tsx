@@ -103,7 +103,7 @@ export default function Footer() {
             <LogoMark />
 
             <p className="text-[13px] text-ink4 font-ui leading-relaxed mb-5 max-w-[220px]">
-              AI-powered operations automation for workforce and financial teams.
+              Operations automation for healthcare, finance, and compliance-heavy industries.
             </p>
 
             {/* Contact */}

@@ -295,10 +295,10 @@ function StepBlock({ number, title, description, detail, isReversed, visual }: S
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Step number — large muted background text */}
+          {/* Step number — large muted brand-tinted text */}
           <p
-            className="font-mono font-bold text-ink4/15 leading-none mb-3"
-            style={{ fontSize: '48px', letterSpacing: '-0.04em' }}
+            className="font-mono font-bold leading-none mb-3"
+            style={{ fontSize: '48px', letterSpacing: '-0.04em', color: 'rgba(107,63,160,0.12)' }}
           >
             0{number}
           </p>
@@ -314,7 +314,7 @@ function StepBlock({ number, title, description, detail, isReversed, visual }: S
             {description}
           </p>
 
-          <p className="text-[13px] text-ink4 font-ui leading-relaxed max-w-[360px]">
+          <p className="text-[13px] font-medium font-ui leading-relaxed max-w-[360px]" style={{ color: '#A0A0A0' }}>
             {detail}
           </p>
         </motion.div>
@@ -349,31 +349,28 @@ function StepBlock({ number, title, description, detail, isReversed, visual }: S
 const steps = [
   {
     number: 1,
-    title: 'Quick requirements gathering',
+    title: 'We map your operations — not your org chart.',
     description:
-      'One discovery call. We map your workflows, pain points, and existing stack — no lengthy onboarding or months-long consulting engagements.',
-    detail:
-      'Works with Epic, Workday, QuickBooks, Salesforce, SAP, AthenaHealth, NetSuite, Rippling, and more. We connect to what you already use.',
+      'One call. We look at your actual workflows — where the gaps are, what your team is doing manually, what systems you\'re already running.',
+    detail: 'Works with what you already use.',
     isReversed: false,
     visual: <IntegrationGrid />,
   },
   {
     number: 2,
-    title: 'Fast configuration & build',
+    title: 'Agents learn your operations. Not a generic template.',
     description:
-      'Agents are trained on your data and configured to your operational patterns in days. No scripts, no custom dev sprints — patterns emerge from your own data.',
-    detail:
-      'Your staff, policies, and historical records feed the agents directly. The result is a system that behaves exactly like your best operators would.',
+      'Your staff records, shift history, contract terms, and compliance rules feed the agents directly. The result behaves like your best operator — not a generic automation.',
+    detail: 'No manual scripting. No custom dev sprint.',
     isReversed: true,
     visual: <LogFeed />,
   },
   {
     number: 3,
-    title: 'Deployed in weeks, not quarters',
+    title: 'You see everything. Agents handle the rest.',
     description:
-      'Your agents go live handling real exceptions, escalations, and routine tasks — within weeks of signing. Full visibility, full control, all the time.',
-    detail:
-      'You see everything. You change anything. Agents do the work. And as your operations evolve, the agents adapt.',
+      'From day one, your team has full visibility into every decision the agents make. You set the rules. The agents do the work.',
+    detail: 'Full audit trail. Every action logged.',
     isReversed: false,
     visual: <LiveFeed />,
   },
@@ -385,22 +382,19 @@ export default function HowItWorks() {
 
       {/* Section header */}
       <div className="text-center max-w-[640px] mx-auto px-10 mb-4">
-        <p className="text-label mb-4">OUR PROCESS</p>
+        <p className="text-label mb-4">WHAT HAPPENS NEXT</p>
         <h2
           className="font-display font-bold text-ink"
           style={{
-            fontSize:      'clamp(30px, 3.8vw, 48px)',
-            letterSpacing: '-0.035em',
-            lineHeight:    '1.05',
+            fontSize:      'clamp(28px, 4vw, 46px)',
+            letterSpacing: '-0.03em',
+            lineHeight:    '1.1',
           }}
         >
-          From first call to{' '}
-          <span className="italic text-brand">agents in production.</span>
+          From first conversation to
+          <br className="hidden md:block" />
+          {' '}agents running live — in weeks.
         </h2>
-        <p className="text-[16px] text-ink3 font-ui leading-relaxed mt-5 max-w-[480px] mx-auto">
-          Most enterprise software takes months to deploy. Quickflows takes weeks —
-          because we built the process to move at the speed of operations.
-        </p>
       </div>
 
       {/* Step blocks */}

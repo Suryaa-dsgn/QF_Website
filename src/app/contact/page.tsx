@@ -203,8 +203,8 @@ export default function ContactPage() {
                     Prefer a live demo?
                   </p>
                   <p className="text-[13px] text-ink3 font-ui leading-relaxed mb-5">
-                    See three Quickflows agents working live in your operational context —
-                    20 minutes, no prep needed.
+                    See three Quickflows agents working live —
+                    20 minutes, no prep needed, tailored to your actual operations.
                   </p>
                   <BookDemoButton className="btn-base btn-primary w-full text-center">
                     Book a 20-min demo →

@@ -118,7 +118,7 @@ export default function Scope() {
             color:         'rgba(196, 181, 253, 0.5)',
           }}
         >
-          The platform — at a glance
+          THE PLATFORM — AT A GLANCE
         </p>
 
         {/* Stat grid — 3-col desktop, 1-col mobile */}
@@ -136,7 +136,7 @@ export default function Scope() {
             <ScopeStat
               value={30}
               suffix="+"
-              descriptor="AI agents live"
+              descriptor="configured AI agents"
               duration={1.6}
             />
           </div>
@@ -163,16 +163,20 @@ export default function Scope() {
           </div>
         </div>
 
-        {/* One-line subtext */}
+        {/* Subtext */}
         <p
-          className="text-center mt-8 font-ui"
+          className="text-center mt-8 font-ui mx-auto"
           style={{
             fontSize:      '14px',
             color:         'rgba(255,255,255,0.25)',
             letterSpacing: '0.01em',
+            lineHeight:    '1.7',
+            maxWidth:      '480px',
           }}
         >
-          Workforce and financial operations — one platform, deployed in weeks, not quarters.
+          Workforce and financial operations — one platform.
+          <br />
+          Standard environments are running within weeks of signing.
         </p>
 
       </div>

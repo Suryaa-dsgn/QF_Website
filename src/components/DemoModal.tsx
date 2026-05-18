@@ -221,7 +221,7 @@ export default function DemoModal() {
                       Tell us about you.
                     </h2>
                     <p className="text-[14px] text-ink3 font-ui mb-6 leading-relaxed">
-                      We&apos;ll personalise the demo to your exact operational context.
+                      We&apos;ll personalise the demo to your actual operations.
                     </p>
 
                     <div className="flex flex-col gap-4">

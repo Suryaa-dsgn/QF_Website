@@ -203,10 +203,13 @@ export default function Hero() {
               </AnimatePresence>
             </div>
 
-            {/* Subhead */}
-            <p className="hero-subhead text-[15px] lg:text-[16px] text-ink3 leading-[1.65] max-w-[480px] mb-6">
-              Quickflows agents run across your workforce and your finances —
-              catching missed shifts, flagging expirations, reconciling invoices.
+            {/* Subhead — each line is temporal, one vertical per sentence */}
+            <p className="hero-subhead text-[15px] lg:text-[16px] text-ink3 leading-[1.75] max-w-[440px] mb-6">
+              Shift gaps filled before your team wakes up.
+              <br className="hidden sm:block" />
+              Invoices matched before your AR team starts their day.
+              <br className="hidden sm:block" />
+              Credentials renewed before the audit notice arrives.
             </p>
 
             {/* CTAs */}

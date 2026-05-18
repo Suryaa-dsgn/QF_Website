@@ -64,8 +64,8 @@ export default function CTA() {
 
           {/* Subhead */}
           <p className="cta-animate text-[16px] text-ink3 font-ui leading-relaxed max-w-[480px] mx-auto mb-8">
-            Book a 20-min demo and see three Quickflows agents working live
-            in your operational context.
+            Book a 20-minute call. We&apos;ll show you three agents working
+            in scenarios that match your actual operations.
           </p>
 
           {/* CTAs */}
@@ -83,7 +83,7 @@ export default function CTA() {
           <div className="cta-animate flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <span className="text-[12px] text-ink4 font-ui">✓ No credit card required</span>
             <span className="hidden sm:block w-px h-3 bg-[--border]" />
-            <span className="text-[12px] text-ink4 font-ui">✓ Live in 24 hours</span>
+            <span className="text-[12px] text-ink4 font-ui">✓ First agent live within 72 hours</span>
             <span className="hidden sm:block w-px h-3 bg-[--border]" />
             <a
               href="tel:6782670106"

@@ -204,15 +204,15 @@ export default function Industries() {
           <p className="text-label mb-4">INDUSTRIES</p>
           <h2
             className="font-display font-bold text-ink mb-4"
-            style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', letterSpacing: '-0.03em', lineHeight: '1.05' }}
+            style={{ fontSize: 'clamp(28px, 3.5vw, 46px)', letterSpacing: '-0.035em', lineHeight: '1.05' }}
           >
-            Built for the industries that{' '}
-            <span className="italic text-brand">can&apos;t afford downtime.</span>
+            Healthcare, finance, and compliance
+            <br className="hidden sm:block" />
+            {' '}don&apos;t get second chances.
           </h2>
-          <p className="text-[15px] text-ink3 font-ui leading-relaxed">
-            30+ pre-configured AI agents across two operational verticals —
-            each shaped to the workflows, compliance rules, and data patterns
-            of its industry.
+          <p className="text-[15px] text-ink3 font-ui leading-relaxed" style={{ maxWidth: '500px' }}>
+            Built for the workflows, compliance requirements, and edge cases
+            of each sector — not adapted from a general-purpose platform.
           </p>
         </motion.div>
 
@@ -264,7 +264,7 @@ export default function Industries() {
                   className="font-ui mt-2"
                   style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', letterSpacing: '0.01em' }}
                 >
-                  Deployed across workforce &amp; financial operations
+                  Configured across workforce &amp; financial operations
                 </p>
               </div>
             </div>
@@ -364,8 +364,7 @@ export default function Industries() {
                   className="font-display font-bold text-ink mb-1"
                   style={{ fontSize: 'clamp(18px, 2vw, 24px)', letterSpacing: '-0.025em', lineHeight: '1.15' }}
                 >
-                  Deployed in weeks.{' '}
-                  <span className="italic text-brand">Not quarters.</span>
+                  Deployed in weeks. Not quarters.
                 </p>
                 <p className="text-[13px] text-ink3 font-ui">
                   Don&apos;t see your industry?{' '}
