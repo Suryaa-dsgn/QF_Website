@@ -8,6 +8,12 @@ import AgentSideNav from '@/components/ui/AgentSideNav'
 import AgentScrollContent from '@/components/ui/AgentScrollContent'
 import BookDemoButton from '@/components/BookDemoButton'
 import Link from 'next/link'
+// ─── VERSION TOGGLE ─────────────────────────────────────────────
+// Change "main" to "v2" to test the card grid design
+// Change back to "main" to restore the original implementation
+import WorkforcePageV2 from '@/components/sections/WorkforcePageV2'
+const DESIGN_VERSION: 'main' | 'v2' = 'v2'
+// ────────────────────────────────────────────────────────────────
 
 export default function WorkforcePage() {
   const [activeAgentIndex, setActiveAgentIndex] = useState(0)
@@ -28,6 +34,9 @@ export default function WorkforcePage() {
       }
     }
   }, [])
+
+  // ── V2 toggle — card grid design (hooks above always run)
+  if (DESIGN_VERSION === 'v2') return <WorkforcePageV2 />
 
   return (
     <>
