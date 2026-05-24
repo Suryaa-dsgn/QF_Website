@@ -21,6 +21,7 @@ export function useLenis() {
         smoothWheel: true,
         touchMultiplier: 2,
       })
+      ;(window as any).__lenis = lenisInstance
 
       // Integrate with GSAP ScrollTrigger if GSAP is loaded
       const tryConnectGSAP = async () => {
