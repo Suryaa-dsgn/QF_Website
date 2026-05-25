@@ -2,10 +2,10 @@
 
 import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
-import { AgentCardGrid } from '@/components/ui/v2/AgentCardGrid'
+import { AgentCardGrid } from '@/components/ui/AgentCardGrid'
 
-// ── Hero (V2) ────────────────────────────────────────────────────
-function HeroV2() {
+// ── Hero ─────────────────────────────────────────────────────────
+function Hero() {
   return (
     <section
       className="flex items-center justify-center pt-[80px] pb-12"
@@ -91,12 +91,12 @@ function HeroV2() {
   )
 }
 
-// ── Main V2 page ─────────────────────────────────────────────────
-export default function WorkforcePageV2() {
+// ── Page ─────────────────────────────────────────────────────────
+export default function WorkforcePage() {
   return (
     <div>
       {/* Hero */}
-      <HeroV2 />
+      <Hero />
 
       {/* Card grid section */}
       <section className="pb-[120px]">

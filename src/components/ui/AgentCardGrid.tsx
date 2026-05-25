@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { agentCardsData } from '@/data/agentCardsV2'
-import AgentCardV2 from './AgentCardV2'
+import { agentCardsData } from '@/data/agentCards'
+import AgentCard from './AgentCard'
 
 // ── CTA card — 8th grid position ────────────────────────────────
 function CTACard() {
@@ -73,7 +73,7 @@ export function AgentCardGrid() {
           ref={(el) => { cardRefs.current[i] = el }}
           className="h-full"
         >
-          <AgentCardV2 agent={agent} />
+          <AgentCard agent={agent} />
         </div>
       ))}
 

@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { AgentCardData } from '@/data/agentCardsV2'
+import { AgentCardData } from '@/data/agentCards'
 import AgentVisualRenderer from './AgentVisualRenderer'
 
-interface AgentCardV2Props {
+interface AgentCardProps {
   agent: AgentCardData
 }
 
-export default function AgentCardV2({ agent }: AgentCardV2Props) {
+export default function AgentCard({ agent }: AgentCardProps) {
   return (
     <Link
       href={`/agents/${agent.slug}`}
