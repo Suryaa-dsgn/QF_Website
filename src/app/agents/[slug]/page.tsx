@@ -21,8 +21,9 @@ export async function generateMetadata({
   }
 }
 
-export default function AgentPage({ params }: { params: { slug: string } }) {
-  const agent = getAgentBySlug(params.slug)
+export default async function AgentPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const agent = getAgentBySlug(slug)
   if (!agent) notFound()
   return <AgentContent agent={agent} />
 }
