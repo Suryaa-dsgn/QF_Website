@@ -1,41 +1,108 @@
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
+
 export default function BurnoutVisual() {
+  const [hours, setHours] = useState(60)
+  const [showAlert, setShowAlert] = useState(false)
+  const [peaked, setPeaked] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const rafRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    function runCycle() {
+      setHours(60)
+      setShowAlert(false)
+      setPeaked(false)
+
+      timerRef.current = setTimeout(() => {
+        const startTime = performance.now()
+        const duration = 1500
+
+        function countUp(now: number) {
+          const elapsed = now - startTime
+          const progress = Math.min(elapsed / duration, 1)
+          const eased = 1 - Math.pow(1 - progress, 3)
+          const current = Math.round(60 + eased * 8)
+          setHours(current)
+
+          if (progress < 1) {
+            rafRef.current = requestAnimationFrame(countUp)
+          } else {
+            setHours(68)
+            setPeaked(true)
+            timerRef.current = setTimeout(() => {
+              setShowAlert(true)
+              timerRef.current = setTimeout(() => {
+                timerRef.current = setTimeout(runCycle, 800)
+              }, 2300)
+            }, 200)
+          }
+        }
+
+        rafRef.current = requestAnimationFrame(countUp)
+      }, 500)
+    }
+
+    runCycle()
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
   return (
-    <div className="flex flex-col gap-2 w-[200px]">
-      <p className="font-mono text-[10px] text-ink4 mb-1">Burnout Risk — 48 staff</p>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', width: '200px' }}>
+      <p style={{
+        fontFamily: 'var(--font-geist-sans)',
+        fontWeight: 600,
+        fontSize: '22px',
+        color: peaked ? '#6B3FA0' : '#0A0A0A',
+        transition: 'color 0.4s ease',
+        letterSpacing: '-0.01em',
+      }}>
+        Mark K.
+      </p>
 
-      {/* High Risk */}
-      <div className="flex items-center gap-2">
-        <span className="font-ui text-[11px] text-ink3 w-16">High risk</span>
-        <div className="flex-1 bg-white border border-[rgba(107,63,160,0.08)] rounded-full h-2">
-          <div className="h-2 rounded-full bg-[#FECACA]" style={{ width: '12%' }} />
-        </div>
-        <span className="font-mono text-[11px] text-[#E63946] w-4">3</span>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px' }}>
+        <span style={{
+          fontFamily: 'var(--font-geist-mono)',
+          fontWeight: 700,
+          fontSize: '32px',
+          color: '#0A0A0A',
+          letterSpacing: '-0.03em',
+          lineHeight: 1,
+        }}>
+          {hours}
+        </span>
+        <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '14px', color: '#A0A0A0' }}>
+          hrs
+        </span>
       </div>
 
-      {/* At Risk */}
-      <div className="flex items-center gap-2">
-        <span className="font-ui text-[11px] text-ink3 w-16">At risk</span>
-        <div className="flex-1 bg-white border border-[rgba(107,63,160,0.08)] rounded-full h-2">
-          <div className="h-2 rounded-full bg-[#FEF3C7]" style={{ width: '28%' }} />
-        </div>
-        <span className="font-mono text-[11px] text-[#F4A261] w-4">8</span>
-      </div>
+      <p style={{
+        fontFamily: 'var(--font-geist-sans)',
+        fontSize: '11px',
+        color: '#A0A0A0',
+        marginBottom: '10px',
+      }}>
+        this week
+      </p>
 
-      {/* Healthy */}
-      <div className="flex items-center gap-2">
-        <span className="font-ui text-[11px] text-ink3 w-16">Healthy</span>
-        <div className="flex-1 bg-white border border-[rgba(107,63,160,0.08)] rounded-full h-2">
-          <div className="h-2 rounded-full bg-[#BBF7D0]" style={{ width: '77%' }} />
-        </div>
-        <span className="font-mono text-[11px] text-[#16A34A] w-4">37</span>
-      </div>
-
-      {/* Alert tag */}
-      <div
-        className="mt-2 rounded-[6px] px-2.5 py-1.5 text-[10px] font-ui text-[#92400E]"
-        style={{ background: '#FEF3C7' }}
-      >
-        ⚠ 2 staff approaching threshold
+      <div style={{
+        opacity: showAlert ? 1 : 0,
+        transform: showAlert ? 'translateY(0)' : 'translateY(8px)',
+        transition: 'opacity 0.4s ease, transform 0.4s ease',
+        background: 'rgba(252,211,77,0.12)',
+        border: '1px solid rgba(252,211,77,0.45)',
+        borderRadius: '6px',
+        padding: '4px 12px',
+        fontFamily: 'var(--font-geist-sans)',
+        fontSize: '11px',
+        fontWeight: 500,
+        color: '#92400E',
+      }}>
+        ⚠ Approaching limit — flagged
       </div>
     </div>
   )

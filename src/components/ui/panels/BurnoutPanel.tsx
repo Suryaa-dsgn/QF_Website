@@ -1,9 +1,24 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 // Staff Burnout Prevention panel
-// Shows: Risk gauge row + staff risk table + alert banner
+// Animation: David M. row highlights red → alert banner slides in
 
 export default function BurnoutPanel() {
+  const [phase, setPhase] = useState(0)
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setPhase(1), 1200),  // David M. row gets red highlight
+      setTimeout(() => setPhase(2), 2000),  // Alert banner slides in
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  const davidHighlight = phase >= 1
+  const alertVisible   = phase >= 2
+
   return (
     <div className="p-4 h-full overflow-hidden font-ui text-ink">
 
@@ -16,9 +31,9 @@ export default function BurnoutPanel() {
       {/* Risk gauge row */}
       <div className="grid grid-cols-3 gap-2 mb-4">
         {[
-          { label: 'High Risk', count: 3,  color: '#FEE2E2', textColor: '#991B1B', barColor: '#EF4444' },
-          { label: 'At Risk',   count: 8,  color: '#FEF3C7', textColor: '#92400E', barColor: '#F59E0B' },
-          { label: 'Healthy',   count: 37, color: '#D1FAE5', textColor: '#065F46', barColor: '#10B981' },
+          { label: 'High Risk', count: 3,  color: '#FEE2E2', textColor: '#991B1B' },
+          { label: 'At Risk',   count: 8,  color: '#FEF3C7', textColor: '#92400E' },
+          { label: 'Healthy',   count: 37, color: '#D1FAE5', textColor: '#065F46' },
         ].map((item) => (
           <div key={item.label} className="rounded-[8px] p-2.5" style={{ background: item.color }}>
             <p className="text-[10px] font-semibold mb-1" style={{ color: item.textColor }}>{item.label}</p>
@@ -36,15 +51,21 @@ export default function BurnoutPanel() {
           <span>Name</span><span>Role</span><span>Hrs/wk</span><span>Risk</span>
         </div>
         {[
-          { name: 'Mark S.',  role: 'RN',  hrs: '58h', score: 94, label: 'HIGH RISK', bg: '#FEE2E2', color: '#991B1B' },
-          { name: 'Jamie L.', role: 'LPN', hrs: '52h', score: 78, label: 'AT RISK',   bg: '#FEF3C7', color: '#92400E' },
-          { name: 'Sarah P.', role: 'CNA', hrs: '44h', score: 45, label: 'HEALTHY',   bg: '#D1FAE5', color: '#065F46' },
-          { name: 'David M.', role: 'RN',  hrs: '61h', score: 97, label: 'HIGH RISK', bg: '#FEE2E2', color: '#991B1B' },
+          { name: 'Mark S.',  role: 'RN',  hrs: '58h', label: 'HIGH RISK', bg: '#FEE2E2', color: '#991B1B', isDavid: false },
+          { name: 'Jamie L.', role: 'LPN', hrs: '52h', label: 'AT RISK',   bg: '#FEF3C7', color: '#92400E', isDavid: false },
+          { name: 'Sarah P.', role: 'CNA', hrs: '44h', label: 'HEALTHY',   bg: '#D1FAE5', color: '#065F46', isDavid: false },
+          { name: 'David M.', role: 'RN',  hrs: '61h', label: 'HIGH RISK', bg: '#FEE2E2', color: '#991B1B', isDavid: true  },
         ].map((row) => (
           <div
             key={row.name}
             className="grid items-center py-1.5 border-b border-[#F9F8FF] text-[12px]"
-            style={{ gridTemplateColumns: '1fr 60px 60px 70px' }}
+            style={{
+              gridTemplateColumns: '1fr 60px 60px 70px',
+              background: row.isDavid && davidHighlight ? '#FFF5F5' : 'transparent',
+              borderLeft: row.isDavid && davidHighlight ? '3px solid #EF4444' : '3px solid transparent',
+              paddingLeft: row.isDavid ? '6px' : undefined,
+              transition: 'background 0.5s ease, border-color 0.5s ease',
+            }}
           >
             <span className="font-medium text-ink">{row.name}</span>
             <span className="font-mono text-ink4 text-[11px]">{row.role}</span>
@@ -56,10 +77,16 @@ export default function BurnoutPanel() {
         ))}
       </div>
 
-      {/* Alert banner */}
+      {/* Alert banner — slides in at phase 2 */}
       <div
         className="mt-3 rounded-[8px] p-2.5 flex items-start gap-2"
-        style={{ background: '#FEF3C7', border: '1px solid #FDE68A' }}
+        style={{
+          background: '#FEF3C7',
+          border: '1px solid #FDE68A',
+          opacity: alertVisible ? 1 : 0,
+          transform: alertVisible ? 'translateY(0)' : 'translateY(8px)',
+          transition: 'opacity 0.5s ease, transform 0.5s ease',
+        }}
       >
         <span className="text-[12px]">⚠</span>
         <p className="text-[11px] text-[#92400E] leading-snug">

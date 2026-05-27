@@ -1,27 +1,61 @@
 export interface AgentCardData {
+  id: string
   slug: string
+  sequence: string
   category: string
+  categoryColor: string
+  categoryBg: string
+  categoryBorder: string
   name: string
   bullets: [string, string]
   outcome: string
   visual: string
 }
 
+// Agent order is deliberate — temporal sequence of an operational day:
+// Scheduler → Burnout Prevention → StaffAssist → Auto Swap →
+// Auto Approval → Visit Verification → Physician Credentialing
 export const agentCardsData: AgentCardData[] = [
   {
+    id: 'scheduler-assist',
+    slug: 'scheduler-assist',
+    sequence: '01',
+    category: 'SCHEDULING',
+    categoryColor: '#0284C7',
+    categoryBg: 'rgba(2,132,199,0.08)',
+    categoryBorder: 'rgba(2,132,199,0.15)',
+    name: 'Scheduler Assist',
+    bullets: [
+      'Identifies coverage gaps the moment they appear',
+      'Scores staff and generates the schedule automatically',
+    ],
+    outcome: 'Fewer unfilled shifts',
+    visual: 'scheduler',
+  },
+  {
+    id: 'staff-burnout-prevention',
     slug: 'staff-burnout-prevention',
+    sequence: '02',
     category: 'BURNOUT PREVENTION',
+    categoryColor: '#DC2626',
+    categoryBg: 'rgba(220,38,38,0.07)',
+    categoryBorder: 'rgba(220,38,38,0.15)',
     name: 'Staff Burnout Prevention',
     bullets: [
-      'Detects over-scheduling and overtime spikes automatically',
+      'Detects over-scheduling and overtime patterns in real time',
       'Flags high-risk staff before the callout happens',
     ],
     outcome: 'Lower turnover costs',
     visual: 'burnout',
   },
   {
+    id: 'staffassist',
     slug: 'staffassist',
+    sequence: '03',
     category: 'STAFF SELF-SERVICE',
+    categoryColor: '#7C3AED',
+    categoryBg: 'rgba(124,58,237,0.07)',
+    categoryBorder: 'rgba(124,58,237,0.15)',
     name: 'StaffAssist Agent',
     bullets: [
       'Answers schedule and policy questions instantly',
@@ -31,56 +65,65 @@ export const agentCardsData: AgentCardData[] = [
     visual: 'staffassist',
   },
   {
-    slug: 'scheduler-assist',
-    category: 'SCHEDULING',
-    name: 'Scheduler Assist',
+    id: 'auto-swap',
+    slug: 'auto-swap',
+    sequence: '04',
+    category: 'SHIFT OPERATIONS',
+    categoryColor: '#0284C7',
+    categoryBg: 'rgba(2,132,199,0.08)',
+    categoryBorder: 'rgba(2,132,199,0.15)',
+    name: 'Auto Swap Agent',
     bullets: [
-      'Identifies coverage gaps the moment they appear',
-      'Scores available staff and auto-generates the schedule',
+      'Matches the best internal candidate in under 30 seconds',
+      'Checks compliance before confirming — no manual review',
     ],
-    outcome: 'Fewer unfilled shifts',
-    visual: 'scheduler',
+    outcome: 'Shifts filled before second call',
+    visual: 'autoswap',
   },
   {
-    slug: 'visit-verification',
-    category: 'COMPLIANCE · EVV',
-    name: 'Visit Verification',
-    bullets: [
-      'GPS and time-based visit validation on every visit',
-      'Flags missed or shortened visits before billing',
-    ],
-    outcome: 'Zero compliance exposure',
-    visual: 'evv',
-  },
-  {
+    id: 'auto-approval',
     slug: 'auto-approval',
+    sequence: '05',
     category: 'APPROVAL AUTOMATION',
+    categoryColor: '#059669',
+    categoryBg: 'rgba(5,150,105,0.08)',
+    categoryBorder: 'rgba(5,150,105,0.15)',
     name: 'Auto Approval Agent',
     bullets: [
-      'Auto-approves compliant requests instantly, overnight',
+      'Auto-approves compliant requests the moment they arrive',
       'Escalates only genuine exceptions to managers',
     ],
     outcome: 'Managers see only exceptions',
     visual: 'autoapproval',
   },
   {
-    slug: 'auto-swap',
-    category: 'SHIFT OPTIMISATION',
-    name: 'Auto Swap Agent',
+    id: 'visit-verification',
+    slug: 'visit-verification',
+    sequence: '06',
+    category: 'COMPLIANCE · EVV',
+    categoryColor: '#0284C7',
+    categoryBg: 'rgba(2,132,199,0.08)',
+    categoryBorder: 'rgba(2,132,199,0.15)',
+    name: 'Visit Verification',
     bullets: [
-      'Matches the best internal candidate in under 30 seconds',
-      'Checks compliance before confirming the swap',
+      'GPS and time-stamp validation on every single visit',
+      'Flags discrepancies before billing runs — not after',
     ],
-    outcome: 'Shifts filled before second call',
-    visual: 'autoswap',
+    outcome: 'Zero compliance exposure',
+    visual: 'evv',
   },
   {
+    id: 'physician-credentialing',
     slug: 'physician-credentialing',
+    sequence: '07',
     category: 'CREDENTIALING',
+    categoryColor: '#7C3AED',
+    categoryBg: 'rgba(124,58,237,0.07)',
+    categoryBorder: 'rgba(124,58,237,0.15)',
     name: 'Physician Credentialing',
     bullets: [
       'Tracks every licence expiry across your provider roster',
-      'Sends reminders at 90, 60, and 30 days automatically',
+      'Initiates renewals at 90, 60, and 30 days automatically',
     ],
     outcome: 'Zero expired credentials at audit',
     visual: 'credentialing',

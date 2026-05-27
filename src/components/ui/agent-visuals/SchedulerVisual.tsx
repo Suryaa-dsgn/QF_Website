@@ -1,63 +1,148 @@
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
+
+type AnimState = 'searching' | 'scanning' | 'resolved'
+
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+const GAP_INDEX = 2 // Wednesday
+
 export default function SchedulerVisual() {
-  const days = ['M', 'T', 'W', 'T', 'F']
-  const row1 = [true, true, true, true, true]
-  const row2 = [true, true, false, true, true]
-  const row3 = [true, true, true, true, true]
+  const [state, setState] = useState<AnimState>('searching')
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    function cycle() {
+      setState('searching')
+      timerRef.current = setTimeout(() => {
+        setState('scanning')
+        timerRef.current = setTimeout(() => {
+          setState('resolved')
+          timerRef.current = setTimeout(() => {
+            cycle()
+          }, 1600)
+        }, 1200)
+      }, 1200)
+    }
+    cycle()
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [])
 
   return (
-    <div className="flex flex-col gap-2 w-[220px]">
-      <p className="font-mono text-[10px] text-ink4">Week of Mar 24 — Coverage</p>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '12px',
+        width: '220px',
+      }}
+    >
+      {/* Week header */}
+      <p style={{
+        fontFamily: 'var(--font-geist-mono)',
+        fontSize: '10px',
+        color: 'rgba(107,63,160,0.35)',
+        letterSpacing: '0.04em',
+      }}>
+        Week of Apr 7 — Coverage
+      </p>
 
-      {/* Mini week grid */}
-      <div className="grid grid-cols-5 gap-1">
-        {/* Headers */}
-        {days.map((d, i) => (
-          <div key={i} className="text-center font-mono text-[9px] text-ink4">{d}</div>
-        ))}
+      {/* 5-cell strip + day labels */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+        <div style={{ display: 'flex', gap: '6px' }}>
+          {DAYS.map((day, i) => {
+            const isGap = i === GAP_INDEX
+            let cellStyle: React.CSSProperties = {
+              width: '36px',
+              height: '36px',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.4s ease',
+              position: 'relative',
+              overflow: 'hidden',
+            }
 
-        {/* Row 1 — all filled */}
-        {row1.map((_, i) => (
-          <div
-            key={`r1-${i}`}
-            className="h-5 rounded-[3px]"
-            style={{ background: '#EDE9FE' }}
-          />
-        ))}
+            if (isGap) {
+              if (state === 'searching') {
+                cellStyle = {
+                  ...cellStyle,
+                  background: 'rgba(220,38,38,0.04)',
+                  border: '1.5px dashed rgba(220,38,38,0.45)',
+                  animation: 'gapPulse 0.6s ease-in-out infinite alternate',
+                }
+              } else if (state === 'scanning') {
+                cellStyle = {
+                  ...cellStyle,
+                  background: 'rgba(107,63,160,0.04)',
+                  border: '1.5px dashed rgba(107,63,160,0.6)',
+                }
+              } else {
+                cellStyle = {
+                  ...cellStyle,
+                  background: 'rgba(107,63,160,0.10)',
+                  border: '1.5px solid rgba(107,63,160,0.25)',
+                }
+              }
+            } else {
+              cellStyle = {
+                ...cellStyle,
+                background: 'rgba(107,63,160,0.07)',
+              }
+            }
 
-        {/* Row 2 — gap on Wednesday */}
-        {row2.map((filled, i) => (
-          <div
-            key={`r2-${i}`}
-            className="h-5 rounded-[3px] flex items-center justify-center"
-            style={{
-              background: filled ? '#EDE9FE' : 'rgba(230,57,70,0.10)',
-              border: !filled ? '1px dashed #E63946' : 'none',
-            }}
-          >
-            {!filled && <span className="text-[8px] text-[#E63946]">!</span>}
-          </div>
-        ))}
+            return (
+              <div key={day} style={cellStyle}>
+                {isGap && state === 'scanning' && (
+                  <div style={{
+                    width: '4px',
+                    height: '4px',
+                    borderRadius: '50%',
+                    background: '#6B3FA0',
+                    animation: 'scanDot 0.4s ease-in-out infinite alternate',
+                  }} />
+                )}
+                {isGap && state === 'resolved' && (
+                  <span style={{ fontSize: '13px', color: '#6B3FA0', fontWeight: 600 }}>✓</span>
+                )}
+              </div>
+            )
+          })}
+        </div>
 
-        {/* Row 3 — all filled */}
-        {row3.map((_, i) => (
-          <div
-            key={`r3-${i}`}
-            className="h-5 rounded-[3px]"
-            style={{ background: '#EDE9FE' }}
-          />
-        ))}
+        {/* Day labels */}
+        <div style={{ display: 'flex', gap: '6px' }}>
+          {DAYS.map(day => (
+            <div
+              key={day}
+              style={{
+                width: '36px',
+                textAlign: 'center',
+                fontFamily: 'var(--font-geist-mono)',
+                fontSize: '9px',
+                color: 'rgba(107,63,160,0.25)',
+              }}
+            >
+              {day}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* AI recommendation */}
-      <div
-        className="rounded-[6px] px-2.5 py-1.5 flex items-center gap-1.5"
-        style={{ background: 'rgba(107,63,160,0.06)', border: '1px solid rgba(107,63,160,0.12)' }}
-      >
-        <span className="text-brand text-[10px] flex-shrink-0">✦</span>
-        <p className="text-[10px] font-ui text-ink3">
-          Sarah P. recommended — no OT, certified
-        </p>
-      </div>
+      {/* Status line — only visible in resolved state */}
+      <p style={{
+        fontFamily: 'var(--font-geist-mono)',
+        fontSize: '10px',
+        color: '#16A34A',
+        opacity: state === 'resolved' ? 1 : 0,
+        transform: state === 'resolved' ? 'translateY(0)' : 'translateY(6px)',
+        transition: 'opacity 0.4s ease, transform 0.4s ease',
+        letterSpacing: '0.01em',
+      }}>
+        Sarah P. matched — schedule updated
+      </p>
     </div>
   )
 }
