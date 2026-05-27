@@ -1,17 +1,11 @@
-// ── Scroll-driven progressive line — data constants ────────────────
-//
-// SVG viewBox: 0 0 1200 5800
-// Left column  x = 200   (LEFT pills)
-// Right column x = 1000  (RIGHT pills)
-// Corner radius: 30 (achieved via cubic-bezier segments)
-//
-// Temporal sequence: Scheduler → Burnout → StaffAssist → AutoSwap →
-//                    AutoApproval → EVV → Credentialing
+// Scroll-line geometry for the Workforce Agents page
+// 7 agents, SECTION_HEIGHT = 5800px
+// Bridges at y = 430, 1130, 1830, 2530, 3230, 3930, 4630
+// Odd steps (1,3,5,7): line comes down LEFT (x=200), bridges RIGHT (to x=1000)
+// Even steps (2,4,6):  line comes down RIGHT (x=1000), bridges LEFT (to x=200)
 
-export const SECTION_HEIGHT = 5800 // px — total scroll distance (was 7500)
+export const SECTION_HEIGHT = 5800
 
-// ── SVG path: zigzags left ↔ right, ends centred at closing text ──
-// Starts directly at first bridge — no vertical stub at top (Fix 5C)
 export const PATH_D = `
   M 200,430
   C 200,430 200,430 230,430
@@ -23,63 +17,69 @@ export const PATH_D = `
   L 230,1130
   C 200,1130 200,1130 200,1160
   L 200,1230
-  L 200,1830
-  C 200,1860 200,1860 230,1860
-  L 970,1860
-  C 1000,1860 1000,1860 1000,1890
-  L 1000,1960
-  L 1000,2530
-  C 1000,2560 1000,2560 970,2560
-  L 230,2560
-  C 200,2560 200,2560 200,2590
-  L 200,2660
-  L 200,3230
-  C 200,3260 200,3260 230,3260
-  L 970,3260
-  C 1000,3260 1000,3260 1000,3290
-  L 1000,3360
-  L 1000,3930
-  C 1000,3960 1000,3960 970,3960
-  L 230,3960
-  C 200,3960 200,3960 200,3990
-  L 200,4060
-  L 200,4630
-  C 200,4660 200,4660 230,4660
-  L 970,4660
-  C 1000,4660 1000,4660 1000,4690
-  L 1000,4760
-  L 1000,5300
-  C 1000,5340 800,5380 600,5400
+  L 200,1800
+  C 200,1830 200,1830 230,1830
+  L 970,1830
+  C 1000,1830 1000,1830 1000,1860
+  L 1000,1930
+  L 1000,2500
+  C 1000,2530 1000,2530 970,2530
+  L 230,2530
+  C 200,2530 200,2530 200,2560
+  L 200,2630
+  L 200,3200
+  C 200,3230 200,3230 230,3230
+  L 970,3230
+  C 1000,3230 1000,3230 1000,3260
+  L 1000,3330
+  L 1000,3900
+  C 1000,3930 1000,3930 970,3930
+  L 230,3930
+  C 200,3930 200,3930 200,3960
+  L 200,4030
+  L 200,4600
+  C 200,4630 200,4630 230,4630
+  L 970,4630
+  C 1000,4630 1000,4630 1000,4660
+  L 1000,4730
+  L 1000,5100
+  L 600,5100
+  L 600,5200
 `
 
-// ── Scroll progress thresholds (0–1 mapped to 0–5800px) ──────────
+// Element positions — all proto tops = bridge_y + 30
+// Step 1: proto LEFT  top=460,  pill RIGHT top=490
+// Step 2: proto RIGHT top=1160, pill LEFT  top=1190
+// Step 3: proto LEFT  top=1860, pill RIGHT top=1890
+// Step 4: proto RIGHT top=2560, pill LEFT  top=2590
+// Step 5: proto LEFT  top=3260, pill RIGHT top=3290
+// Step 6: proto RIGHT top=3960, pill LEFT  top=3990
+// Step 7: proto LEFT  top=4660, pill RIGHT top=4690
+
 export const THRESHOLDS = {
-  // Pills appear when line reaches their pill-side position
-  step1Pill:  530  / 5800,   // 0.091
-  step2Pill:  1230 / 5800,   // 0.212
-  step3Pill:  1960 / 5800,   // 0.338
-  step4Pill:  2660 / 5800,   // 0.459
-  step5Pill:  3360 / 5800,   // 0.579
-  step6Pill:  4060 / 5800,   // 0.700
-  step7Pill:  4760 / 5800,   // 0.821
-
-  // Prototypes appear slightly BEFORE the pill
+  // Prototype panels appear slightly before pill text
   step1Proto: 515  / 5800,   // 0.089
-  step2Proto: 1215 / 5800,   // 0.210
-  step3Proto: 1945 / 5800,   // 0.335
-  step4Proto: 2645 / 5800,   // 0.456
-  step5Proto: 3345 / 5800,   // 0.577
-  step6Proto: 4045 / 5800,   // 0.697
-  step7Proto: 4745 / 5800,   // 0.818
+  step1Pill:  530  / 5800,   // 0.091
+  step2Proto: 1215 / 5800,   // 0.209
+  step2Pill:  1230 / 5800,   // 0.212
+  step3Proto: 1915 / 5800,   // 0.330
+  step3Pill:  1930 / 5800,   // 0.333
+  step4Proto: 2615 / 5800,   // 0.451
+  step4Pill:  2630 / 5800,   // 0.453
+  step5Proto: 3315 / 5800,   // 0.571
+  step5Pill:  3330 / 5800,   // 0.574
+  step6Proto: 4015 / 5800,   // 0.692
+  step6Pill:  4030 / 5800,   // 0.695
+  step7Proto: 4715 / 5800,   // 0.813
+  step7Pill:  4730 / 5800,   // 0.816
 
-  // Bridge labels appear as line draws through each horizontal bridge
-  label1: 1130 / 5800,   // 0.195  — CATCHING RISK BEFORE IT ESCALATES
-  label2: 1860 / 5800,   // 0.321  — STAFF NEEDS ANSWERS
-  label3: 2560 / 5800,   // 0.441  — 6:04 AM — CALLOUT RECEIVED
-  label4: 3260 / 5800,   // 0.562  — REQUESTS ARRIVE OVERNIGHT
-  label5: 3960 / 5800,   // 0.683  — CAREGIVERS IN THE FIELD
-  label6: 4660 / 5800,   // 0.803  — AUDIT APPROACHING
+  // Bridge labels — centred at each bridge_y horizontal crossing
+  label1: 1130 / 5800,   // 0.195 — between step 1 and 2
+  label2: 1830 / 5800,   // 0.316 — between step 2 and 3
+  label3: 2530 / 5800,   // 0.436 — between step 3 and 4
+  label4: 3230 / 5800,   // 0.557 — between step 4 and 5
+  label5: 3930 / 5800,   // 0.678 — between step 5 and 6
+  label6: 4630 / 5800,   // 0.798 — between step 6 and 7
 
-  // Closing headline
-  closing: 5300 / 5800,  // 0.914
+  closing: 5100 / 5800,  // 0.879
 } as const

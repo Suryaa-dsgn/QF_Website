@@ -1,5 +1,5 @@
 import WorkforcePage from '@/components/sections/WorkforcePage'
 
-export default function WorkforcePageRoute() {
+export default function Page() {
   return <WorkforcePage />
 }

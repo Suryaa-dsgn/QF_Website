@@ -12,16 +12,13 @@ import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
 
 // ── Panel components ──────────────────────────────────────────────
-import BurnoutPanel      from '@/components/ui/panels/BurnoutPanel'
-import StaffAssistPanel  from '@/components/ui/panels/StaffAssistPanel'
-import SchedulerPanel    from '@/components/ui/panels/SchedulerPanel'
-import EVVPanel          from '@/components/ui/panels/EVVPanel'
-import AutoApprovalPanel from '@/components/ui/panels/AutoApprovalPanel'
-import AutoSwapPanel     from '@/components/ui/panels/AutoSwapPanel'
-import CredentialingPanel from '@/components/ui/panels/CredentialingPanel'
+import APARPanel       from '@/components/ui/panels/APARPanel'
+import CollectionPanel from '@/components/ui/panels/CollectionPanel'
+import CompliancePanel from '@/components/ui/panels/CompliancePanel'
+import REITPanel       from '@/components/ui/panels/REITPanel'
 
 // ── Scroll-line data ──────────────────────────────────────────────
-import { PATH_D, THRESHOLDS, SECTION_HEIGHT } from '@/data/agentStepsV2'
+import { PATH_D, THRESHOLDS, SECTION_HEIGHT } from '@/data/financialStepsV1'
 
 // ════════════════════════════════════════════════════════════════
 // CUSTOM HOOK — maps scroll progress to opacity + y + scale
@@ -221,62 +218,41 @@ function Desc({
 }
 
 // ════════════════════════════════════════════════════════════════
-// MOBILE WORKFORCE STACK — linear fallback for <1024px
+// MOBILE FINANCIAL STACK — linear fallback for <1024px
 // ════════════════════════════════════════════════════════════════
 
 const MOBILE_STEPS = [
   {
     index: 1,
-    slug: 'staff-burnout-prevention',
-    label: 'Staff Burnout Prevention',
-    Panel: BurnoutPanel,
-    desc: 'The nurse who called out last Monday called out again today. Three callouts in six days. 54-hour week. Burnout Prevention flagged her pattern on Wednesday — before the fourth callout happened.',
+    slug: 'ap-ar-matching',
+    label: 'AP/AR Matching',
+    Panel: APARPanel,
+    desc: 'Your finance team opens the reconciliation dashboard Friday afternoon. 847 bank transactions. 4 invoices. AP/AR Matching has already matched three. Bellmore\'s $500 short-pay was caught 6 minutes after the mismatch hit the ledger. Auto-dispute letter sent. Before anyone opened a spreadsheet.',
   },
   {
     index: 2,
-    slug: 'staffassist',
-    label: 'StaffAssist',
-    Panel: StaffAssistPanel,
-    desc: "She asks if she can request PTO for April 12th. It's a Thursday — one other RN already off. PTO balance confirmed: 3 days left. Request submitted. Response within 2 hours. No manager involved.",
+    slug: 'payment-collection',
+    label: 'Payment Collection',
+    Panel: CollectionPanel,
+    desc: "PrimaCare is 45 days past due. $22,400 outstanding. Nobody's had time to follow up — the queue is 11 accounts long. Payment Collection prioritised by recovery likelihood, timed the escalation for 9am Tuesday, and logged the contact. DSO down 4.8% from last month.",
   },
   {
     index: 3,
-    slug: 'scheduler-assist',
-    label: 'Scheduler Assist',
-    Panel: SchedulerPanel,
-    desc: "Tuesday PM has a gap. The overtime risk is real. Scheduler Assist found a swap that saves 6 hours of overtime, fills the coverage gap, and notifies both staff before end of shift. Without anyone asking.",
+    slug: 'contract-compliance',
+    label: 'Contract Compliance',
+    Panel: CompliancePanel,
+    desc: "Bellmore's invoice matches the PO. Amounts add up. But clause 3b of the services agreement requires a 5% volume discount on orders over $5,000. Contract Compliance flagged a $420 revenue leakage before payment cleared. Dispute filed automatically.",
   },
   {
     index: 4,
-    slug: 'visit-verification',
-    label: 'Visit Verification (EVV)',
-    Panel: EVVPanel,
-    desc: "The billing record says 9am. The EVV log says 28 minutes, not 60. Visit Verification flagged the discrepancy before the billing sync ran. GPS confirmed arrival and departure. Claim corrected automatically.",
-  },
-  {
-    index: 5,
-    slug: 'auto-approval',
-    label: 'Auto Approval',
-    Panel: AutoApprovalPanel,
-    desc: "It's 11pm. A compliant time-off request is sitting in a queue. 14 requests processed this week. The compliant ones were cleared automatically — licence, overtime, policy all checked. Managers only see the exceptions.",
-  },
-  {
-    index: 6,
-    slug: 'auto-swap',
-    label: 'Auto Swap',
-    Panel: AutoSwapPanel,
-    desc: '6:02am. Amanda called in sick. The coordinator opens the contact list. AutoSwap already identified three eligible replacements, ranked by shift fit and overtime status. Maria confirmed by 6:18am. No phone calls.',
-  },
-  {
-    index: 7,
-    slug: 'physician-credentialing',
-    label: 'Physician Credentialing',
-    Panel: CredentialingPanel,
-    desc: "Dr. Patel's DEA registration expires in 11 days. Nobody flagged it. Credentialing flagged it. Reminder sent at 90 days, 60 days, and today at 11. Renewal document queued. Audit log updated. Complete.",
+    slug: 'reit-deal-qualifier',
+    label: 'REIT Deal Qualifier',
+    Panel: REITPanel,
+    desc: '84 units. Dallas, TX. IRR 18.2%. DSCR 1.38x. Cap rate 6.7%. REIT Deal Qualifier scored it 87/100 in 40 seconds — flagged the rent growth sensitivity, cleared every IC threshold. Summary ready before the first call.',
   },
 ]
 
-function MobileWorkforceStack() {
+function MobileFinancialStack() {
   return (
     <div className="section-container py-20">
       <div className="mb-14 text-center">
@@ -291,8 +267,8 @@ function MobileWorkforceStack() {
             marginBottom: '12px',
           }}
         >
-          The 6am callout.
-          <br />Seven agents. Nothing uncovered.
+          Month-end close.
+          <br />Four agents. Nothing leaking.
         </h2>
         <p
           style={{
@@ -304,7 +280,7 @@ function MobileWorkforceStack() {
             margin: '0 auto',
           }}
         >
-          From the first burnout flag to the last credential check — every agent, every step.
+          From reconciliation to deal close — every agent, every step.
         </p>
       </div>
 
@@ -364,7 +340,7 @@ function MobileWorkforceStack() {
             marginBottom: '20px',
           }}
         >
-          All seven. Running simultaneously.
+          All four. Running simultaneously.
         </h3>
         <BookDemoButton className="btn-base btn-primary">Book a demo</BookDemoButton>
       </div>
@@ -413,12 +389,12 @@ function Hero() {
           <span
             className="inline-block text-[10px] font-semibold font-ui uppercase tracking-[0.07em] px-3 py-1 rounded-full"
             style={{
-              color: '#0284C7',
-              background: 'rgba(2,132,199,0.08)',
-              border: '1px solid rgba(2,132,199,0.18)',
+              color: '#16A34A',
+              background: 'rgba(22,163,74,0.08)',
+              border: '1px solid rgba(22,163,74,0.18)',
             }}
           >
-            Workforce Operations
+            Financial Operations
           </span>
         </div>
 
@@ -432,11 +408,11 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          Seven agents.{' '}
+          Four agents.{' '}
           <br className="hidden sm:block" />
-          One workforce{' '}
+          One finance team{' '}
           <br className="hidden sm:block" />
-          that runs itself.
+          that closes itself.
         </h1>
 
         {/* Subhead */}
@@ -449,8 +425,8 @@ function Hero() {
             marginBottom: '32px',
           }}
         >
-          From the 6am callout to the last shift of the month.
-          Every shift, credential, and approval — handled.
+          From invoice matching to deal qualification.
+          Every transaction, contract, and collection — automated.
         </p>
 
         {/* CTAs */}
@@ -458,8 +434,8 @@ function Hero() {
           <BookDemoButton className="btn-base btn-primary">
             Book a demo
           </BookDemoButton>
-          <Link href="/financial" className="btn-base btn-ghost group">
-            Explore Financial <span className="arrow-icon">→</span>
+          <Link href="/workforce" className="btn-base btn-ghost group">
+            Explore Workforce <span className="arrow-icon">→</span>
           </Link>
         </div>
 
@@ -493,7 +469,7 @@ function Hero() {
               textTransform: 'uppercase',
             }}
           >
-            7 agents below
+            4 agents below
           </p>
         </div>
 
@@ -503,7 +479,7 @@ function Hero() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// DESKTOP SCROLL SECTION — SVG line + 7 agent steps
+// DESKTOP SCROLL SECTION — SVG line + 4 agent steps
 // ════════════════════════════════════════════════════════════════
 
 function ScrollSection({ sv }: { sv: MotionValue<number> }) {
@@ -515,50 +491,35 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
   const s3Proto = useStepReveal(sv, THRESHOLDS.step3Proto)
   const s4Pill  = useStepReveal(sv, THRESHOLDS.step4Pill)
   const s4Proto = useStepReveal(sv, THRESHOLDS.step4Proto)
-  const s5Pill  = useStepReveal(sv, THRESHOLDS.step5Pill)
-  const s5Proto = useStepReveal(sv, THRESHOLDS.step5Proto)
-  const s6Pill  = useStepReveal(sv, THRESHOLDS.step6Pill)
-  const s6Proto = useStepReveal(sv, THRESHOLDS.step6Proto)
-  const s7Pill  = useStepReveal(sv, THRESHOLDS.step7Pill)
-  const s7Proto = useStepReveal(sv, THRESHOLDS.step7Proto)
 
-  // Panel visibility — remount key restarts panel animations on entry
+  // Panel visibility — remount key to restart animations on entry
   const [visiblePanels, setVisiblePanels] = useState<Set<number>>(new Set())
 
   useMotionValueEvent(s1Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(1)) return prev; const s = new Set(prev); s.add(1); return s })
+    if (v > 0.5) setVisiblePanels(prev => {
+      if (prev.has(1)) return prev
+      const s = new Set(prev); s.add(1); return s
+    })
   })
   useMotionValueEvent(s2Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(2)) return prev; const s = new Set(prev); s.add(2); return s })
+    if (v > 0.5) setVisiblePanels(prev => {
+      if (prev.has(2)) return prev
+      const s = new Set(prev); s.add(2); return s
+    })
   })
   useMotionValueEvent(s3Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(3)) return prev; const s = new Set(prev); s.add(3); return s })
+    if (v > 0.5) setVisiblePanels(prev => {
+      if (prev.has(3)) return prev
+      const s = new Set(prev); s.add(3); return s
+    })
   })
   useMotionValueEvent(s4Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(4)) return prev; const s = new Set(prev); s.add(4); return s })
-  })
-  useMotionValueEvent(s5Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(5)) return prev; const s = new Set(prev); s.add(5); return s })
-  })
-  useMotionValueEvent(s6Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(6)) return prev; const s = new Set(prev); s.add(6); return s })
-  })
-  useMotionValueEvent(s7Proto.opacity, 'change', v => {
-    if (v > 0.5) setVisiblePanels(prev => { if (prev.has(7)) return prev; const s = new Set(prev); s.add(7); return s })
+    if (v > 0.5) setVisiblePanels(prev => {
+      if (prev.has(4)) return prev
+      const s = new Set(prev); s.add(4); return s
+    })
   })
 
-  // Closing text — IntersectionObserver (stays visible once reached)
-  const closingRef = useRef<HTMLDivElement>(null)
-  const [closingVisible, setClosingVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setClosingVisible(true) },
-      { threshold: 0.2 }
-    )
-    if (closingRef.current) observer.observe(closingRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <>
@@ -629,8 +590,8 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
               marginBottom: '16px',
             }}
           >
-            The 6am callout.
-            <br />Seven agents. Nothing uncovered.
+            Month-end close.
+            <br />Four agents. Nothing leaking.
           </h2>
           <p
             style={{
@@ -641,32 +602,23 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
               maxWidth: '360px',
             }}
           >
-            Scroll through a single week on-call — from the first burnout flag
-            to the last credential check — and see which agent is handling what.
+            Scroll through a single finance cycle — from reconciliation
+            to deal close — and see which agent is handling what.
           </p>
         </div>
 
         {/* ── BRIDGE LABELS ───────────────────────────────────── */}
         <BridgeLabelEl topPx={1130} sv={sv} threshold={THRESHOLDS.label1}>
-          THE NURSE WHO CALLED OUT LAST MONDAY — CALLED OUT AGAIN TODAY
+          CASH SITTING OVERDUE — 45 DAYS OUT
         </BridgeLabelEl>
         <BridgeLabelEl topPx={1830} sv={sv} threshold={THRESHOLDS.label2}>
-          DAVID WANTS TO SWAP THURSDAY
+          INVOICE CLEARED — TERMS UNDER REVIEW
         </BridgeLabelEl>
         <BridgeLabelEl topPx={2530} sv={sv} threshold={THRESHOLDS.label3}>
-          THREE CALLOUTS. TWELVE OPEN SHIFTS. FORTY-EIGHT HOURS.
-        </BridgeLabelEl>
-        <BridgeLabelEl topPx={3230} sv={sv} threshold={THRESHOLDS.label4}>
-          THE BILLING RECORD SAYS 9AM. THE EVV LOG SAYS 28 MINUTES.
-        </BridgeLabelEl>
-        <BridgeLabelEl topPx={3930} sv={sv} threshold={THRESHOLDS.label5}>
-          IT&apos;S 11PM. A COMPLIANT REQUEST IS SITTING IN A QUEUE.
-        </BridgeLabelEl>
-        <BridgeLabelEl topPx={4630} sv={sv} threshold={THRESHOLDS.label6}>
-          6:02AM. AMANDA CALLED IN SICK.
+          PIPELINE ARRIVES BEFORE MORNING COFFEE
         </BridgeLabelEl>
 
-        {/* ── STEP 1: STAFF BURNOUT PREVENTION (RIGHT pill, LEFT prototype) ── */}
+        {/* ── STEP 1: AP/AR MATCHING (RIGHT pill, LEFT prototype) ── */}
         <motion.div
           style={{
             opacity: s1Proto.opacity,
@@ -677,8 +629,8 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             left: '40px',
           }}
         >
-          <PrototypeWrapper slug="staff-burnout-prevention" width={560}>
-            <BurnoutPanel key={`burnout-${visiblePanels.has(1) ? 'v' : 'h'}`} />
+          <PrototypeWrapper slug="ap-ar-matching" width={560}>
+            <APARPanel key={`apar-${visiblePanels.has(1) ? 'v' : 'h'}`} />
           </PrototypeWrapper>
         </motion.div>
         <div
@@ -693,18 +645,18 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           }}
         >
           <motion.div style={{ opacity: s1Pill.opacity, y: s1Pill.y }}>
-            <AgentStepMarker label="Staff Burnout Prevention" index={1} align="right" />
+            <AgentStepMarker label="AP/AR Matching" index={1} align="right" />
             <Desc align="right">
-              The nurse who called out last Monday called out again today.
-              Three callouts in six days. 54-hour week.
+              Your finance team opens the reconciliation dashboard Friday afternoon.
+              847 bank transactions. 4 invoices. AP/AR Matching has already matched three.
               <br /><br />
-              Burnout Prevention flagged her pattern on Wednesday — before
-              the fourth callout happened. Intervention scheduled. No spreadsheet opened.
+              {`Bellmore's $500 short-pay was caught 6 minutes after the mismatch hit the
+              ledger. Auto-dispute letter sent. Before anyone opened a spreadsheet.`}
             </Desc>
           </motion.div>
         </div>
 
-        {/* ── STEP 2: STAFFASSIST (LEFT pill, RIGHT prototype) ── */}
+        {/* ── STEP 2: PAYMENT COLLECTION (LEFT pill, RIGHT prototype) ── */}
         <div
           style={{
             position: 'absolute',
@@ -716,12 +668,13 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           }}
         >
           <motion.div style={{ opacity: s2Pill.opacity, y: s2Pill.y }}>
-            <AgentStepMarker label="StaffAssist" index={2} align="left" />
+            <AgentStepMarker label="Payment Collection" index={2} align="left" />
             <Desc align="left">
-              {"She asks if she can request PTO for April 12th. It's a Thursday — one other RN already off."}
+              PrimaCare is 45 days past due. $22,400 outstanding.
+              {`Nobody's had time to follow up — the queue is 11 accounts long.`}
               <br /><br />
-              PTO balance confirmed: 3 days left. Request submitted.
-              Response within 2 hours. No manager involved.
+              Payment Collection prioritised by recovery likelihood, timed the escalation
+              for 9am Tuesday, and logged the contact. DSO down 4.8% from last month.
             </Desc>
           </motion.div>
         </div>
@@ -735,12 +688,12 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             left: '500px',
           }}
         >
-          <PrototypeWrapper slug="staffassist" width={580}>
-            <StaffAssistPanel key={`staffassist-${visiblePanels.has(2) ? 'v' : 'h'}`} />
+          <PrototypeWrapper slug="payment-collection" width={580}>
+            <CollectionPanel key={`collection-${visiblePanels.has(2) ? 'v' : 'h'}`} />
           </PrototypeWrapper>
         </motion.div>
 
-        {/* ── STEP 3: SCHEDULER ASSIST (RIGHT pill, LEFT prototype) ── */}
+        {/* ── STEP 3: CONTRACT COMPLIANCE (RIGHT pill, LEFT prototype) ── */}
         <motion.div
           style={{
             opacity: s3Proto.opacity,
@@ -751,8 +704,8 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             left: '40px',
           }}
         >
-          <PrototypeWrapper slug="scheduler-assist" width={560}>
-            <SchedulerPanel key={`scheduler-${visiblePanels.has(3) ? 'v' : 'h'}`} />
+          <PrototypeWrapper slug="contract-compliance" width={560}>
+            <CompliancePanel key={`compliance-${visiblePanels.has(3) ? 'v' : 'h'}`} />
           </PrototypeWrapper>
         </motion.div>
         <div
@@ -767,18 +720,18 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           }}
         >
           <motion.div style={{ opacity: s3Pill.opacity, y: s3Pill.y }}>
-            <AgentStepMarker label="Scheduler Assist" index={3} align="right" />
+            <AgentStepMarker label="Contract Compliance" index={3} align="right" />
             <Desc align="right">
-              Three callouts. Twelve open shifts. Forty-eight hours. One AI.
+              {`Bellmore's invoice matches the PO. Amounts add up.`}
               <br /><br />
-              Scheduler Assist found the swap that saves 6 hours of overtime,
-              fills every gap, and notifies both staff before end of shift.
-              Without anyone asking.
+              But clause 3b of the services agreement requires a 5% volume discount
+              on orders over $5,000. Contract Compliance flagged a $420 revenue leakage
+              before payment cleared. Dispute filed automatically.
             </Desc>
           </motion.div>
         </div>
 
-        {/* ── STEP 4: VISIT VERIFICATION EVV (LEFT pill, RIGHT prototype) ── */}
+        {/* ── STEP 4: REIT DEAL QUALIFIER (LEFT pill, RIGHT prototype) ── */}
         <div
           style={{
             position: 'absolute',
@@ -790,12 +743,12 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           }}
         >
           <motion.div style={{ opacity: s4Pill.opacity, y: s4Pill.y }}>
-            <AgentStepMarker label="Visit Verification (EVV)" index={4} align="left" />
+            <AgentStepMarker label="REIT Deal Qualifier" index={4} align="left" />
             <Desc align="left">
-              The billing record says 9am. The EVV log says 28 minutes, not 60.
+              84 units. Dallas, TX. IRR 18.2%. DSCR 1.38x. Cap rate 6.7%.
               <br /><br />
-              Visit Verification flagged the discrepancy before the billing sync ran.
-              GPS confirmed arrival and departure. Claim corrected automatically.
+              REIT Deal Qualifier scored it 87/100 in 40 seconds — flagged the rent growth
+              sensitivity, cleared every IC threshold. Summary ready before the first call.
             </Desc>
           </motion.div>
         </div>
@@ -809,160 +762,11 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             left: '500px',
           }}
         >
-          <PrototypeWrapper slug="visit-verification" width={580}>
-            <EVVPanel key={`evv-${visiblePanels.has(4) ? 'v' : 'h'}`} />
+          <PrototypeWrapper slug="reit-deal-qualifier" width={580}>
+            <REITPanel key={`reit-${visiblePanels.has(4) ? 'v' : 'h'}`} />
           </PrototypeWrapper>
         </motion.div>
 
-        {/* ── STEP 5: AUTO APPROVAL (RIGHT pill, LEFT prototype) ── */}
-        <motion.div
-          style={{
-            opacity: s5Proto.opacity,
-            y: s5Proto.y,
-            scale: s5Proto.scale,
-            position: 'absolute',
-            top: '3260px',
-            left: '40px',
-          }}
-        >
-          <PrototypeWrapper slug="auto-approval" width={560}>
-            <AutoApprovalPanel key={`autoapproval-${visiblePanels.has(5) ? 'v' : 'h'}`} />
-          </PrototypeWrapper>
-        </motion.div>
-        <div
-          style={{
-            position: 'absolute',
-            top: '3290px',
-            right: '40px',
-            textAlign: 'right',
-            background: '#F9F8FF',
-            padding: '0 16px 16px',
-            borderRadius: '8px',
-          }}
-        >
-          <motion.div style={{ opacity: s5Pill.opacity, y: s5Pill.y }}>
-            <AgentStepMarker label="Auto Approval" index={5} align="right" />
-            <Desc align="right">
-              {"It's 11pm. A compliant time-off request is sitting in a queue waiting for morning."}
-              <br /><br />
-              14 requests processed this week. The compliant ones were cleared
-              automatically — licence, overtime, policy all checked.
-              Managers only see the exceptions.
-            </Desc>
-          </motion.div>
-        </div>
-
-        {/* ── STEP 6: AUTO SWAP (LEFT pill, RIGHT prototype) ── */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '3990px',
-            left: '40px',
-            background: '#F9F8FF',
-            padding: '0 16px 16px',
-            borderRadius: '8px',
-          }}
-        >
-          <motion.div style={{ opacity: s6Pill.opacity, y: s6Pill.y }}>
-            <AgentStepMarker label="Auto Swap" index={6} align="left" />
-            <Desc align="left">
-              {"6:02am. Amanda called in sick. The coordinator opens the contact list."}
-              <br /><br />
-              AutoSwap already identified three eligible replacements, ranked by shift
-              fit and overtime status. Maria confirmed by 6:18am. No phone calls.
-            </Desc>
-          </motion.div>
-        </div>
-        <motion.div
-          style={{
-            opacity: s6Proto.opacity,
-            y: s6Proto.y,
-            scale: s6Proto.scale,
-            position: 'absolute',
-            top: '3960px',
-            left: '500px',
-          }}
-        >
-          <PrototypeWrapper slug="auto-swap" width={580}>
-            <AutoSwapPanel key={`autoswap-${visiblePanels.has(6) ? 'v' : 'h'}`} />
-          </PrototypeWrapper>
-        </motion.div>
-
-        {/* ── STEP 7: PHYSICIAN CREDENTIALING (RIGHT pill, LEFT prototype) ── */}
-        <motion.div
-          style={{
-            opacity: s7Proto.opacity,
-            y: s7Proto.y,
-            scale: s7Proto.scale,
-            position: 'absolute',
-            top: '4660px',
-            left: '40px',
-          }}
-        >
-          <PrototypeWrapper slug="physician-credentialing" width={560}>
-            <CredentialingPanel key={`credentialing-${visiblePanels.has(7) ? 'v' : 'h'}`} />
-          </PrototypeWrapper>
-        </motion.div>
-        <div
-          style={{
-            position: 'absolute',
-            top: '4690px',
-            right: '40px',
-            textAlign: 'right',
-            background: '#F9F8FF',
-            padding: '0 16px 16px',
-            borderRadius: '8px',
-          }}
-        >
-          <motion.div style={{ opacity: s7Pill.opacity, y: s7Pill.y }}>
-            <AgentStepMarker label="Physician Credentialing" index={7} align="right" />
-            <Desc align="right">
-              {"Dr. Patel's DEA registration expires in 11 days. Nobody flagged it."}
-              <br /><br />
-              Credentialing flagged it. Reminder sent at 90 days, 60 days, and today at 11.
-              Renewal document queued. Audit log updated. Complete.
-            </Desc>
-          </motion.div>
-        </div>
-
-        {/* ── CLOSING TEXT ────────────────────────────────────── */}
-        <div
-          ref={closingRef}
-          style={{
-            position: 'absolute',
-            top: '5150px',
-            left: '50%',
-            maxWidth: '680px',
-            textAlign: 'center',
-            zIndex: 10,
-            background: '#F9F8FF',
-            padding: '40px 48px',
-            borderRadius: '20px',
-            opacity: closingVisible ? 1 : 0,
-            transform: closingVisible
-              ? 'translateX(-50%) translateY(0px)'
-              : 'translateX(-50%) translateY(20px)',
-            transition: 'opacity 0.7s ease, transform 0.7s ease',
-          }}
-        >
-          <h3
-            style={{
-              fontFamily: 'var(--font-bricolage)',
-              fontSize: 'clamp(26px, 3vw, 40px)',
-              fontWeight: 700,
-              color: '#0A0A0A',
-              letterSpacing: '-0.035em',
-              lineHeight: 1.1,
-              marginBottom: '24px',
-            }}
-          >
-            All seven. Running simultaneously.
-            <br />While your team focuses on what actually needs them.
-          </h3>
-          <BookDemoButton className="btn-base btn-primary">
-            Book a demo
-          </BookDemoButton>
-        </div>
 
       </div>
     </>
@@ -973,7 +777,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
 // PAGE ROOT
 // ════════════════════════════════════════════════════════════════
 
-export default function WorkforcePage() {
+export default function FinancialPage() {
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024)
@@ -992,15 +796,42 @@ export default function WorkforcePage() {
     <div>
       <Hero />
       {isMobile ? (
-        <MobileWorkforceStack />
+        <MobileFinancialStack />
       ) : (
-        <section
-          ref={sectionRef}
-          className="relative w-full"
-          style={{ height: `${SECTION_HEIGHT}px` }}
-        >
-          <ScrollSection sv={scrollYProgress} />
-        </section>
+        <>
+          <section
+            ref={sectionRef}
+            className="relative w-full"
+            style={{ height: `${SECTION_HEIGHT}px` }}
+          >
+            <ScrollSection sv={scrollYProgress} />
+          </section>
+
+          {/* ── CLOSING — static section below scroll, always visible ── */}
+          <div
+            className="flex flex-col items-center justify-center text-center px-10 py-24"
+            style={{ background: '#F9F8FF' }}
+          >
+            <h3
+              style={{
+                fontFamily: 'var(--font-bricolage)',
+                fontSize: 'clamp(26px, 3vw, 40px)',
+                fontWeight: 700,
+                color: '#0A0A0A',
+                letterSpacing: '-0.035em',
+                lineHeight: 1.1,
+                marginBottom: '24px',
+                maxWidth: '640px',
+              }}
+            >
+              All four. Running simultaneously.
+              <br />While your team focuses on what actually needs them.
+            </h3>
+            <BookDemoButton className="btn-base btn-primary">
+              Book a demo
+            </BookDemoButton>
+          </div>
+        </>
       )}
     </div>
   )
