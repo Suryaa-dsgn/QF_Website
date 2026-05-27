@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import {
-  useScroll,
+  useMotionValue,
   useTransform,
   motion,
   useMotionValueEvent,
@@ -10,6 +10,8 @@ import {
 } from 'framer-motion'
 import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
+import CTA    from '@/components/sections/CTA'
+import Footer from '@/components/Footer'
 
 // ── Panel components ──────────────────────────────────────────────
 import BurnoutPanel      from '@/components/ui/panels/BurnoutPanel'
@@ -983,10 +985,27 @@ export default function WorkforcePage() {
   }, [])
 
   const sectionRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  })
+  const scrollYProgress = useMotionValue(0)
+
+  useEffect(() => {
+    const update = () => {
+      const el = sectionRef.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      // progress = 0 when section top hits viewport bottom (section just entering)
+      // progress = 1 when section bottom hits viewport bottom
+      // This matches the thresholds which are calibrated as y_px / SECTION_HEIGHT
+      const progress = (window.innerHeight - rect.top) / el.offsetHeight
+      scrollYProgress.set(Math.max(0, Math.min(1, progress)))
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update, { passive: true })
+    update()
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [scrollYProgress])
 
   return (
     <div>
@@ -1002,6 +1021,8 @@ export default function WorkforcePage() {
           <ScrollSection sv={scrollYProgress} />
         </section>
       )}
+      <CTA />
+      <Footer />
     </div>
   )
 }

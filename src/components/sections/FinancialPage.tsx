@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import {
-  useScroll,
+  useMotionValue,
   useTransform,
   motion,
   useMotionValueEvent,
@@ -10,6 +10,8 @@ import {
 } from 'framer-motion'
 import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
+import CTA    from '@/components/sections/CTA'
+import Footer from '@/components/Footer'
 
 // ── Panel components ──────────────────────────────────────────────
 import APARPanel       from '@/components/ui/panels/APARPanel'
@@ -495,6 +497,19 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
   // Panel visibility — remount key to restart animations on entry
   const [visiblePanels, setVisiblePanels] = useState<Set<number>>(new Set())
 
+  // Closing text — IntersectionObserver (stays visible once reached)
+  const closingRef = useRef<HTMLDivElement>(null)
+  const [closingVisible, setClosingVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setClosingVisible(true) },
+      { threshold: 0.2 }
+    )
+    if (closingRef.current) observer.observe(closingRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   useMotionValueEvent(s1Proto.opacity, 'change', v => {
     if (v > 0.5) setVisiblePanels(prev => {
       if (prev.has(1)) return prev
@@ -767,6 +782,44 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           </PrototypeWrapper>
         </motion.div>
 
+        {/* ── CLOSING TEXT ────────────────────────────────────── */}
+        <div
+          ref={closingRef}
+          style={{
+            position: 'absolute',
+            top: '3100px',
+            left: '50%',
+            maxWidth: '680px',
+            textAlign: 'center',
+            zIndex: 10,
+            background: '#F9F8FF',
+            padding: '40px 48px',
+            borderRadius: '20px',
+            opacity: closingVisible ? 1 : 0,
+            transform: closingVisible
+              ? 'translateX(-50%) translateY(0px)'
+              : 'translateX(-50%) translateY(20px)',
+            transition: 'opacity 0.7s ease, transform 0.7s ease',
+          }}
+        >
+          <h3
+            style={{
+              fontFamily: 'var(--font-bricolage)',
+              fontSize: 'clamp(26px, 3vw, 40px)',
+              fontWeight: 700,
+              color: '#0A0A0A',
+              letterSpacing: '-0.035em',
+              lineHeight: 1.1,
+              marginBottom: '24px',
+            }}
+          >
+            All four. Running simultaneously.
+            <br />While your finance team focuses on what actually needs them.
+          </h3>
+          <BookDemoButton className="btn-base btn-primary">
+            Book a demo
+          </BookDemoButton>
+        </div>
 
       </div>
     </>
@@ -787,10 +840,27 @@ export default function FinancialPage() {
   }, [])
 
   const sectionRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  })
+  const scrollYProgress = useMotionValue(0)
+
+  useEffect(() => {
+    const update = () => {
+      const el = sectionRef.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      // progress = 0 when section top hits viewport bottom (section just entering)
+      // progress = 1 when section bottom hits viewport bottom
+      // This matches the thresholds which are calibrated as y_px / SECTION_HEIGHT
+      const progress = (window.innerHeight - rect.top) / el.offsetHeight
+      scrollYProgress.set(Math.max(0, Math.min(1, progress)))
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update, { passive: true })
+    update()
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [scrollYProgress])
 
   return (
     <div>
@@ -798,41 +868,16 @@ export default function FinancialPage() {
       {isMobile ? (
         <MobileFinancialStack />
       ) : (
-        <>
-          <section
-            ref={sectionRef}
-            className="relative w-full"
-            style={{ height: `${SECTION_HEIGHT}px` }}
-          >
-            <ScrollSection sv={scrollYProgress} />
-          </section>
-
-          {/* ── CLOSING — static section below scroll, always visible ── */}
-          <div
-            className="flex flex-col items-center justify-center text-center px-10 py-24"
-            style={{ background: '#F9F8FF' }}
-          >
-            <h3
-              style={{
-                fontFamily: 'var(--font-bricolage)',
-                fontSize: 'clamp(26px, 3vw, 40px)',
-                fontWeight: 700,
-                color: '#0A0A0A',
-                letterSpacing: '-0.035em',
-                lineHeight: 1.1,
-                marginBottom: '24px',
-                maxWidth: '640px',
-              }}
-            >
-              All four. Running simultaneously.
-              <br />While your team focuses on what actually needs them.
-            </h3>
-            <BookDemoButton className="btn-base btn-primary">
-              Book a demo
-            </BookDemoButton>
-          </div>
-        </>
+        <section
+          ref={sectionRef}
+          className="relative w-full"
+          style={{ height: `${SECTION_HEIGHT}px` }}
+        >
+          <ScrollSection sv={scrollYProgress} />
+        </section>
       )}
+      <CTA />
+      <Footer />
     </div>
   )
 }
