@@ -1,51 +1,109 @@
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
+
 export default function AutoSwapVisual() {
+  const [phase, setPhase] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const rafRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    function runCycle() {
+      setPhase(0)
+      setSeconds(0)
+
+      timerRef.current = setTimeout(() => {
+        setPhase(1) // alert visible
+
+        timerRef.current = setTimeout(() => {
+          setPhase(2) // divider draws in
+
+          timerRef.current = setTimeout(() => {
+            setPhase(3) // resolution line visible
+
+            // count 0 → 28
+            const startTime = performance.now()
+            function tick(now: number) {
+              const elapsed = now - startTime
+              const progress = Math.min(elapsed / 600, 1)
+              const eased = 1 - Math.pow(1 - progress, 3)
+              setSeconds(Math.round(eased * 28))
+              if (progress < 1) {
+                rafRef.current = requestAnimationFrame(tick)
+              } else {
+                setSeconds(28)
+                setPhase(4) // final hold
+                timerRef.current = setTimeout(runCycle, 2500)
+              }
+            }
+            rafRef.current = requestAnimationFrame(tick)
+          }, 700)
+        }, 500)
+      }, 300)
+    }
+
+    runCycle()
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
+  const fade = (visible: boolean): React.CSSProperties => ({
+    opacity: visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(6px)',
+    transition: 'opacity 0.4s ease, transform 0.4s ease',
+  })
+
   return (
-    <div className="flex flex-col gap-2 w-[220px]">
-      {/* Trigger */}
-      <div
-        className="rounded-[6px] px-2.5 py-1.5 text-[10px] font-ui text-[#92400E]"
-        style={{ background: '#FEF3C7', border: '1px solid #FDE68A' }}
-      >
-        ⚠ Amanda W. — Called in sick · 06:00–14:00
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '230px' }}>
+      {/* Alert line */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', alignSelf: 'flex-start', ...fade(phase >= 1) }}>
+        <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#F4A261', flexShrink: 0 }} />
+        <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: '#F4A261' }}>
+          6:04 AM — Gap detected
+        </span>
       </div>
 
-      {/* Candidate cards row */}
-      <div className="flex items-center gap-2">
-        {/* Candidate A — top match */}
-        <div
-          className="flex-1 rounded-[8px] px-2.5 py-2 border text-center"
-          style={{ background: 'rgba(107,63,160,0.04)', borderColor: 'rgba(107,63,160,0.14)' }}
-        >
-          <div className="w-6 h-6 rounded-full bg-brand text-white font-mono text-[9px] flex items-center justify-center mx-auto mb-1">
-            SP
-          </div>
-          <p className="font-ui text-[10px] font-semibold text-ink">Sarah P.</p>
-          <p className="font-mono text-[9px] text-[#16A34A]">94% match</p>
-        </div>
+      {/* Divider — draws in */}
+      <div style={{
+        width: phase >= 2 ? '100%' : '0%',
+        height: '1px',
+        background: 'rgba(107,63,160,0.10)',
+        transition: 'width 0.5s ease',
+        margin: '10px 0',
+      }} />
 
-        {/* Arrow */}
-        <div className="flex-shrink-0 flex items-center justify-center">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="#6B3FA0" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-        </div>
-
-        {/* Candidate B */}
-        <div
-          className="flex-1 rounded-[8px] px-2.5 py-2 border text-center"
-          style={{ background: '#FAFAFA', borderColor: 'rgba(107,63,160,0.08)' }}
-        >
-          <div className="w-6 h-6 rounded-full bg-[#D1FAE5] text-[#065F46] font-mono text-[9px] flex items-center justify-center mx-auto mb-1">
-            JK
-          </div>
-          <p className="font-ui text-[10px] font-semibold text-ink3">James K.</p>
-          <p className="font-mono text-[9px] text-ink4">87% match</p>
-        </div>
+      {/* Resolution line */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', alignSelf: 'flex-start', ...fade(phase >= 3) }}>
+        <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16A34A', flexShrink: 0 }} />
+        <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: '#16A34A' }}>
+          6:04:28 AM — Sarah P. confirmed
+        </span>
       </div>
 
-      <p className="font-mono text-[9px] text-ink4 text-center">
-        Confirmed in 28s · No agency needed
-      </p>
+      {/* Fill time — large centrepiece */}
+      <div style={{ marginTop: '16px', textAlign: 'center', ...fade(phase >= 3) }}>
+        <span style={{
+          fontFamily: 'var(--font-geist-mono)',
+          fontWeight: 700,
+          fontSize: '44px',
+          color: '#6B3FA0',
+          letterSpacing: '-0.04em',
+          lineHeight: 1,
+        }}>
+          {seconds}s
+        </span>
+        <p style={{
+          fontFamily: 'var(--font-geist-sans)',
+          fontSize: '10px',
+          color: '#A0A0A0',
+          marginTop: '3px',
+        }}>
+          average fill time
+        </p>
+      </div>
     </div>
   )
 }

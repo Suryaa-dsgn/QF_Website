@@ -1,9 +1,24 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 // Auto Approval panel
-// Shows: Stat row (auto-approved / escalated / avg time) + approval queue table
+// Animation: Jamie L. row shows PROCESSING → AUTO-APR → counter ticks 13 → 14
 
 export default function AutoApprovalPanel() {
+  const [phase, setPhase] = useState(0)
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setPhase(1), 1000),  // Jamie's badge → AUTO-APR
+      setTimeout(() => setPhase(2), 1600),  // Counter 13 → 14
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  const jamieApproved = phase >= 1
+  const approvedCount = phase >= 2 ? '14' : '13'
+
   return (
     <div className="p-4 h-full overflow-hidden font-ui text-ink">
 
@@ -13,21 +28,21 @@ export default function AutoApprovalPanel() {
         <p className="text-[11px] text-ink4">Today · 18 processed · 1 escalated</p>
       </div>
 
-      {/* Stat row */}
+      {/* Stat row — auto-approved counter animates at phase 2 */}
       <div className="grid grid-cols-3 gap-2 mb-3">
         {[
-          { label: 'Auto-Approved', count: '14', bg: '#D1FAE5', color: '#065F46' },
-          { label: 'Escalated',     count: '1',  bg: '#FEF3C7', color: '#92400E' },
-          { label: 'Avg. Time',     count: '3s', bg: '#EDE9FE', color: '#5B21B6' },
+          {
+            label: 'Auto-Approved',
+            count: approvedCount,
+            bg: '#D1FAE5', color: '#065F46',
+          },
+          { label: 'Escalated', count: '1',  bg: '#FEF3C7', color: '#92400E' },
+          { label: 'Avg. Time', count: '3s', bg: '#EDE9FE', color: '#5B21B6' },
         ].map((s) => (
-          <div
-            key={s.label}
-            className="rounded-[8px] p-2.5 text-center"
-            style={{ background: s.bg }}
-          >
+          <div key={s.label} className="rounded-[8px] p-2.5 text-center" style={{ background: s.bg }}>
             <p
               className="text-[18px] font-bold font-mono leading-none mb-0.5"
-              style={{ color: s.color }}
+              style={{ color: s.color, transition: 'opacity 0.3s ease' }}
             >
               {s.count}
             </p>
@@ -47,13 +62,21 @@ export default function AutoApprovalPanel() {
         <span>Decision</span>
       </div>
 
-      {/* Approval rows */}
+      {/* Approval rows — Jamie at top, transitioning at phase 1 */}
       {[
-        { req: 'PTO Apr 12',      staff: 'Amanda W.', type: 'Time Off', decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46' },
-        { req: 'Swap Apr 9 PM',   staff: 'Tom R.',    type: 'Shift',    decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46' },
-        { req: 'OT cover Apr 11', staff: 'Mark S.',   type: 'Overtime', decision: 'ESCALATED', bg: '#FEF3C7', color: '#92400E' },
-        { req: 'PTO Apr 15',      staff: 'Janet F.',  type: 'Time Off', decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46' },
-        { req: 'Swap Apr 14 AM',  staff: 'Derek P.',  type: 'Shift',    decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46' },
+        {
+          req: 'PTO Apr 15',
+          staff: 'Jamie L.',
+          type: 'Time Off',
+          decision: jamieApproved ? 'AUTO-APR'  : 'PROCESSING',
+          bg:       jamieApproved ? '#D1FAE5'   : '#FEF3C7',
+          color:    jamieApproved ? '#065F46'   : '#92400E',
+          isJamie: true,
+        },
+        { req: 'PTO Apr 12',      staff: 'Amanda W.', type: 'Time Off', decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46', isJamie: false },
+        { req: 'Swap Apr 9 PM',   staff: 'Tom R.',    type: 'Shift',    decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46', isJamie: false },
+        { req: 'OT cover Apr 11', staff: 'Mark S.',   type: 'Overtime', decision: 'ESCALATED', bg: '#FEF3C7', color: '#92400E', isJamie: false },
+        { req: 'Swap Apr 14 AM',  staff: 'Derek P.',  type: 'Shift',    decision: 'AUTO-APR',  bg: '#D1FAE5', color: '#065F46', isJamie: false },
       ].map((row, i) => (
         <div
           key={i}
@@ -63,7 +86,14 @@ export default function AutoApprovalPanel() {
           <span className="font-medium text-ink truncate">{row.req}</span>
           <span className="text-ink4 text-[10px]">{row.staff}</span>
           <span className="text-ink4 text-[10px]">{row.type}</span>
-          <span className="status-pill text-[10px]" style={{ background: row.bg, color: row.color }}>
+          <span
+            className="status-pill text-[10px]"
+            style={{
+              background: row.bg,
+              color: row.color,
+              transition: 'background 0.5s ease, color 0.5s ease',
+            }}
+          >
             {row.decision}
           </span>
         </div>

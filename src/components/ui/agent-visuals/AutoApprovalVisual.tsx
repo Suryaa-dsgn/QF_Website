@@ -1,42 +1,83 @@
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
+
 export default function AutoApprovalVisual() {
+  const [phase, setPhase] = useState(0)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    function runCycle() {
+      setPhase(0)
+      timerRef.current = setTimeout(() => {
+        setPhase(1) // time label + request card visible
+        timerRef.current = setTimeout(() => {
+          setPhase(2) // ✓ status line appears inside card
+          timerRef.current = setTimeout(() => {
+            setPhase(3) // "While you were asleep." appears
+            timerRef.current = setTimeout(runCycle, 2000)
+          }, 400)
+        }, 800)
+      }, 300)
+    }
+    runCycle()
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [])
+
+  const fade = (minPhase: number): React.CSSProperties => ({
+    opacity: phase >= minPhase ? 1 : 0,
+    transition: 'opacity 0.4s ease',
+  })
+
   return (
-    <div className="flex flex-col gap-2 w-[220px]">
-      <p className="font-mono text-[10px] text-ink4">Approval Queue</p>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '230px' }}>
+      {/* Time */}
+      <p style={{
+        fontFamily: 'var(--font-geist-mono)',
+        fontSize: '12px',
+        color: '#A0A0A0',
+        ...fade(1),
+      }}>
+        11:47 PM
+      </p>
 
-      {/* Auto-approved */}
-      <div
-        className="rounded-[8px] px-3 py-2 border"
-        style={{ background: '#F0FDF4', borderColor: '#BBF7D0' }}
-      >
-        <div className="flex items-center justify-between gap-2">
-          <p className="font-ui text-[11px] font-semibold text-ink leading-tight">
-            Jamie L. — Time off Apr 15
-          </p>
-          <span className="font-mono text-[9px] text-[#16A34A] bg-[#D1FAE5] px-1.5 py-0.5 rounded flex-shrink-0">
-            AUTO
-          </span>
-        </div>
-        <p className="font-ui text-[10px] text-ink4 mt-0.5">No conflicts · Policy clear · ✓ Approved</p>
+      {/* Request card */}
+      <div style={{
+        background: '#FFFFFF',
+        border: '1px solid rgba(107,63,160,0.08)',
+        borderRadius: '10px',
+        padding: '12px 14px',
+        width: '100%',
+        ...fade(1),
+      }}>
+        <p style={{
+          fontFamily: 'var(--font-geist-sans)',
+          fontWeight: 600,
+          fontSize: '12px',
+          color: '#0A0A0A',
+          marginBottom: '6px',
+        }}>
+          Jamie L. — Time off Apr 15
+        </p>
+        <p style={{
+          fontFamily: 'var(--font-geist-mono)',
+          fontSize: '11px',
+          color: '#16A34A',
+          ...fade(2),
+        }}>
+          ✓ Auto-approved. Policy clear.
+        </p>
       </div>
 
-      {/* Escalated */}
-      <div
-        className="rounded-[8px] px-3 py-2 border"
-        style={{ background: '#FFFBEB', borderColor: '#FDE68A' }}
-      >
-        <div className="flex items-center justify-between gap-2">
-          <p className="font-ui text-[11px] font-semibold text-ink leading-tight">
-            David M. — Overtime request
-          </p>
-          <span className="font-mono text-[9px] text-[#92400E] bg-[#FEF3C7] px-1.5 py-0.5 rounded flex-shrink-0">
-            ESC
-          </span>
-        </div>
-        <p className="font-ui text-[10px] text-ink4 mt-0.5">OT limit exceeded · Sent to manager</p>
-      </div>
-
-      <p className="font-mono text-[9px] text-ink4 text-right">
-        16 auto-resolved today · 2 escalated
+      {/* Night label */}
+      <p style={{
+        fontFamily: 'var(--font-geist-sans)',
+        fontSize: '11px',
+        color: '#A0A0A0',
+        fontStyle: 'italic',
+        ...fade(3),
+      }}>
+        While you were asleep.
       </p>
     </div>
   )

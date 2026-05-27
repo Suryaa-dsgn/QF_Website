@@ -1,35 +1,100 @@
-const providers = [
-  { name: 'Dr. Rogers', cred: 'MD Licence (PA)',   expires: 'Jun 2026', status: 'CURRENT',  bg: '#D1FAE5', color: '#065F46', expiring: false },
-  { name: 'Dr. Patel',  cred: 'DEA Registration',  expires: '11 days',  status: 'EXPIRING', bg: '#FEF3C7', color: '#92400E', expiring: true  },
-  { name: 'Dr. Chen',   cred: 'Board Cert',         expires: 'Dec 2025', status: 'CURRENT',  bg: '#D1FAE5', color: '#065F46', expiring: false },
-]
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
 
 export default function CredentialingVisual() {
-  return (
-    <div className="flex flex-col gap-1.5 w-[230px]">
-      <p className="font-mono text-[10px] text-ink4 mb-0.5">Provider Credentials — 48 providers</p>
+  const [days, setDays] = useState(30)
+  const [showRenewal, setShowRenewal] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const rafRef = useRef<number | null>(null)
 
-      {providers.map((row) => (
-        <div
-          key={row.name}
-          className="flex items-center justify-between bg-white rounded-[6px] px-2.5 py-1.5 border"
-          style={{ borderColor: row.expiring ? '#FDE68A' : 'rgba(107,63,160,0.07)' }}
-        >
-          <div>
-            <p className="font-ui text-[10px] font-semibold text-ink">{row.name}</p>
-            <p className="font-mono text-[9px] text-ink4">{row.cred}</p>
-          </div>
-          <div className="text-right">
-            <span
-              className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded-[4px] block"
-              style={{ background: row.bg, color: row.color }}
-            >
-              {row.status}
-            </span>
-            <p className="font-mono text-[9px] text-ink4 mt-0.5">{row.expires}</p>
-          </div>
-        </div>
-      ))}
+  useEffect(() => {
+    function runCycle() {
+      setDays(30)
+      setShowRenewal(false)
+
+      timerRef.current = setTimeout(() => {
+        const startTime = performance.now()
+        const duration = 1700
+
+        function countDown(now: number) {
+          const elapsed = now - startTime
+          const progress = Math.min(elapsed / duration, 1)
+          const eased = 1 - Math.pow(1 - progress, 3)
+          const current = Math.round(30 - eased * 19) // 30 → 11
+          setDays(current)
+
+          if (progress < 1) {
+            rafRef.current = requestAnimationFrame(countDown)
+          } else {
+            setDays(11)
+            timerRef.current = setTimeout(() => {
+              setShowRenewal(true)
+              timerRef.current = setTimeout(runCycle, 2300)
+            }, 200)
+          }
+        }
+        rafRef.current = requestAnimationFrame(countDown)
+      }, 400)
+    }
+
+    runCycle()
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', width: '200px' }}>
+      <p style={{
+        fontFamily: 'var(--font-geist-sans)',
+        fontWeight: 600,
+        fontSize: '18px',
+        color: '#0A0A0A',
+        letterSpacing: '-0.01em',
+      }}>
+        Dr. Patel
+      </p>
+      <p style={{
+        fontFamily: 'var(--font-geist-sans)',
+        fontSize: '11px',
+        color: '#6B6B6B',
+        marginBottom: '10px',
+      }}>
+        DEA Registration
+      </p>
+
+      <span style={{
+        fontFamily: 'var(--font-geist-mono)',
+        fontWeight: 700,
+        fontSize: '48px',
+        color: '#F4A261',
+        letterSpacing: '-0.04em',
+        lineHeight: 1,
+      }}>
+        {days}
+      </span>
+      <p style={{
+        fontFamily: 'var(--font-geist-sans)',
+        fontSize: '10px',
+        color: '#A0A0A0',
+        marginBottom: '10px',
+      }}>
+        days to expiry
+      </p>
+
+      <p style={{
+        fontFamily: 'var(--font-geist-mono)',
+        fontSize: '10px',
+        color: '#16A34A',
+        opacity: showRenewal ? 1 : 0,
+        transform: showRenewal ? 'translateY(0)' : 'translateY(6px)',
+        transition: 'opacity 0.4s ease, transform 0.4s ease',
+        letterSpacing: '0.01em',
+      }}>
+        ✓ Renewal initiated automatically
+      </p>
     </div>
   )
 }
