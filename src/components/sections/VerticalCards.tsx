@@ -60,7 +60,7 @@ function VerticalCard({
   return (
     <div
       ref={ref}
-      className="bg-white rounded-[16px] p-9 border border-[--border] flex flex-col"
+      className="bg-white rounded-[16px] p-6 border border-[--border] flex flex-col"
       style={{
         transition: 'transform 250ms ease-out, border-color 250ms ease-out, box-shadow 250ms ease-out',
       }}
@@ -77,9 +77,9 @@ function VerticalCard({
         t.style.boxShadow = 'none'
       }}
     >
-      {/* Vertical pill */}
+      {/* Pill */}
       <span
-        className="inline-block self-start text-[10px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full mb-5"
+        className="inline-block self-start text-[10px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full mb-4"
         style={{ color: pillColor, background: pillBg, border: `1px solid ${pillBorder}` }}
       >
         {pillLabel}
@@ -87,39 +87,29 @@ function VerticalCard({
 
       {/* Headline */}
       <h3
-        className="font-display font-bold text-ink mb-3"
-        style={{ fontSize: '22px', letterSpacing: '-0.025em', lineHeight: '1.2' }}
+        className="font-display font-bold text-ink mb-2"
+        style={{ fontSize: '19px', letterSpacing: '-0.025em', lineHeight: '1.25' }}
       >
-        {headline.map((line, i) => (
-          <span key={i}>
-            {line}
-            {i < headline.length - 1 && <br />}
-          </span>
-        ))}
+        {headline.join(' ')}
       </h3>
 
-      {/* One-liner body */}
+      {/* Body */}
       <p
-        className="text-ink3 font-ui mb-5"
-        style={{ fontSize: '15px', lineHeight: '1.65', maxWidth: '340px' }}
+        className="text-ink3 font-ui mb-4"
+        style={{ fontSize: '13px', lineHeight: '1.6' }}
       >
-        {body.map((line, i) => (
-          <span key={i}>
-            {line}
-            {i < body.length - 1 && <br />}
-          </span>
-        ))}
+        {body.join(' ')}
       </p>
 
       {/* Divider */}
-      <div className="border-t border-[rgba(107,63,160,0.07)] mb-5" />
+      <div className="border-t border-[rgba(107,63,160,0.07)] mb-4" />
 
       {/* Capability chips */}
-      <div className="flex flex-wrap gap-1.5 mb-6">
+      <div className="flex flex-wrap gap-1.5 mb-5">
         {chips.map(chip => (
           <span
             key={chip.label}
-            className="text-[12px] font-medium font-ui px-2.5 py-1 rounded-[6px]"
+            className="text-[11px] font-medium font-ui px-2 py-[3px] rounded-[5px]"
             style={{
               color: '#3D3D3D',
               background: '#F5F5F7',
@@ -131,16 +121,16 @@ function VerticalCard({
         ))}
       </div>
 
-      {/* Bottom row — agent count + CTA link */}
-      <div className="flex items-center justify-between mt-auto pt-2">
-        <span className="font-mono text-[13px] text-ink4">{agentCount}</span>
+      {/* Bottom row */}
+      <div className="flex items-center justify-between mt-auto pt-1">
+        <span className="font-mono text-[12px] text-ink4">{agentCount}</span>
         <Link
           href={ctaHref}
-          className="flex items-center gap-1.5 text-[14px] font-medium text-brand font-ui group"
+          className="flex items-center gap-1.5 text-[13px] font-medium text-brand font-ui group"
         >
           {ctaLabel}
           <ArrowRight
-            size={13}
+            size={12}
             className="group-hover:translate-x-1 transition-transform duration-150"
           />
         </Link>
@@ -185,7 +175,7 @@ export default function VerticalCards() {
         {/* Label */}
         <p className="text-label text-center mb-4">OUR SOLUTIONS</p>
 
-        {/* Headline — no colour accent, structural statement */}
+        {/* Headline */}
         <h2
           ref={headlineRef}
           className="font-display font-bold text-ink text-center mx-auto mb-12"
@@ -196,35 +186,30 @@ export default function VerticalCards() {
             maxWidth: '820px',
           }}
         >
-          One platform. Two operational verticals.{' '}
+          One platform. Three agent suites.{' '}
           <br className="hidden md:block" />
           Everything connected.
         </h2>
 
-        {/* Two cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Three cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
           <VerticalCard
             pillLabel="Workforce Operations"
             pillColor="#0284C7"
             pillBg="rgba(2,132,199,0.08)"
             pillBorder="rgba(2,132,199,0.15)"
-            headline={[
-              "Your coordinators shouldn't spend",
-              'their mornings on the phone.',
-            ]}
-            body={[
-              'Seven agents that handle every shift, credential,',
-              "and staffing decision — so your team doesn't have to.",
-            ]}
+            headline={["Your coordinators shouldn't spend their mornings on the phone."]}
+            body={["Eight agents handling every shift, schedule, and staffing decision — so your team doesn't have to."]}
             chips={[
-              { label: 'Shift Coverage' },
-              { label: 'Credentialing' },
-              { label: 'Auto-Approval' },
+              { label: 'Schedule Optimizer' },
+              { label: 'Referral Intake' },
+              { label: 'Call-Off Management' },
+              { label: 'Auto Approval' },
+              { label: 'Capacity Planner' },
               { label: 'Visit Verification' },
-              { label: 'Burnout Prevention' },
             ]}
-            agentCount="7 agents"
+            agentCount="8 agents"
             ctaLabel="Explore Workforce"
             ctaHref="/workforce"
             delay={0}
@@ -235,24 +220,36 @@ export default function VerticalCards() {
             pillColor="#059669"
             pillBg="rgba(5,150,105,0.08)"
             pillBorder="rgba(5,150,105,0.15)"
-            headline={[
-              "Your AR team shouldn't be",
-              'your reconciliation team.',
-            ]}
-            body={[
-              'Four agents across your full receivables stack —',
-              'matching, collecting, and enforcing contracts automatically.',
-            ]}
+            headline={["Your AR team shouldn't be your reconciliation team."]}
+            body={["Four agents across your full receivables stack — matching, collecting, and recovering revenue automatically."]}
             chips={[
               { label: 'AP/AR Matching' },
               { label: 'Payment Collection' },
-              { label: 'Contract Compliance' },
-              { label: 'Deal Qualification' },
+              { label: 'Revenue Cycle Mgmt' },
+              { label: 'REIT Deal Qualifier' },
             ]}
             agentCount="4 agents"
             ctaLabel="Explore Financial"
             ctaHref="/financial"
             delay={0.08}
+          />
+
+          <VerticalCard
+            pillLabel="Compliance Agents"
+            pillColor="#0891B2"
+            pillBg="rgba(8,145,178,0.08)"
+            pillBorder="rgba(8,145,178,0.15)"
+            headline={["Your compliance gaps don't wait for your team."]}
+            body={["Three agents running credentialing, claims checks, and contract audits — around the clock."]}
+            chips={[
+              { label: 'Provider Credentialing' },
+              { label: 'Claims Compliance' },
+              { label: 'Contract Compliance' },
+            ]}
+            agentCount="3 agents"
+            ctaLabel="Explore Compliance"
+            ctaHref="/compliance"
+            delay={0.16}
           />
 
         </div>

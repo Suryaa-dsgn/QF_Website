@@ -197,22 +197,23 @@ export default function ProofRow() {
 
         </div>
 
-        {/* ── Row 2: Wide testimonial | Narrow stat ── */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 items-stretch">
+        {/* ── Row 2: Two new stat cards ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
 
-          {/* TODO: Replace with verified client testimonial when available */}
-          <TestimonialCard
-            quote="We had people doing reconciliation work that shouldn't have required people at all. That's the part that changed first — and fastest."
-            name="James T."
-            role="VP Finance, Logistics Company"
+          <StatBlock
+            value={2500}
+            suffix="+"
+            label="ANNUAL HOURS RECLAIMED"
+            comparison="Coordinator and compliance hours saved per mid-market agency annually — across scheduling, call-offs, intake, and provider credentialing."
+            delta="↑ ~1.2 FTE equivalent reclaimed per deployment"
           />
 
           <StatBlock
-            value={72}
-            suffix="hr"
-            label="DEPLOYMENT TARGET"
-            comparison="From contract to first live agent — for standard integration environments."
-            delta="No rip-and-replace required"
+            value={96}
+            suffix="%"
+            label="PRE-SUBMISSION CATCH RATE"
+            comparison="Of billing modifier conflicts and claim code errors flagged before payer submission by the Claims Compliance agent."
+            delta="↓ 4.2-min avg correction vs. 14-day payer denial cycle"
           />
 
         </div>
