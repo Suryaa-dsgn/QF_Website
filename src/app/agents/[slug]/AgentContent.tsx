@@ -373,7 +373,7 @@ function AgentHowItWorks({ agent }: { agent: Agent }) {
             className="font-display font-bold text-ink"
             style={{ fontSize: 'clamp(24px, 3vw, 38px)', letterSpacing: '-0.03em', lineHeight: '1.1' }}
           >
-            From connection to live in 72 hours
+            From connection to live in under 100 hours
           </h2>
         </div>
 

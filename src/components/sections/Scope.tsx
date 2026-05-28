@@ -7,12 +7,13 @@ import { cn } from '@/lib/utils'
 
 interface ScopeStatProps {
   value: number
+  prefix?: string
   suffix: string
   descriptor: string
   duration?: number
 }
 
-function ScopeStat({ value, suffix, descriptor, duration = 1.8 }: ScopeStatProps) {
+function ScopeStat({ value, prefix, suffix, descriptor, duration = 1.8 }: ScopeStatProps) {
   const [displayValue, setDisplayValue] = useState('0')
   const [hasStarted, setHasStarted]     = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -65,6 +66,9 @@ function ScopeStat({ value, suffix, descriptor, duration = 1.8 }: ScopeStatProps
     <div ref={ref} className="flex flex-col items-center text-center px-8">
       {/* Giant Geist Mono number */}
       <div className="text-data-xl text-white leading-none mb-3">
+        {prefix && (
+          <span className="text-white/40 mr-0.5" style={{ fontSize: '55%' }}>{prefix}</span>
+        )}
         {displayValue}
         {/* Suffix — smaller, muted */}
         <span className="text-white/40 ml-0.5" style={{ fontSize: '45%' }}>
@@ -155,7 +159,8 @@ export default function Scope() {
 
           <div className="py-10 lg:py-16">
             <ScopeStat
-              value={72}
+              value={100}
+              prefix="<"
               suffix="hr"
               descriptor="from contract to first agent live"
               duration={1.4}

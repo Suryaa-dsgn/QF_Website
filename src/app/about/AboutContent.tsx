@@ -9,7 +9,7 @@ const EASE = [0.16, 1, 0.3, 1] as const
 
 const stats = [
   { value: '30+',  label: 'AI agents configured' },
-  { value: '72hr', label: 'Average time to live'  },
+  { value: '<100hr', label: 'Average time to live'  },
   { value: '15+',  label: 'Industries served'     },
 ]
 
@@ -24,7 +24,7 @@ const values = [
     icon: Zap,
     title: 'Speed over process',
     description:
-      "Operations don't pause for onboarding. Standard environments go live in 72 hours — no consultants, no scripting phase, no project team required.",
+      "Operations don't pause for onboarding. Standard environments go live in under 100 hours — no consultants, no scripting phase, no project team required.",
   },
   {
     icon: Users,
@@ -522,7 +522,7 @@ function CTASection() {
               className="font-ui"
               style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}
             >
-              No credit card required &nbsp;·&nbsp; First agent live within 72 hours
+              No credit card required &nbsp;·&nbsp; First agent live in under 100 hours
             </p>
 
           </div>

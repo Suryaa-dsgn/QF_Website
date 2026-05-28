@@ -92,7 +92,7 @@ export default function CTA() {
           >
             <span className="text-[12px] text-ink4 font-ui">✓ No credit card required</span>
             <span className="hidden sm:block w-px h-3 bg-[--border]" />
-            <span className="text-[12px] text-ink4 font-ui">✓ First agent live within 72 hours</span>
+            <span className="text-[12px] text-ink4 font-ui">✓ First agent live in under 100 hours</span>
             <span className="hidden sm:block w-px h-3 bg-[--border]" />
             <a
               href="tel:6782670106"
