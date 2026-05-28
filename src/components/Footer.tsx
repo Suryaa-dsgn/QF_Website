@@ -3,30 +3,27 @@
 // ─── NAV DATA ─────────────────────────────────────────────────────
 
 const platformLinks = [
-  { label: 'How It Works',       href: '/#how-it-works'                },
-  { label: 'Workforce Agents',   href: '/workforce'                    },
-  { label: 'Financial Agents',   href: '/financial'                    },
-  { label: 'Compliance Agents',  href: '/compliance'                   },
-  { label: 'Industries',         href: '/industries'                   },
-  { label: 'Pricing',            href: '/pricing'                      },
+  { label: 'How It Works',      href: '/how-it-works' },
+  { label: 'Workforce Agents',  href: '/workforce'    },
+  { label: 'Financial Agents',  href: '/financial'    },
+  { label: 'Compliance Agents', href: '/compliance'   },
+  { label: 'Contact',           href: '/contact'      },
 ]
 
 const industryLinks = [
-  { label: 'Healthcare',           href: '/industries/hospitals'         },
-  { label: 'Finance & Real Estate', href: '/industries/reits'            },
-  { label: 'Logistics & Ops',      href: '/industries/logistics'         },
-  { label: 'Home Health',          href: '/industries/home-health'       },
-  { label: 'Staffing Agencies',    href: '/industries/staffing-agencies' },
+  { label: 'Healthcare',            href: '/industries/home-health' },
+  { label: 'Finance & Real Estate', href: '/industries/reits'       },
+  { label: 'Logistics & Ops',       href: '/industries/logistics'   },
+  { label: 'Home Health',           href: '/industries/home-health' },
+  { label: 'Staffing Agencies',     href: '/industries/logistics'   },
 ]
 
 const companyLinks = [
-  { label: 'About',            href: '/about'   },
-  { label: 'Blog',             href: '/blog'    },
-  { label: 'Careers',         href: '/careers' },
-  { label: 'Contact',          href: '/contact' },
-  { label: 'Talk to an Expert',      href: '/contact' },
-  { label: 'Privacy Policy',   href: '/privacy' },
-  { label: 'Terms of Service', href: '/terms'   },
+  { label: 'About',             href: '/about'   },
+  { label: 'Contact',           href: '/contact' },
+  { label: 'Talk to an Expert', href: '/contact' },
+  { label: 'Privacy Policy',    href: '/privacy' },
+  { label: 'Terms of Service',  href: '/terms'   },
 ]
 
 // ─── LOGO MARK ────────────────────────────────────────────────────
