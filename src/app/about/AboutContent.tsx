@@ -513,7 +513,7 @@ function CTASection() {
                   fontWeight: 600,
                 }}
               >
-                Book a 20-min demo →
+                Talk to an Expert →
               </button>
             </div>
 

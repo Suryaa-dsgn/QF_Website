@@ -1,8 +1,6 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import BookDemoButton from '@/components/BookDemoButton'
 
 const FADE_UP = {
@@ -59,13 +57,13 @@ export default function CTA() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            Book a 20-minute call. We&apos;ll show you three agents working
+            Talk to an expert in 20 minutes. We&apos;ll show you three agents working
             in scenarios that match your actual operations.
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTA */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-7"
+            className="flex items-center justify-center mb-7"
             variants={FADE_UP}
             initial="hidden"
             whileInView="visible"
@@ -73,12 +71,8 @@ export default function CTA() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <BookDemoButton className="btn-base btn-primary">
-              Book a demo
+              Talk to an Expert
             </BookDemoButton>
-            <Link href="/contact" className="btn-base btn-ghost group">
-              Talk to sales
-              <ArrowRight size={14} className="arrow-icon text-ink3 group-hover:text-ink" />
-            </Link>
           </motion.div>
 
           {/* Trust pills */}

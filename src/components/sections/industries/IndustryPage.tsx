@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -238,12 +238,8 @@ export default function IndustryPage({ config }: { config: IndustryPageConfig })
               {config.subtext}
             </p>
 
-            <div className="flex items-center justify-center gap-4 flex-wrap">
-              <BookDemoButton className="btn-base btn-primary">Book a demo</BookDemoButton>
-              <Link href="/contact" className="flex items-center gap-1.5 text-[14px] font-medium text-ink3 hover:text-ink transition-colors group">
-                Talk to sales
-                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-150" />
-              </Link>
+            <div className="flex items-center justify-center">
+              <BookDemoButton className="btn-base btn-primary">Talk to an Expert</BookDemoButton>
             </div>
           </motion.div>
         </div>

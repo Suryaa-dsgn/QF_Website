@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -309,7 +309,7 @@ function MobileDrawer({
                 Sign in
               </Link>
               <BookDemoButton className="btn-base btn-primary w-full text-center">
-                Book a demo
+                Talk to an Expert
               </BookDemoButton>
             </div>
           </motion.div>
@@ -421,7 +421,7 @@ export default function Navigation() {
               Sign in
             </Link>
             <BookDemoButton className="btn-base btn-primary !py-[9px] !px-[18px] !text-[14px]">
-              Book a demo
+              Talk to an Expert
             </BookDemoButton>
           </div>
 

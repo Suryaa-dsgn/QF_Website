@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -183,7 +183,7 @@ export default function DemoModal() {
             {step < 3 && (
               <div className="flex items-start justify-between px-8 pt-7">
                 <div>
-                  <p className="text-label mb-1">BOOK A DEMO</p>
+                  <p className="text-label mb-1">Talk to an Expert</p>
                   <p className="text-[12px] text-ink4 font-ui">
                     Step {step} of 2 — {step === 1 ? 'Your details' : 'What to show you'}
                   </p>

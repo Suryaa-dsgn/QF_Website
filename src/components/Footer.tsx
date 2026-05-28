@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 // ─── NAV DATA ─────────────────────────────────────────────────────
 
@@ -24,7 +24,7 @@ const companyLinks = [
   { label: 'Blog',             href: '/blog'    },
   { label: 'Careers',         href: '/careers' },
   { label: 'Contact',          href: '/contact' },
-  { label: 'Book a Demo',      href: '/contact' },
+  { label: 'Talk to an Expert',      href: '/contact' },
   { label: 'Privacy Policy',   href: '/privacy' },
   { label: 'Terms of Service', href: '/terms'   },
 ]

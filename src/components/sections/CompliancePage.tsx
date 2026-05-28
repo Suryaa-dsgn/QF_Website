@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useRef } from 'react'
 import {
@@ -336,7 +336,7 @@ function MobileComplianceStack() {
         >
           All three. Running around the clock.
         </h3>
-        <BookDemoButton className="btn-base btn-primary">Book a demo</BookDemoButton>
+        <BookDemoButton className="btn-base btn-primary">Talk to an Expert</BookDemoButton>
       </div>
     </div>
   )
@@ -426,7 +426,7 @@ function Hero() {
         {/* CTAs */}
         <div className="hero-animate flex items-center justify-center gap-3 flex-wrap">
           <BookDemoButton className="btn-base btn-primary">
-            Book a demo
+            Talk to an Expert
           </BookDemoButton>
           <Link href="/workforce" className="btn-base btn-ghost group">
             Explore Workforce <span className="arrow-icon">→</span>
@@ -760,7 +760,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             <br />While your compliance team focuses on exceptions.
           </h3>
           <BookDemoButton className="btn-base btn-primary">
-            Book a demo
+            Talk to an Expert
           </BookDemoButton>
         </div>
 

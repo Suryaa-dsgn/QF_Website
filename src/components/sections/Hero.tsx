@@ -213,7 +213,7 @@ export default function Hero() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-start gap-3">
               <BookDemoButton className="hero-cta-primary btn-base btn-primary">
-                Book a 20-min demo
+                Talk to an Expert
               </BookDemoButton>
               <BookDemoButton className="hero-cta-ghost btn-base btn-ghost group">
                 Watch it run

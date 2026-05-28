@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
@@ -272,7 +272,7 @@ export default function WorkforceAgents() {
           your workforce operations.
         </p>
         <div className="flex items-center justify-center gap-3">
-          <Link href="/demo" className="btn-base btn-primary">Book a demo</Link>
+          <Link href="/demo" className="btn-base btn-primary">Talk to an Expert</Link>
           <Link href="/workforce" className="btn-base btn-ghost group">
             See all agents
             <ArrowRight size={14} className="arrow-icon text-ink3 group-hover:text-ink" />

@@ -223,7 +223,7 @@ function AgentHero({ agent }: { agent: Agent }) {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-start gap-3">
               <BookDemoButton className="btn-base btn-primary">
-                Book a demo
+                Talk to an Expert
               </BookDemoButton>
               <Link href="#how-it-works" className="btn-base btn-ghost group">
                 See how it works

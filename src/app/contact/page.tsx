@@ -207,7 +207,7 @@ export default function ContactPage() {
                     20 minutes, no prep needed, tailored to your actual operations.
                   </p>
                   <BookDemoButton className="btn-base btn-primary w-full text-center">
-                    Book a 20-min demo →
+                    Talk to an Expert →
                   </BookDemoButton>
                 </div>
 

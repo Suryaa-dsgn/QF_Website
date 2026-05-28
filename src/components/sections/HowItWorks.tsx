@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -743,7 +743,7 @@ export default function HowItWorks({ extended = false }: HowItWorksProps) {
                 From contract signed to first agent live: under 100 hours.
               </p>
               <BookDemoButton className="btn-base btn-primary flex-shrink-0">
-                Book a demo
+                Talk to an Expert
               </BookDemoButton>
             </div>
           </div>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -155,7 +155,7 @@ export default function FinancialAgents() {
           Invoice matching, collections, contract enforcement, and deal screening — all automated.
         </p>
         <div className="flex items-center justify-center gap-3">
-          <Link href="/demo" className="btn-base btn-primary">Book a demo</Link>
+          <Link href="/demo" className="btn-base btn-primary">Talk to an Expert</Link>
           <Link href="/financial" className="btn-base btn-ghost group">
             See all agents
             <ArrowRight size={14} className="arrow-icon text-ink3 group-hover:text-ink" />
