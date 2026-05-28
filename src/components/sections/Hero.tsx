@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import HeroPanel from '@/components/ui/HeroPanel'
+import HeroDashboard from '@/components/ui/HeroDashboard'
 import BookDemoButton from '@/components/BookDemoButton'
 
 // ─── ROTATING PHRASES ─────────────────────────────────────────────
@@ -154,11 +154,11 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="min-h-[calc(100vh-60px)] flex flex-col justify-center pt-[60px]"
+      className="min-h-[calc(100vh-60px)] flex flex-col justify-center pt-[60px] overflow-x-clip"
     >
       {/* ── Main grid ── */}
-      <div className="max-w-[1120px] mx-auto w-full px-10 pt-6 pb-0">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <div className="max-w-[1280px] mx-auto w-full px-10 pt-6 pb-0">
+        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-6 items-center">
 
           {/* ── LEFT: Text content ── */}
           <div className="flex flex-col">
@@ -226,17 +226,19 @@ export default function Hero() {
 
           </div>
 
-          {/* ── RIGHT: Live ops panel ── */}
-          {/* Panel hidden entirely on xs, truncated on sm–md, full on lg+ */}
-          <div className="hero-panel-wrapper hidden sm:block lg:block">
-            <HeroPanel />
+          {/* ── RIGHT: Dashboard panel ── */}
+          {/* Hidden on mobile, visible on lg+ — bleeds past right edge intentionally */}
+          <div className="hero-panel-wrapper hidden lg:block">
+            <div className="lg:translate-x-8 xl:translate-x-14">
+              <HeroDashboard />
+            </div>
           </div>
 
         </div>
       </div>
 
       {/* ── Trust bar ── */}
-      <div className="max-w-[1120px] mx-auto w-full px-10">
+      <div className="max-w-[1280px] mx-auto w-full px-10">
         <TrustBar />
       </div>
     </section>
