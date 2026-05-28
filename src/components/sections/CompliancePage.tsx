@@ -247,12 +247,14 @@ const MOBILE_STEPS = [
 
 function MobileComplianceStack() {
   return (
-    <div className="section-container py-20">
-      <div className="mb-14 text-center">
+    <div style={{ padding: '56px 20px 0', maxWidth: '560px', margin: '0 auto' }}>
+
+      {/* Section header */}
+      <div style={{ marginBottom: '40px', textAlign: 'center' }}>
         <h2
           style={{
             fontFamily: 'var(--font-bricolage)',
-            fontSize: 'clamp(26px, 5vw, 38px)',
+            fontSize: 'clamp(28px, 7vw, 40px)',
             fontWeight: 700,
             color: '#0A0A0A',
             letterSpacing: '-0.035em',
@@ -267,42 +269,52 @@ function MobileComplianceStack() {
           style={{
             fontFamily: 'var(--font-geist-sans)',
             fontSize: '15px',
-            color: '#6B6B6B',
+            color: '#6B7280',
             lineHeight: 1.7,
-            maxWidth: '380px',
-            margin: '0 auto',
           }}
         >
           From credentialing to contract terms — every agent, every check.
         </p>
       </div>
 
-      <div className="flex flex-col gap-16">
+      {/* Step cards */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
         {MOBILE_STEPS.map(({ index, slug, label, Panel, desc }) => (
-          <div key={slug}>
-            <div className="mb-4">
-              <AgentStepMarker label={label} index={index} align="left" />
-            </div>
+          <div
+            key={slug}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid rgba(8,145,178,0.10)',
+              borderRadius: '20px',
+              padding: '28px 24px',
+              boxShadow: '0 2px 12px rgba(8,145,178,0.06)',
+            }}
+          >
+            {/* Agent pill — AgentStepMarker already renders the "Agent 01" label above the pill */}
+            <AgentStepMarker label={label} index={index} align="left" />
+
+            {/* Description */}
             <p
               style={{
                 fontFamily: 'var(--font-geist-sans)',
-                fontSize: '15px',
-                color: '#6B6B6B',
+                fontSize: '14px',
+                color: '#6B7280',
                 lineHeight: 1.75,
-                marginBottom: '20px',
-                maxWidth: '400px',
+                margin: '20px 0 24px',
               }}
             >
               {desc}
             </p>
+
+            {/* Animated panel — full 460px height matches desktop; loops continuously */}
             <div
               style={{
                 width: '100%',
-                height: '280px',
-                background: '#FFFFFF',
-                borderRadius: '16px',
+                height: '520px',
+                borderRadius: '12px',
                 overflow: 'hidden',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)',
+                border: '1px solid rgba(8,145,178,0.08)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
               }}
             >
               <div className="browser-chrome">
@@ -321,22 +333,44 @@ function MobileComplianceStack() {
         ))}
       </div>
 
-      <div className="text-center mt-20">
+      {/* Closing CTA card */}
+      <div
+        style={{
+          marginTop: '24px',
+          marginBottom: '64px',
+          padding: '40px 28px',
+          background: '#0A0A0A',
+          borderRadius: '20px',
+          textAlign: 'center',
+        }}
+      >
         <h3
           style={{
             fontFamily: 'var(--font-bricolage)',
-            fontSize: 'clamp(22px, 4vw, 34px)',
+            fontSize: 'clamp(24px, 6vw, 32px)',
             fontWeight: 700,
-            color: '#0A0A0A',
-            letterSpacing: '-0.035em',
+            color: '#FFFFFF',
+            letterSpacing: '-0.03em',
             lineHeight: 1.1,
-            marginBottom: '20px',
+            marginBottom: '10px',
           }}
         >
           All three. Running around the clock.
         </h3>
+        <p
+          style={{
+            fontFamily: 'var(--font-geist-sans)',
+            fontSize: '14px',
+            color: 'rgba(255,255,255,0.5)',
+            lineHeight: 1.65,
+            marginBottom: '24px',
+          }}
+        >
+          While your compliance team focuses on exceptions.
+        </p>
         <BookDemoButton className="btn-base btn-primary">Talk to an Expert</BookDemoButton>
       </div>
+
     </div>
   )
 }
@@ -773,14 +807,6 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
 // ════════════════════════════════════════════════════════════════
 
 export default function CompliancePage() {
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024)
-    check()
-    window.addEventListener('resize', check, { passive: true })
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
   const sectionRef = useRef<HTMLElement>(null)
   const scrollYProgress = useMotionValue(0)
 
@@ -807,17 +833,21 @@ export default function CompliancePage() {
   return (
     <div>
       <Hero />
-      {isMobile ? (
+
+      {/* Mobile layout — visible below lg, hidden on desktop */}
+      <div className="block lg:hidden">
         <MobileComplianceStack />
-      ) : (
-        <section
-          ref={sectionRef}
-          className="relative w-full"
-          style={{ height: `${SECTION_HEIGHT}px` }}
-        >
-          <ScrollSection sv={scrollYProgress} />
-        </section>
-      )}
+      </div>
+
+      {/* Desktop scroll section — hidden below lg (display:none collapses the height) */}
+      <section
+        ref={sectionRef}
+        className="hidden lg:block relative w-full"
+        style={{ height: `${SECTION_HEIGHT}px` }}
+      >
+        <ScrollSection sv={scrollYProgress} />
+      </section>
+
       <Footer />
     </div>
   )
