@@ -12,7 +12,8 @@
       "Bash(Write-Output \"data + sections done\")",
       "Bash(npm run *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\SURYAKANTA JENA\\\\Desktop\\\\quickflows-web\\\\src\\\\app\" -Recurse -Directory)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Path . -Type Directory)"
     ]
   }
 }

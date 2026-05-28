@@ -4,10 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import {
-  Home, Heart, Users, Building2, Plane,
-  Truck, Factory, ShoppingBag, GraduationCap, Coffee,
-  Activity, Landmark, Package, Laptop, Briefcase,
-  ArrowRight,
+  Building2, Activity, ArrowRight,
+  Calendar, AlertCircle, MapPin, UserPlus, BarChart2,
+  MessageCircle, PhoneOff, CheckSquare,
+  RefreshCw, CreditCard,
+  ShieldCheck, FileCheck, FileText,
+  ChevronLeft, ChevronRight,
 } from 'lucide-react'
 
 // ─── COUNT-UP ─────────────────────────────────────────────────────
@@ -46,49 +48,63 @@ function CountUp({ value, duration = 1.6 }: { value: number; duration?: number }
   return <span ref={ref}>{display}</span>
 }
 
-// ─── DATA ─────────────────────────────────────────────────────────
+// ─── AGENT DATA ───────────────────────────────────────────────────
 
-const workforceIndustries = [
-  { icon: Home,           name: 'Home Health & Hospice'        },
-  { icon: Heart,          name: 'Hospitals & Health Systems'   },
-  { icon: Users,          name: 'Staffing Agencies'            },
-  { icon: Building2,      name: 'Skilled Nursing Facilities'   },
-  { icon: Plane,          name: 'Airports & Aviation'          },
-  { icon: Truck,          name: 'Logistics & Warehousing'      },
-  { icon: Factory,        name: 'Manufacturing & Plants'       },
-  { icon: ShoppingBag,    name: 'Retail & Hospitality'         },
-  { icon: GraduationCap,  name: 'Education & Childcare'        },
-  { icon: Coffee,         name: 'Food Service & Catering'      },
+const workforceAgents = [
+  { icon: Calendar,       name: 'Schedule Optimizer'        },
+  { icon: AlertCircle,    name: 'Staff Burnout Prevention'  },
+  { icon: MapPin,         name: 'Visit Verification (EVV)'  },
+  { icon: UserPlus,       name: 'Referral Intake'           },
+  { icon: BarChart2,      name: 'Capacity Planner'          },
+  { icon: MessageCircle,  name: 'StaffAssist'               },
+  { icon: PhoneOff,       name: 'Call-Off Management'       },
+  { icon: CheckSquare,    name: 'Auto Approval'             },
 ]
 
-const financialIndustries = [
-  { icon: Activity,   name: 'Healthcare Revenue Cycle'       },
-  { icon: Landmark,   name: 'REITs & Real Estate'            },
-  { icon: Package,    name: 'Logistics & Operations Finance' },
-  { icon: Laptop,     name: 'SaaS Companies'                 },
-  { icon: Briefcase,  name: 'Staffing & Services Finance'    },
+const financialAgents = [
+  { icon: RefreshCw,   name: 'AP / AR Matching'           },
+  { icon: CreditCard,  name: 'Payment Collection'         },
+  { icon: Activity,    name: 'Revenue Cycle Management'   },
+  { icon: Building2,   name: 'REIT Deal Qualifier'        },
 ]
 
-// ─── INDUSTRY CAROUSEL ────────────────────────────────────────────
+const complianceAgents = [
+  { icon: ShieldCheck,  name: 'Provider Credentialing' },
+  { icon: FileCheck,    name: 'Claims Compliance'      },
+  { icon: FileText,     name: 'Contract Compliance'    },
+]
 
-function IndustryCarousel({
+// ─── AGENT CAROUSEL ───────────────────────────────────────────────
+
+function AgentCarousel({
   items,
   label,
   accent,
+  href,
 }: {
   items: { icon: React.ElementType; name: string }[]
   label: string
   accent: string
+  href: string
 }) {
   const [idx, setIdx]       = useState(0)
   const [paused, setPaused] = useState(false)
-  const ref = useRef<ReturnType<typeof setInterval> | null>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     if (paused) return
-    ref.current = setInterval(() => setIdx((i) => (i + 1) % items.length), 2600)
-    return () => { if (ref.current) clearInterval(ref.current) }
+    intervalRef.current = setInterval(() => setIdx((i) => (i + 1) % items.length), 2600)
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [paused, items.length])
+
+  const handlePrev = () => {
+    setIdx((i) => (i - 1 + items.length) % items.length)
+    setPaused(true)
+  }
+  const handleNext = () => {
+    setIdx((i) => (i + 1) % items.length)
+    setPaused(true)
+  }
 
   const Icon = items[idx].icon
 
@@ -111,8 +127,12 @@ function IndustryCarousel({
         </span>
       </div>
 
-      {/* Animated industry display */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center">
+      {/* Animated agent display — clicking leads to the suite page */}
+      <Link
+        href={href}
+        className="flex-1 flex flex-col items-center justify-center text-center group"
+        style={{ cursor: 'pointer' }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={idx}
@@ -124,36 +144,66 @@ function IndustryCarousel({
           >
             {/* Icon ring */}
             <div
-              className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+              className="w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-110"
               style={{ background: accent + '12', border: `1.5px solid ${accent}28` }}
             >
               <Icon size={26} style={{ color: accent }} />
             </div>
             <p
-              className="font-display font-bold text-ink leading-tight"
-              style={{ fontSize: 'clamp(17px, 1.6vw, 21px)', letterSpacing: '-0.025em' }}
+              className="font-display font-bold text-ink leading-tight transition-colors duration-150"
+              style={{ fontSize: 'clamp(16px, 1.5vw, 20px)', letterSpacing: '-0.025em', color: 'inherit' }}
             >
               {items[idx].name}
             </p>
+            {/* Subtle "view" hint on hover */}
+            <p
+              className="text-[11px] mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              style={{ color: accent }}
+            >
+              View suite →
+            </p>
           </motion.div>
         </AnimatePresence>
-      </div>
+      </Link>
 
-      {/* Progress dots */}
-      <div className="flex items-center justify-center gap-[5px] mt-5">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => { setIdx(i); setPaused(true) }}
-            aria-label={`Industry ${i + 1}`}
-            className="rounded-full transition-all duration-200"
-            style={{
-              width:      i === idx ? '16px' : '6px',
-              height:     '6px',
-              background: i === idx ? accent : accent + '28',
-            }}
-          />
-        ))}
+      {/* Navigation: arrows + dots */}
+      <div className="flex items-center justify-center gap-3 mt-5">
+        {/* Prev arrow */}
+        <button
+          onClick={handlePrev}
+          aria-label="Previous agent"
+          className="w-6 h-6 rounded-full flex items-center justify-center transition-colors duration-150"
+          style={{ background: accent + '14', color: accent }}
+        >
+          <ChevronLeft size={13} />
+        </button>
+
+        {/* Dots */}
+        <div className="flex items-center gap-[5px]">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setIdx(i); setPaused(true) }}
+              aria-label={`Agent ${i + 1}`}
+              className="rounded-full transition-all duration-200"
+              style={{
+                width:      i === idx ? '16px' : '6px',
+                height:     '6px',
+                background: i === idx ? accent : accent + '28',
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Next arrow */}
+        <button
+          onClick={handleNext}
+          aria-label="Next agent"
+          className="w-6 h-6 rounded-full flex items-center justify-center transition-colors duration-150"
+          style={{ background: accent + '14', color: accent }}
+        >
+          <ChevronRight size={13} />
+        </button>
       </div>
     </div>
   )
@@ -219,9 +269,9 @@ export default function Industries() {
         {/* ── BENTO GRID ── */}
         {/*
           Desktop 3-col layout:
-          Row 1: [Card 1 — 2col dark stat] [Card 2 — 1col tinted stat]
-          Row 2: [Card 3 — 1col carousel, rows 2-3] [Card 4 — 1col stat] [Card 5 — 1col carousel]
-          Row 3:                                     [Card 6 — 2col tagline]
+          Row 1: [Card 1 — 2col dark stat] [Card 2 — 1col industries stat]
+          Row 2: [Card 3 — 1col carousel, rows 2-3] [Card 4 — Financial] [Card 5 — Compliance]
+          Row 3:                                     [Card 6 — 2col tagline CTA]
         */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
 
@@ -264,58 +314,17 @@ export default function Industries() {
                   className="font-ui mt-2"
                   style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', letterSpacing: '0.01em' }}
                 >
-                  Configured across workforce &amp; financial operations
+                  Configured across workforce, financial &amp; compliance
                 </p>
               </div>
             </div>
           </BentoCard>
 
-          {/* ── Card 2: 72hr — brand-tinted ── */}
+          {/* ── Card 2: 15+ Industries ── */}
           <BentoCard
             className="bg-white"
-            style={{ minHeight: '190px', background: 'var(--brand-08)' }}
+            style={{ minHeight: '190px' }}
             delay={0.08}
-          >
-            <div className="p-8 h-full flex flex-col justify-between">
-              <p
-                className="font-ui font-medium"
-                style={{ fontSize: '10px', letterSpacing: '0.09em', textTransform: 'uppercase', color: 'rgba(107,63,160,0.5)' }}
-              >
-                Time to first live agent
-              </p>
-              <div>
-                <div
-                  className="font-mono font-bold text-brand leading-none"
-                  style={{ fontSize: 'clamp(52px, 6vw, 76px)', letterSpacing: '-0.04em' }}
-                >
-                  <CountUp value={72} duration={1.4} />
-                  <span style={{ fontSize: '38%', color: 'rgba(107,63,160,0.45)', marginLeft: '2px' }}>hr</span>
-                </div>
-                <p className="text-[13px] text-ink3 font-ui mt-2">
-                  From contract signed to agent in production
-                </p>
-              </div>
-            </div>
-          </BentoCard>
-
-          {/* ── Card 3: Workforce carousel — tall (spans 2 rows) ── */}
-          <BentoCard
-            className="lg:row-span-2 bg-white"
-            style={{ minHeight: '300px' }}
-            delay={0.05}
-          >
-            <IndustryCarousel
-              items={workforceIndustries}
-              label="Workforce Operations"
-              accent="#0284C7"
-            />
-          </BentoCard>
-
-          {/* ── Card 4: 15+ industries stat ── */}
-          <BentoCard
-            className="bg-white"
-            style={{ minHeight: '155px' }}
-            delay={0.12}
           >
             <div className="p-7 h-full flex flex-col justify-between">
               <p
@@ -327,28 +336,57 @@ export default function Industries() {
               <div>
                 <div
                   className="font-mono font-bold text-ink leading-none"
-                  style={{ fontSize: 'clamp(44px, 5vw, 64px)', letterSpacing: '-0.04em' }}
+                  style={{ fontSize: 'clamp(52px, 6vw, 76px)', letterSpacing: '-0.04em' }}
                 >
                   <CountUp value={15} duration={1.5} />
-                  <span style={{ fontSize: '40%', color: '#05966988', marginLeft: '1px' }}>+</span>
+                  <span style={{ fontSize: '38%', color: '#05966988', marginLeft: '2px' }}>+</span>
                 </div>
-                <p className="text-[12px] text-ink4 font-ui mt-1">
+                <p className="text-[13px] text-ink3 font-ui mt-2">
                   New verticals added quarterly
                 </p>
               </div>
             </div>
           </BentoCard>
 
-          {/* ── Card 5: Financial carousel ── */}
+          {/* ── Card 3: Workforce carousel — tall (spans 2 rows) ── */}
+          <BentoCard
+            className="lg:row-span-2 bg-white"
+            style={{ minHeight: '300px' }}
+            delay={0.05}
+          >
+            <AgentCarousel
+              items={workforceAgents}
+              label="Workforce Operations"
+              accent="#0284C7"
+              href="/workforce"
+            />
+          </BentoCard>
+
+          {/* ── Card 4: Financial carousel ── */}
+          <BentoCard
+            className="bg-white"
+            style={{ minHeight: '155px' }}
+            delay={0.12}
+          >
+            <AgentCarousel
+              items={financialAgents}
+              label="Financial Operations"
+              accent="#059669"
+              href="/financial"
+            />
+          </BentoCard>
+
+          {/* ── Card 5: Compliance carousel — NEW ── */}
           <BentoCard
             className="bg-white"
             style={{ minHeight: '155px' }}
             delay={0.16}
           >
-            <IndustryCarousel
-              items={financialIndustries}
-              label="Financial Operations"
-              accent="#059669"
+            <AgentCarousel
+              items={complianceAgents}
+              label="Compliance Agents"
+              accent="#0891B2"
+              href="/compliance"
             />
           </BentoCard>
 
@@ -364,7 +402,7 @@ export default function Industries() {
                   className="font-display font-bold text-ink mb-1"
                   style={{ fontSize: 'clamp(18px, 2vw, 24px)', letterSpacing: '-0.025em', lineHeight: '1.15' }}
                 >
-                  Standard environments live in 72 hours.
+                  Standard environments live in under 100 hours.
                 </p>
                 <p className="text-[13px] text-ink3 font-ui">
                   Don&apos;t see your industry?{' '}
