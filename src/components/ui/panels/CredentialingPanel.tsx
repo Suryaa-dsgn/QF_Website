@@ -9,13 +9,13 @@ export default function CredentialingPanel() {
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1), 1000),  // Dr. Patel row gets amber left border + bg
-      setTimeout(() => setPhase(2), 1800),  // Status badge: CURRENT → EXPIRING
-      setTimeout(() => setPhase(3), 2400),  // Renewal banner slides in
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
+    let t: ReturnType<typeof setTimeout>
+    if (phase === 0) t = setTimeout(() => setPhase(1), 1000)
+    else if (phase === 1) t = setTimeout(() => setPhase(2), 800)
+    else if (phase === 2) t = setTimeout(() => setPhase(3), 600)
+    else t = setTimeout(() => setPhase(0), 2500) // pause then restart
+    return () => clearTimeout(t)
+  }, [phase])
 
   const patelHighlight = phase >= 1
   const patelExpiring  = phase >= 2

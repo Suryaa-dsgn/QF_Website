@@ -9,12 +9,12 @@ export default function APARPanel() {
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1), 1200),  // Bellmore row: MATCHED → REVIEW, amount mismatch
-      setTimeout(() => setPhase(2), 2000),  // Short-pay detail card slides in
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
+    let t: ReturnType<typeof setTimeout>
+    if (phase === 0) t = setTimeout(() => setPhase(1), 1200)
+    else if (phase === 1) t = setTimeout(() => setPhase(2), 800)
+    else t = setTimeout(() => setPhase(0), 2500) // pause then restart
+    return () => clearTimeout(t)
+  }, [phase])
 
   const bellmoreReview  = phase >= 1
   const shortPayVisible = phase >= 2

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import BookDemoButton from '@/components/BookDemoButton'
 import {
-  Users, DollarSign, Heart, TrendingUp, Zap,
+  Users, DollarSign, ShieldCheck, Heart, TrendingUp, Zap,
   Menu, X, ChevronDown,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -16,14 +16,20 @@ const agentSuites = [
   {
     icon: Users,
     title: 'Workforce Agents',
-    subtitle: '7 agents. Shifts, credentials, scheduling.',
+    subtitle: '8 agents. Scheduling, capacity, call-offs.',
     href: '/workforce',
   },
   {
     icon: DollarSign,
     title: 'Financial Agents',
-    subtitle: '4 agents. AR, collections, compliance.',
+    subtitle: '4 agents. AR, collections, revenue cycle.',
     href: '/financial',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Compliance Agents',
+    subtitle: '3 agents. Credentialing, claims, contracts.',
+    href: '/compliance',
   },
 ]
 

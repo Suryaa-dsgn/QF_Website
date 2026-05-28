@@ -9,13 +9,13 @@ export default function CollectionPanel() {
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1), 800),   // Progress bar fills to 73%
-      setTimeout(() => setPhase(2), 1600),  // PrimaCare row highlights HIGH priority
-      setTimeout(() => setPhase(3), 2200),  // Trend text fades in
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
+    let t: ReturnType<typeof setTimeout>
+    if (phase === 0) t = setTimeout(() => setPhase(1), 800)
+    else if (phase === 1) t = setTimeout(() => setPhase(2), 800)
+    else if (phase === 2) t = setTimeout(() => setPhase(3), 600)
+    else t = setTimeout(() => setPhase(0), 2500) // pause then restart
+    return () => clearTimeout(t)
+  }, [phase])
 
   const barFilled       = phase >= 1
   const primaHighlight  = phase >= 2

@@ -16,7 +16,7 @@ import Footer from '@/components/Footer'
 // ── Panel components ──────────────────────────────────────────────
 import APARPanel       from '@/components/ui/panels/APARPanel'
 import CollectionPanel from '@/components/ui/panels/CollectionPanel'
-import CompliancePanel from '@/components/ui/panels/CompliancePanel'
+import RCMPanel        from '@/components/ui/panels/RCMPanel'
 import REITPanel       from '@/components/ui/panels/REITPanel'
 
 // ── Scroll-line data ──────────────────────────────────────────────
@@ -240,10 +240,10 @@ const MOBILE_STEPS = [
   },
   {
     index: 3,
-    slug: 'contract-compliance',
-    label: 'Contract Compliance',
-    Panel: CompliancePanel,
-    desc: "Bellmore's invoice matches the PO. Amounts add up. But clause 3b of the services agreement requires a 5% volume discount on orders over $5,000. Contract Compliance flagged a $420 revenue leakage before payment cleared. Dispute filed automatically.",
+    slug: 'revenue-cycle-management',
+    label: 'Revenue Cycle Management',
+    Panel: RCMPanel,
+    desc: "Claim 4892 came back denied — Medicaid, modifier mismatch. By the time the billing team opened their queue, RCM had already flagged it, queued the rework, and resubmitted with the corrected code. Status: Under Review. Revenue recovered before anyone touched it.",
   },
   {
     index: 4,
@@ -627,7 +627,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           CASH SITTING OVERDUE — 45 DAYS OUT
         </BridgeLabelEl>
         <BridgeLabelEl topPx={1830} sv={sv} threshold={THRESHOLDS.label2}>
-          INVOICE CLEARED — TERMS UNDER REVIEW
+          CLAIM DENIED. REWORK QUEUED. REVENUE RECOVERED.
         </BridgeLabelEl>
         <BridgeLabelEl topPx={2530} sv={sv} threshold={THRESHOLDS.label3}>
           PIPELINE ARRIVES BEFORE MORNING COFFEE
@@ -708,7 +708,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           </PrototypeWrapper>
         </motion.div>
 
-        {/* ── STEP 3: CONTRACT COMPLIANCE (RIGHT pill, LEFT prototype) ── */}
+        {/* ── STEP 3: REVENUE CYCLE MANAGEMENT (RIGHT pill, LEFT prototype) ── */}
         <motion.div
           style={{
             opacity: s3Proto.opacity,
@@ -719,8 +719,8 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             left: '40px',
           }}
         >
-          <PrototypeWrapper slug="contract-compliance" width={560}>
-            <CompliancePanel key={`compliance-${visiblePanels.has(3) ? 'v' : 'h'}`} />
+          <PrototypeWrapper slug="revenue-cycle-management" width={560}>
+            <RCMPanel key={`rcm-${visiblePanels.has(3) ? 'v' : 'h'}`} />
           </PrototypeWrapper>
         </motion.div>
         <div
@@ -735,13 +735,13 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           }}
         >
           <motion.div style={{ opacity: s3Pill.opacity, y: s3Pill.y }}>
-            <AgentStepMarker label="Contract Compliance" index={3} align="right" />
+            <AgentStepMarker label="Revenue Cycle Management" index={3} align="right" />
             <Desc align="right">
-              {`Bellmore's invoice matches the PO. Amounts add up.`}
+              Claim 4892 came back denied — Medicaid, modifier mismatch.
               <br /><br />
-              But clause 3b of the services agreement requires a 5% volume discount
-              on orders over $5,000. Contract Compliance flagged a $420 revenue leakage
-              before payment cleared. Dispute filed automatically.
+              By the time the billing team opened their queue, RCM had already flagged it,
+              queued the rework, and resubmitted with the corrected code.
+              Status: Under Review. Revenue recovered before anyone touched it.
             </Desc>
           </motion.div>
         </div>

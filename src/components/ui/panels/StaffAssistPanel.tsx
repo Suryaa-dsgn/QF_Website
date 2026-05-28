@@ -14,12 +14,15 @@ const messages = [
 export default function StaffAssistPanel() {
   const [visibleCount, setVisibleCount] = useState(0)
 
-  // Reveal messages one by one — like a real chat loading
+  // Reveal messages one by one then restart — loops continuously
   useEffect(() => {
+    let t: ReturnType<typeof setTimeout>
     if (visibleCount < messages.length) {
-      const t = setTimeout(() => setVisibleCount(v => v + 1), 800)
-      return () => clearTimeout(t)
+      t = setTimeout(() => setVisibleCount(v => v + 1), 800)
+    } else {
+      t = setTimeout(() => setVisibleCount(0), 2500) // pause then restart
     }
+    return () => clearTimeout(t)
   }, [visibleCount])
 
   return (

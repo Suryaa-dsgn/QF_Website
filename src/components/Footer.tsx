@@ -3,11 +3,12 @@ import Link from 'next/link'
 // ─── NAV DATA ─────────────────────────────────────────────────────
 
 const platformLinks = [
-  { label: 'How It Works',      href: '/#how-it-works'                },
-  { label: 'Workforce Agents',  href: '/workforce'                    },
-  { label: 'Financial Agents',  href: '/financial'                    },
-  { label: 'Industries',        href: '/industries'                   },
-  { label: 'Pricing',           href: '/pricing'                      },
+  { label: 'How It Works',       href: '/#how-it-works'                },
+  { label: 'Workforce Agents',   href: '/workforce'                    },
+  { label: 'Financial Agents',   href: '/financial'                    },
+  { label: 'Compliance Agents',  href: '/compliance'                   },
+  { label: 'Industries',         href: '/industries'                   },
+  { label: 'Pricing',            href: '/pricing'                      },
 ]
 
 const industryLinks = [

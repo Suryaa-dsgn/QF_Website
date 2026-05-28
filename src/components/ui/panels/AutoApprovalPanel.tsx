@@ -9,12 +9,12 @@ export default function AutoApprovalPanel() {
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1), 1000),  // Jamie's badge → AUTO-APR
-      setTimeout(() => setPhase(2), 1600),  // Counter 13 → 14
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
+    let t: ReturnType<typeof setTimeout>
+    if (phase === 0) t = setTimeout(() => setPhase(1), 1000)
+    else if (phase === 1) t = setTimeout(() => setPhase(2), 600)
+    else t = setTimeout(() => setPhase(0), 2500) // pause then restart
+    return () => clearTimeout(t)
+  }, [phase])
 
   const jamieApproved = phase >= 1
   const approvedCount = phase >= 2 ? '14' : '13'

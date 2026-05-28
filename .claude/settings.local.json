@@ -10,7 +10,9 @@
       "Bash(Remove-Item \"C:\\\\Users\\\\SURYAKANTA JENA\\\\Desktop\\\\quickflows-web\\\\src\\\\data\\\\agentCardsV2.ts\" -Force)",
       "Bash(Remove-Item \"C:\\\\Users\\\\SURYAKANTA JENA\\\\Desktop\\\\quickflows-web\\\\src\\\\components\\\\sections\\\\WorkforcePageV2.tsx\" -Force)",
       "Bash(Write-Output \"data + sections done\")",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\SURYAKANTA JENA\\\\Desktop\\\\quickflows-web\\\\src\\\\app\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)"
     ]
   }
 }

@@ -13,12 +13,12 @@ export default function REITPanel() {
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1), 600),   // Score ring animates 0 → 87
-      setTimeout(() => setPhase(2), 1400),  // Risk flags staggered fade in
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
+    let t: ReturnType<typeof setTimeout>
+    if (phase === 0) t = setTimeout(() => setPhase(1), 600)
+    else if (phase === 1) t = setTimeout(() => setPhase(2), 800)
+    else t = setTimeout(() => setPhase(0), 2500) // pause then restart
+    return () => clearTimeout(t)
+  }, [phase])
 
   const ringFilled  = phase >= 1
   const flagsVisible = phase >= 2
