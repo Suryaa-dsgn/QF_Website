@@ -10,7 +10,6 @@ import {
 } from 'framer-motion'
 import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
-import CTA    from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
 
 // ── Panel components ──────────────────────────────────────────────
@@ -876,7 +875,8 @@ export default function FinancialPage() {
           <ScrollSection sv={scrollYProgress} />
         </section>
       )}
-      <CTA />
+      {/* Spacer — gives the closing text card clearance above the footer */}
+      {!isMobile && <div style={{ height: '220px' }} />}
       <Footer />
     </div>
   )

@@ -237,10 +237,10 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Trust bar ── */}
-      <div className="max-w-[1280px] mx-auto w-full px-10">
+      {/* ── Trust bar — hidden until client logos are confirmed ── */}
+      {/* <div className="max-w-[1280px] mx-auto w-full px-10">
         <TrustBar />
-      </div>
+      </div> */}
     </section>
   )
 }

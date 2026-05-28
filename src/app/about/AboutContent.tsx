@@ -16,7 +16,7 @@ const stats = [
 const missionParagraphs = [
   "Most operational failures aren't dramatic. They're quiet. A missed shift. An unmatched invoice. A credential that nobody renewed.",
   "These aren't technology problems — they're coordination problems. They happen when the right data exists in one system and the right action never follows in another.",
-  "Quickflows closes that gap. Not by replacing your team — by handling the work that shouldn't require them in the first place.",
+  "Our mission is to design and deploy intelligent systems that solve complex operational, financial, and workforce challenges across industries. We transform how organizations operate through purpose-built AI agents — not by replacing your team, but by handling the work that shouldn't require them in the first place.",
 ]
 
 const values = [
@@ -55,7 +55,7 @@ export default function AboutContent() {
       <HeroSection />
       <MissionSection />
       <PrinciplesSection />
-      <TeamSection />
+      {/* <TeamSection /> — hidden until bios are ready */}
       <CTASection />
     </>
   )
@@ -93,9 +93,10 @@ function HeroSection() {
             className="font-ui leading-[1.75]"
             style={{ fontSize: '16px', color: '#6B6B6B', maxWidth: '520px', margin: '0 auto' }}
           >
-            Shift coverage, invoice reconciliation, credential compliance.
-            Quickflows runs these automatically — so your team isn&apos;t spending
-            their best hours on work that shouldn&apos;t require them.
+            Founded and led by industry veterans with 24+ years of expertise in
+            technology consulting, digital transformation, cloud architecture, and
+            AI/ML innovation — building intelligent systems that handle the
+            operational work your team shouldn&apos;t have to.
           </p>
         </motion.div>
 

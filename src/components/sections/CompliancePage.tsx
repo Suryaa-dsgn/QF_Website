@@ -10,7 +10,6 @@ import {
 } from 'framer-motion'
 import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
-import CTA    from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
 
 // ── Panel components ──────────────────────────────────────────────
@@ -819,7 +818,6 @@ export default function CompliancePage() {
           <ScrollSection sv={scrollYProgress} />
         </section>
       )}
-      <CTA />
       <Footer />
     </div>
   )

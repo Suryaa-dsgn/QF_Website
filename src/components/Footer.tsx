@@ -106,12 +106,13 @@ export default function Footer() {
 
             {/* Contact */}
             <div className="flex flex-col gap-1.5 mb-5">
-              <a
+              {/* Phone hidden for now */}
+              {/* <a
                 href="tel:6782670106"
                 className="text-[13px] text-ink3 font-ui hover:text-ink transition-colors duration-150"
               >
                 678-267-0106
-              </a>
+              </a> */}
               <a
                 href="mailto:info@quickflows.ai"
                 className="text-[13px] text-ink3 font-ui hover:text-ink transition-colors duration-150"

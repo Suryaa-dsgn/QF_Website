@@ -169,7 +169,8 @@ export default function ContactPage() {
                   </p>
 
                   <div className="flex flex-col gap-4">
-                    <div>
+                    {/* Phone hidden for now */}
+                    {/* <div>
                       <p className="text-[11px] font-semibold text-ink4 uppercase tracking-[0.06em] mb-1 font-ui">
                         Phone
                       </p>
@@ -179,7 +180,7 @@ export default function ContactPage() {
                       >
                         678-267-0106
                       </a>
-                    </div>
+                    </div> */}
 
                     <div>
                       <p className="text-[11px] font-semibold text-ink4 uppercase tracking-[0.06em] mb-1 font-ui">

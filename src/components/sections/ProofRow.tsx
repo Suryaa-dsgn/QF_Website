@@ -1,136 +1,200 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useState } from 'react'
 
-// ─── COUNT-UP STAT BLOCK ──────────────────────────────────────────
+// ─── STAT DATA ────────────────────────────────────────────────────
 
-function StatBlock({
-  value,
-  suffix,
-  label,
-  comparison,
-  delta,
-}: {
-  value: number
+const STATS = [
+  {
+    value:      '28',
+    suffix:     's',
+    label:      'TARGET FILL TIME',
+    comparison: 'Projected time from callout to confirmed shift coverage, with full agent automation.',
+    delta:      '↓ 97% reduction in coordinator time',
+  },
+  {
+    value:      '78',
+    suffix:     '%',
+    label:      'REFERRAL INTAKE TIME SAVED',
+    comparison: 'Reduction in coordinator time from referral receipt to confirmed intake summary — agent handles parsing, provider matching, and draft preparation automatically.',
+    delta:      '↓ 160 min → 22 min per referral',
+  },
+  {
+    value:      '94',
+    suffix:     '%',
+    label:      'PROJECTED MATCH RATE',
+    comparison: 'Of invoice exceptions resolved automatically, without manual reconciliation.',
+    delta:      '↑ 31% vs fully manual AR workflows',
+  },
+  {
+    value:      '95',
+    suffix:     '%',
+    label:      'CREDENTIALING TIME SAVED',
+    comparison: 'Reduction in manual time spent monitoring provider licenses, DEA registrations, and board certifications — per provider, per month.',
+    delta:      '↓ ~2.5 hrs → 8 min per provider per month',
+  },
+  {
+    value:      '96',
+    suffix:     '%',
+    label:      'PRE-SUBMISSION CATCH RATE',
+    comparison: 'Of billing modifier conflicts and claim code errors flagged before payer submission by the Claims Compliance agent.',
+    delta:      '↓ 4.2-min avg correction vs. 14-day payer denial cycle',
+  },
+]
+
+// ─── BENCHMARK CARD ───────────────────────────────────────────────
+
+interface Stat {
+  value: string
   suffix: string
   label: string
   comparison: string
   delta: string
+}
+
+function BenchmarkCard({
+  stat,
+  onEnter,
+  onLeave,
+}: {
+  stat: Stat
+  onEnter: () => void
+  onLeave: () => void
 }) {
-  const [display, setDisplay]   = useState('0')
-  const [started, setStarted]   = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    const observer = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting && !started) {
-          setStarted(true)
-
-          if (prefersReduced) {
-            setDisplay(value.toString())
-            return
-          }
-
-          const startT = performance.now()
-          const dur    = 1800
-
-          function tick(t: number) {
-            const p     = Math.min((t - startT) / dur, 1)
-            const eased = 1 - Math.pow(1 - p, 3)
-            setDisplay(Math.floor(eased * value).toString())
-            if (p < 1) requestAnimationFrame(tick)
-            else       setDisplay(value.toString())
-          }
-
-          requestAnimationFrame(tick)
-        }
-      },
-      { threshold: 0.5 }
-    )
-
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [started])
+  const [hovered, setHovered] = useState(false)
 
   return (
-    <div ref={ref} className="card p-8 flex flex-col h-full">
-
+    <div
+      onMouseEnter={() => { setHovered(true);  onEnter() }}
+      onMouseLeave={() => { setHovered(false); onLeave() }}
+      style={{
+        width:        '360px',
+        minHeight:    '280px',
+        flexShrink:   0,
+        display:      'flex',
+        flexDirection:'column',
+        padding:      '28px',
+        borderRadius: '20px',
+        background:   hovered ? '#6B3FA0' : '#FFFFFF',
+        border:       hovered ? '1px solid transparent' : '1px solid rgba(107,63,160,0.08)',
+        boxShadow:    hovered
+          ? '0 16px 48px rgba(107,63,160,0.30)'
+          : '0 2px 8px rgba(107,63,160,0.06)',
+        transition:   'background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+        cursor:       'default',
+        userSelect:   'none',
+      }}
+    >
       {/* Label */}
-      <p className="text-label mb-4">{label}</p>
+      <p
+        className="font-ui uppercase"
+        style={{
+          fontSize:      '10px',
+          fontWeight:    600,
+          letterSpacing: '0.07em',
+          color:         hovered ? 'rgba(255,255,255,0.5)' : '#A0A0A0',
+          marginBottom:  '14px',
+          transition:    'color 0.3s ease',
+        }}
+      >
+        {stat.label}
+      </p>
 
-      {/* Giant number */}
-      <div className="mb-3">
+      {/* Big number */}
+      <div style={{ marginBottom: '12px', lineHeight: 1 }}>
         <span
-          className="font-mono font-bold text-ink"
-          style={{ fontSize: 'clamp(52px, 6vw, 76px)', letterSpacing: '-0.03em', lineHeight: '1' }}
+          className="font-mono font-bold"
+          style={{
+            fontSize:      'clamp(52px, 5vw, 68px)',
+            letterSpacing: '-0.03em',
+            color:         hovered ? '#FFFFFF' : '#0A0A0A',
+            transition:    'color 0.3s ease',
+          }}
         >
-          {display}
+          {stat.value}
         </span>
         <span
-          className="font-mono text-ink4 ml-0.5"
-          style={{ fontSize: 'clamp(26px, 3vw, 38px)' }}
+          className="font-mono"
+          style={{
+            fontSize:   'clamp(26px, 2.5vw, 34px)',
+            color:      hovered ? 'rgba(255,255,255,0.45)' : '#9CA3AF',
+            marginLeft: '2px',
+            transition: 'color 0.3s ease',
+          }}
         >
-          {suffix}
+          {stat.suffix}
         </span>
       </div>
 
-      {/* Comparison text */}
-      <p className="text-[14px] text-ink3 font-ui leading-snug mb-3">{comparison}</p>
+      {/* Description */}
+      <p
+        className="font-ui leading-snug"
+        style={{
+          fontSize:   '13px',
+          color:      hovered ? 'rgba(255,255,255,0.65)' : '#6B7280',
+          transition: 'color 0.3s ease',
+          flex:       1,
+        }}
+      >
+        {stat.comparison}
+      </p>
 
       {/* Delta badge — pushed to bottom */}
-      <div className="mt-auto">
-        <span className="inline-flex items-center text-[12px] font-mono text-[#16A34A] bg-[#D1FAE5] px-2.5 py-1 rounded-[6px]">
-          {delta}
+      <div style={{ marginTop: '18px' }}>
+        <span
+          className="font-mono"
+          style={{
+            display:      'inline-flex',
+            alignItems:   'center',
+            fontSize:     '11px',
+            fontWeight:   500,
+            padding:      '4px 10px',
+            borderRadius: '6px',
+            background:   hovered ? 'rgba(255,255,255,0.14)' : '#D1FAE5',
+            color:        hovered ? '#FFFFFF'                 : '#16A34A',
+            transition:   'background 0.3s ease, color 0.3s ease',
+            whiteSpace:   'normal',
+          }}
+        >
+          {stat.delta}
         </span>
       </div>
-
     </div>
   )
 }
 
-// ─── TESTIMONIAL CARD ─────────────────────────────────────────────
+// ─── BENCHMARK CAROUSEL ───────────────────────────────────────────
 
-function TestimonialCard({
-  quote,
-  name,
-  role,
-}: {
-  quote: string
-  name: string
-  role: string
-}) {
+function BenchmarkCarousel() {
+  const [paused, setPaused] = useState(false)
+  const doubled = [...STATS, ...STATS]
+
   return (
     <div
-      className="rounded-[16px] p-8 flex flex-col justify-between h-full"
+      className="relative overflow-hidden"
       style={{
-        background: 'rgba(107,63,160,0.04)',
-        border:     '1px solid rgba(107,63,160,0.10)',
+        maskImage:       'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
       }}
     >
-      {/* Quote text */}
-      <p className="text-[15px] text-ink font-ui leading-[1.7] flex-1 mb-6">
-        &ldquo;{quote}&rdquo;
-      </p>
-
-      {/* Attribution — pushed to bottom */}
-      <div className="flex items-center gap-3 mt-6">
-        {/* Initials avatar */}
-        <div
-          className="w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-semibold flex-shrink-0"
-          style={{ background: 'rgba(107,63,160,0.10)', color: '#6B3FA0' }}
-        >
-          {name.split(' ').map((n: string) => n[0]).join('')}
-        </div>
-        <div>
-          <p className="text-[14px] font-semibold text-ink font-ui leading-none mb-1">{name}</p>
-          <p className="text-[12px] text-ink4 font-ui leading-none">{role}</p>
-        </div>
+      <div
+        className="flex benchmark-carousel"
+        style={{
+          gap:                '20px',
+          width:              'max-content',
+          padding:            '12px 20px 20px',
+          animationPlayState: paused ? 'paused' : 'running',
+        }}
+      >
+        {doubled.map((stat, i) => (
+          <BenchmarkCard
+            key={i}
+            stat={stat}
+            onEnter={() => setPaused(true)}
+            onLeave={() => setPaused(false)}
+          />
+        ))}
       </div>
-
     </div>
   )
 }
@@ -139,10 +203,10 @@ function TestimonialCard({
 
 export default function ProofRow() {
   return (
-    <section className="section-padding">
-      <div className="section-container">
+    <section className="section-padding" style={{ overflow: 'hidden' }}>
 
-        {/* Section header */}
+      {/* Section header */}
+      <div className="section-container">
         <div className="text-center mb-12">
           <p className="text-label mb-4">OPERATIONAL BENCHMARKS</p>
           <h2
@@ -158,7 +222,6 @@ export default function ProofRow() {
             <br className="hidden md:block" />
             {' '}look like.
           </h2>
-          {/* Framing note — signals intellectual honesty to compliance/investor readers */}
           <p
             className="text-[13px] text-ink4 font-ui text-center mx-auto mt-3"
             style={{ maxWidth: '460px', lineHeight: '1.65' }}
@@ -168,57 +231,11 @@ export default function ProofRow() {
             based on environment, data quality, and configuration.
           </p>
         </div>
-
-        {/* ── Row 1: STAT | TESTIMONIAL | STAT ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 items-stretch">
-
-          <StatBlock
-            value={28}
-            suffix="s"
-            label="TARGET FILL TIME"
-            comparison="Projected time from callout to confirmed shift coverage, with full agent automation."
-            delta="↓ 97% reduction in coordinator time"
-          />
-
-          {/* TODO: Replace with verified client testimonial when available */}
-          <TestimonialCard
-            quote="The volume of coordination that used to hit our team every morning — it's genuinely different now. Things that needed three calls are handled before anyone's at their desk."
-            name="Sarah M."
-            role="Director of Operations, Regional Home Care Agency"
-          />
-
-          <StatBlock
-            value={94}
-            suffix="%"
-            label="PROJECTED MATCH RATE"
-            comparison="Of invoice exceptions resolved automatically, without manual reconciliation."
-            delta="↑ 31% vs fully manual AR workflows"
-          />
-
-        </div>
-
-        {/* ── Row 2: Two new stat cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-
-          <StatBlock
-            value={2500}
-            suffix="+"
-            label="ANNUAL HOURS RECLAIMED"
-            comparison="Coordinator and compliance hours saved per mid-market agency annually — across scheduling, call-offs, intake, and provider credentialing."
-            delta="↑ ~1.2 FTE equivalent reclaimed per deployment"
-          />
-
-          <StatBlock
-            value={96}
-            suffix="%"
-            label="PRE-SUBMISSION CATCH RATE"
-            comparison="Of billing modifier conflicts and claim code errors flagged before payer submission by the Claims Compliance agent."
-            delta="↓ 4.2-min avg correction vs. 14-day payer denial cycle"
-          />
-
-        </div>
-
       </div>
+
+      {/* Infinite carousel — full width, bleeds past container */}
+      <BenchmarkCarousel />
+
     </section>
   )
 }

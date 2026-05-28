@@ -5,7 +5,6 @@ import { Check, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { Agent } from '@/data/agents'
 import { agents } from '@/data/agents'
-import CTA    from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
 import BookDemoButton from '@/components/BookDemoButton'
 
@@ -469,7 +468,6 @@ export default function AgentContent({ agent }: { agent: Agent }) {
       <AgentImpact     agent={agent} />
       <AgentHowItWorks agent={agent} />
       <RelatedAgents   agent={agent} />
-      <CTA />
       <Footer />
     </>
   )

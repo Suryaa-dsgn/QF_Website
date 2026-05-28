@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { ArrowRight, Building2, Heart, Activity, Brain, Laptop, Factory, Landmark, Users, Plane, Shield, type LucideIcon } from 'lucide-react'
 import BookDemoButton from '@/components/BookDemoButton'
 import Navigation from '@/components/Navigation'
-import CTA from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
 
 // Panel components (all imports live in the client component)
@@ -361,7 +360,6 @@ export default function IndustryPage({ config }: { config: IndustryPageConfig })
         </div>
       </section>
 
-      <CTA />
       <Footer />
     </>
   )

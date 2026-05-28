@@ -353,6 +353,16 @@ body {
   to   { transform: translateX(-50%); }
 }
 
+/* Operational Benchmarks infinite carousel */
+.benchmark-carousel {
+  animation: benchmark-scroll 50s linear infinite;
+}
+
+@keyframes benchmark-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* ═══════════════════════════════════════════════
    SCROLLBAR (subtle, brand-tinted)
 ═══════════════════════════════════════════════ */
