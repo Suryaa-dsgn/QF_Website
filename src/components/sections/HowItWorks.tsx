@@ -690,7 +690,12 @@ const steps = [
   },
 ]
 
-export default function HowItWorks() {
+interface HowItWorksProps {
+  /** Set true on the /how-it-works page to show the ROI strip, engagement models, and callout */
+  extended?: boolean
+}
+
+export default function HowItWorks({ extended = false }: HowItWorksProps) {
   return (
     <>
       <section className="section-padding">
@@ -717,33 +722,33 @@ export default function HowItWorks() {
         ))}
       </section>
 
-      {/* Dark ROI Strip */}
-      <ROIStrip />
-
-      {/* Flexible Engagement Models */}
-      <EngagementModels />
-
-      {/* Time-to-value callout bar */}
-      <div className="py-16 max-w-[900px] mx-auto px-10">
-        <div
-          className="rounded-[16px] px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-white border border-[--border]"
-          style={{ boxShadow: 'var(--shadow-1)' }}
-        >
-          <p
-            className="font-display font-bold text-ink"
-            style={{
-              fontSize:      'clamp(18px, 2.2vw, 26px)',
-              letterSpacing: '-0.03em',
-              lineHeight:    '1.2',
-            }}
-          >
-            From contract signed to first agent live: under 100 hours.
-          </p>
-          <BookDemoButton className="btn-base btn-primary flex-shrink-0">
-            Book a demo
-          </BookDemoButton>
-        </div>
-      </div>
+      {/* Extended sections — /how-it-works page only */}
+      {extended && (
+        <>
+          <ROIStrip />
+          <EngagementModels />
+          <div className="py-16 max-w-[900px] mx-auto px-10">
+            <div
+              className="rounded-[16px] px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-white border border-[--border]"
+              style={{ boxShadow: 'var(--shadow-1)' }}
+            >
+              <p
+                className="font-display font-bold text-ink"
+                style={{
+                  fontSize:      'clamp(18px, 2.2vw, 26px)',
+                  letterSpacing: '-0.03em',
+                  lineHeight:    '1.2',
+                }}
+              >
+                From contract signed to first agent live: under 100 hours.
+              </p>
+              <BookDemoButton className="btn-base btn-primary flex-shrink-0">
+                Book a demo
+              </BookDemoButton>
+            </div>
+          </div>
+        </>
+      )}
     </>
   )
 }

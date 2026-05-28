@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <Navigation />
       <div style={{ paddingTop: '60px' }}>
-        <HowItWorks />
+        <HowItWorks extended />
       </div>
       <CTA />
       <Footer />
