@@ -78,55 +78,70 @@ function OfferingsDropdown() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[540px] bg-white border border-[--border] rounded-[14px] shadow-[0_8px_40px_rgba(107,63,160,0.10)] p-6 z-50"
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[800px] bg-white border border-[--border] rounded-[20px] shadow-[0_20px_60px_rgba(107,63,160,0.13),0_4px_16px_rgba(0,0,0,0.06)] p-8 z-50"
     >
-      <div className="grid grid-cols-2 gap-6">
 
-        {/* Left column — Agent Suites */}
-        <div>
-          <p className="text-label mb-3" style={{ color: '#6B3FA0' }}>Agent Suites</p>
-          <div className="flex flex-col gap-1">
-            {agentSuites.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 p-2 rounded-[8px] hover:bg-[--brand-08] transition-colors duration-150 group"
-              >
-                <div className="w-8 h-8 rounded-[8px] bg-[--brand-08] flex items-center justify-center flex-shrink-0 group-hover:bg-[--brand-12] transition-colors duration-150">
-                  <item.icon size={15} className="text-brand" />
-                </div>
-                <div>
-                  <p className="text-[14px] font-semibold text-ink leading-none mb-1">{item.title}</p>
-                  <p className="text-[12px] text-ink3 leading-none">{item.subtitle}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
+      {/* ── AGENT SUITES ──────────────────────────────────────────── */}
+      <p style={{
+        fontSize: '11px', fontWeight: 600, letterSpacing: '0.10em',
+        textTransform: 'uppercase', color: '#6B3FA0',
+        fontFamily: 'var(--font-geist-sans)',
+      }}>
+        Agent Suites
+      </p>
 
-        {/* Right column — Industries */}
-        <div>
-          <p className="text-label mb-3" style={{ color: '#6B3FA0' }}>Industries</p>
-          <div className="flex flex-col gap-1">
-            {industries.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 p-2 rounded-[8px] hover:bg-[--brand-08] transition-colors duration-150 group"
-              >
-                <div className="w-8 h-8 rounded-[8px] bg-[--brand-08] flex items-center justify-center flex-shrink-0 group-hover:bg-[--brand-12] transition-colors duration-150">
-                  <item.icon size={15} className="text-brand" />
-                </div>
-                <div>
-                  <p className="text-[14px] font-semibold text-ink leading-none mb-1">{item.title}</p>
-                  <p className="text-[12px] text-ink3 leading-none">{item.subtitle}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
+      <div className="grid grid-cols-3 gap-3 mt-4">
+        {agentSuites.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group flex flex-col p-[18px] rounded-[14px] border border-transparent hover:border-[#E8E4F5] bg-[#FAFAFA] hover:bg-[#F5F3FF] transition-all duration-150 hover:shadow-[0_4px_16px_rgba(107,63,160,0.10)]"
+          >
+            {/* Icon */}
+            <div className="w-10 h-10 rounded-[10px] bg-[--brand-08] group-hover:bg-[--brand-12] flex items-center justify-center flex-shrink-0 transition-colors duration-150">
+              <item.icon size={18} className="text-brand" />
+            </div>
+            {/* Text */}
+            <p className="text-[15px] font-semibold text-ink mt-3 mb-1 leading-tight">{item.title}</p>
+            <p className="text-[12px] text-ink3 leading-[1.5] flex-1">{item.subtitle}</p>
+            {/* Arrow */}
+            <div className="flex justify-end mt-3">
+              <span className="text-[13px] text-brand opacity-0 group-hover:opacity-100 transition-opacity duration-150">→</span>
+            </div>
+          </Link>
+        ))}
       </div>
+
+      {/* ── DIVIDER ───────────────────────────────────────────────── */}
+      <div className="mt-6 mb-5 border-t border-[--border]" />
+
+      {/* ── INDUSTRIES ────────────────────────────────────────────── */}
+      <p style={{
+        fontSize: '11px', fontWeight: 600, letterSpacing: '0.10em',
+        textTransform: 'uppercase', color: '#6B3FA0',
+        fontFamily: 'var(--font-geist-sans)',
+      }}>
+        Industries
+      </p>
+
+      <div className="grid grid-cols-3 gap-2 mt-3">
+        {industries.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group flex items-center gap-2.5 py-[10px] px-3 rounded-[10px] hover:bg-[--brand-08] transition-colors duration-150"
+          >
+            <div className="w-7 h-7 rounded-[8px] bg-[--brand-08] group-hover:bg-[--brand-12] flex items-center justify-center flex-shrink-0 transition-colors duration-150">
+              <item.icon size={14} className="text-brand" />
+            </div>
+            <div>
+              <p className="text-[13px] font-semibold text-ink leading-none mb-0.5">{item.title}</p>
+              <p className="text-[11px] text-ink4 leading-none">{item.subtitle}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+
     </motion.div>
   )
 }
