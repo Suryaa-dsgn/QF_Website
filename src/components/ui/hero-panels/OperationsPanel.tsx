@@ -4,7 +4,8 @@ import { type Phase } from './types'
 
 // ── AGENT DATA ────────────────────────────────────────────────────────────────
 
-const AGENTS = [
+// variant=1  Claims / RCM workflow
+const AGENTS_1 = [
   {
     suite: 'WORKFORCE',
     color: '#6B3FA0',
@@ -43,6 +44,92 @@ const AGENTS = [
   },
 ] as const
 
+// variant=2  Referral Intake workflow
+const AGENTS_2 = [
+  {
+    suite: 'INTAKE',
+    color: '#0891B2',
+    name: 'Referral Intake',
+    activeText: '↻ Reviewing referral',
+    doneText: '✓ Patient placed',
+    time: 'now',
+    activatePhase: 'compliance' as Phase,
+  },
+  {
+    suite: 'WORKFORCE',
+    color: '#059669',
+    name: 'Schedule Optimizer',
+    activeText: '↻ Matching provider',
+    doneText: '✓ Visit scheduled',
+    time: 'now',
+    activatePhase: 'rcm' as Phase,
+  },
+  {
+    suite: 'WORKFORCE',
+    color: '#6B3FA0',
+    name: 'Call-Off Mgmt',
+    activeText: 'Monitoring',
+    doneText: '✓ Shift filled',
+    time: '4m ago',
+    activatePhase: null as Phase | null,
+  },
+  {
+    suite: 'COMPLIANCE',
+    color: '#0891B2',
+    name: 'Provider Cred.',
+    activeText: 'Monitoring',
+    doneText: '✓ Renewal queued',
+    time: '8m ago',
+    activatePhase: null as Phase | null,
+  },
+] as const
+
+// variant=3  Call-Off Management workflow
+const AGENTS_3 = [
+  {
+    suite: 'WORKFORCE',
+    color: '#6B3FA0',
+    name: 'Call-Off Mgmt',
+    activeText: '↻ Scanning staff',
+    doneText: '✓ Shift covered',
+    time: 'now',
+    activatePhase: 'compliance' as Phase,
+  },
+  {
+    suite: 'WORKFORCE',
+    color: '#059669',
+    name: 'Auto Approval',
+    activeText: '↻ Notifying Maria G.',
+    doneText: '✓ Confirmed 28s',
+    time: 'now',
+    activatePhase: 'rcm' as Phase,
+  },
+  {
+    suite: 'WORKFORCE',
+    color: '#059669',
+    name: 'Schedule Optimizer',
+    activeText: 'Monitoring',
+    doneText: '✓ Gaps filled',
+    time: '6m ago',
+    activatePhase: null as Phase | null,
+  },
+  {
+    suite: 'COMPLIANCE',
+    color: '#0891B2',
+    name: 'Provider Cred.',
+    activeText: 'Monitoring',
+    doneText: '✓ Renewal queued',
+    time: '9m ago',
+    activatePhase: null as Phase | null,
+  },
+] as const
+
+const AGENTS_BY_VARIANT = {
+  1: AGENTS_1,
+  2: AGENTS_2,
+  3: AGENTS_3,
+} as const
+
 type AgentRowState = 'done' | 'active' | 'pending'
 
 const ORDER: Phase[] = ['idle', 'claim-in', 'compliance', 'rcm', 'resolved', 'resetting']
@@ -52,24 +139,31 @@ function getRowState(phase: Phase, activatePhase: Phase | null): AgentRowState {
     return activatePhase === null ? 'done' : 'pending'
   }
   if (activatePhase === null) return 'done'
-  const phaseIdx = ORDER.indexOf(phase)
+  const phaseIdx    = ORDER.indexOf(phase)
   const activateIdx = ORDER.indexOf(activatePhase)
-  if (phaseIdx < activateIdx)  return 'pending'
+  if (phaseIdx < activateIdx)   return 'pending'
   if (phaseIdx === activateIdx) return 'active'
   return 'done'
 }
 
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 
-export default function OperationsPanel({ phase }: { phase: Phase }) {
+export default function OperationsPanel({
+  phase,
+  variant = 1,
+}: {
+  phase: Phase
+  variant?: 1 | 2 | 3
+}) {
+  const AGENTS = AGENTS_BY_VARIANT[variant]
+
   return (
     <div
       style={{
         width: '320px',
         background: '#FFFFFF',
         borderRadius: '16px',
-        boxShadow:
-          '0 4px 20px rgba(107,63,160,0.08), 0 1px 6px rgba(0,0,0,0.04)',
+        boxShadow: '0 4px 20px rgba(107,63,160,0.08), 0 1px 6px rgba(0,0,0,0.04)',
         border: '1px solid rgba(107,63,160,0.08)',
         overflow: 'hidden',
         fontFamily: 'var(--font-geist-sans)',
@@ -88,24 +182,9 @@ export default function OperationsPanel({ phase }: { phase: Phase }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <div
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: '#6B3FA0',
-            }}
-          />
-          <span style={{ fontSize: '11px', fontWeight: 600, color: '#0A0A0A' }}>
-            Operations
-          </span>
-          <span
-            style={{
-              fontSize: '9px',
-              color: '#9CA3AF',
-              fontFamily: 'var(--font-geist-mono)',
-            }}
-          >
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6B3FA0' }} />
+          <span style={{ fontSize: '11px', fontWeight: 600, color: '#0A0A0A' }}>Operations</span>
+          <span style={{ fontSize: '9px', color: '#9CA3AF', fontFamily: 'var(--font-geist-mono)' }}>
             4 active
           </span>
         </div>
@@ -124,38 +203,19 @@ export default function OperationsPanel({ phase }: { phase: Phase }) {
         >
           <div
             className="animate-pulse"
-            style={{
-              width: '5px',
-              height: '5px',
-              borderRadius: '50%',
-              background: '#22C55E',
-            }}
+            style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#22C55E' }}
           />
-          <span
-            style={{ fontSize: '10px', fontWeight: 600, color: '#16A34A' }}
-          >
-            Live
-          </span>
+          <span style={{ fontSize: '10px', fontWeight: 600, color: '#16A34A' }}>Live</span>
         </div>
       </div>
 
       {/* Agent rows */}
       <div style={{ padding: '6px 0' }}>
         {AGENTS.map((agent, i) => {
-          const state = getRowState(phase, agent.activatePhase)
-          const dotColor =
-            state === 'active'
-              ? agent.color
-              : state === 'done'
-              ? '#22C55E'
-              : '#CBD5E1'
-          const statusText =
-            state === 'active'
-              ? agent.activeText
-              : state === 'done'
-              ? agent.doneText
-              : 'Monitoring...'
-          const timeText = state === 'active' ? 'now' : agent.time
+          const state      = getRowState(phase, agent.activatePhase)
+          const dotColor   = state === 'active' ? agent.color : state === 'done' ? '#22C55E' : '#CBD5E1'
+          const statusText = state === 'active' ? agent.activeText : state === 'done' ? agent.doneText : 'Monitoring...'
+          const timeText   = state === 'active' ? 'now' : agent.time
 
           return (
             <div
@@ -182,14 +242,7 @@ export default function OperationsPanel({ phase }: { phase: Phase }) {
                   marginRight: '10px',
                 }}
               >
-                <div
-                  style={{
-                    width: '6px',
-                    height: '6px',
-                    borderRadius: '50%',
-                    background: agent.color,
-                  }}
-                />
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: agent.color }} />
               </div>
 
               {/* Name + status */}
@@ -245,13 +298,7 @@ export default function OperationsPanel({ phase }: { phase: Phase }) {
                     transition: 'background 400ms ease',
                   }}
                 />
-                <span
-                  style={{
-                    fontSize: '9px',
-                    color: '#C4C9D4',
-                    fontFamily: 'var(--font-geist-mono)',
-                  }}
-                >
+                <span style={{ fontSize: '9px', color: '#C4C9D4', fontFamily: 'var(--font-geist-mono)' }}>
                   {timeText}
                 </span>
               </div>
@@ -271,22 +318,10 @@ export default function OperationsPanel({ phase }: { phase: Phase }) {
           background: '#FAFAF9',
         }}
       >
-        <span
-          style={{
-            fontSize: '10px',
-            color: '#C4C9D4',
-            fontFamily: 'var(--font-geist-mono)',
-          }}
-        >
+        <span style={{ fontSize: '10px', color: '#C4C9D4', fontFamily: 'var(--font-geist-mono)' }}>
           6 tasks/min ↑
         </span>
-        <span
-          style={{
-            fontSize: '10px',
-            color: '#C4C9D4',
-            fontFamily: 'var(--font-geist-mono)',
-          }}
-        >
+        <span style={{ fontSize: '10px', color: '#C4C9D4', fontFamily: 'var(--font-geist-mono)' }}>
           ↑ 284 events
         </span>
       </div>
