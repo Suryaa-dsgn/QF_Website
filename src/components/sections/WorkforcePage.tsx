@@ -506,7 +506,7 @@ function Hero() {
 
         {/* Scroll cue */}
         <div
-          className="hero-animate hidden md:flex flex-col items-center gap-2 mt-14"
+          className="hero-animate flex flex-col items-center gap-2 mt-14"
           aria-hidden="true"
         >
           <div
