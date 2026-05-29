@@ -11,7 +11,7 @@ const config: IndustryPageConfig = {
   categoryColor: '#7C3AED',
   headline: '24/7 operations. Zero coverage gaps.',
   subtext:
-    'Quickflows workforce agents handle shift coverage, capacity planning, and compliance across staffing agencies, airports, plants, and security firms — automatically.',
+    'Quickflows workforce agents handle shift coverage, capacity planning, and compliance across staffing agencies, airports, plants, and security firms, automatically.',
 
   scenarios: [
     {

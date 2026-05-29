@@ -11,7 +11,7 @@ const config: IndustryPageConfig = {
   categoryColor: '#059669',
   headline: 'Every invoice. Every deal. Handled.',
   subtext:
-    'From AP/AR reconciliation to RCM recovery and REIT deal qualification — Quickflows financial agents close the loop before your team opens it.',
+    'From AP/AR reconciliation to RCM recovery and REIT deal qualification: Quickflows financial agents close the loop before your team opens it.',
 
   scenarios: [
     {

@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 const config: IndustryPageConfig = {
   category: 'Healthcare',
   categoryColor: '#0284C7',
-  headline: 'Operations that never stop — covered.',
+  headline: 'Operations that never stop: covered.',
   subtext:
-    'From hospital scheduling to home health EVV compliance — Quickflows agents handle every shift, credential, and visit verification before anyone notices a gap.',
+    'From hospital scheduling to home health EVV compliance: Quickflows agents handle every shift, credential, and visit verification before anyone notices a gap.',
 
   scenarios: [
     {
