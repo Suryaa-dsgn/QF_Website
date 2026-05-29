@@ -407,7 +407,7 @@ function Hero() {
   return (
     <section
       className="flex flex-col items-center justify-center text-center px-10"
-      style={{ minHeight: 'calc(100vh - 60px)', paddingTop: '80px', paddingBottom: '60px' }}
+      style={{ minHeight: 'calc(100vh - 60px)', paddingTop: '80px', paddingBottom: '20px' }}
     >
       <div ref={heroRef} className="max-w-[680px] mx-auto">
 
@@ -466,7 +466,7 @@ function Hero() {
 
         {/* Scroll cue */}
         <div
-          className="hero-animate flex flex-col items-center gap-2 mt-14"
+          className="hero-animate flex flex-col items-center gap-2 mt-8"
           aria-hidden="true"
         >
           <div
@@ -568,7 +568,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
       >
         {/* Static lead-in stub: always visible, connects header to animated line */}
         <line
-          x1="200" y1="80"
+          x1="200" y1="40"
           x2="200" y2="430"
           stroke="#0891B2"
           strokeWidth="1.5"
@@ -599,7 +599,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
         <div
           style={{
             position: 'absolute',
-            top: '80px',
+            top: '40px',
             left: '40px',
             maxWidth: '460px',
             zIndex: 10,
