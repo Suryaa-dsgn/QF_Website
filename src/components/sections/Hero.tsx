@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import HeroComposition from '@/components/ui/HeroComposition'
+import HeroOrbit from '@/components/ui/HeroOrbit'
 import BookDemoButton from '@/components/BookDemoButton'
 
 // ─── ROTATING PHRASES ─────────────────────────────────────────────
@@ -157,8 +157,8 @@ export default function Hero() {
       className="min-h-[calc(100vh-60px)] flex flex-col justify-center pt-[60px] overflow-x-clip"
     >
       {/* ── Main grid ── */}
-      <div className="max-w-[1280px] mx-auto w-full px-10 pt-6 pb-0">
-        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-6 items-center">
+      <div className="max-w-[1280px] mx-auto w-full px-5 sm:px-8 lg:px-10 pt-6 pb-0">
+        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-8 lg:gap-4 items-center">
 
           {/* ── LEFT: Text content ── */}
           <div className="flex flex-col">
@@ -177,10 +177,10 @@ export default function Hero() {
               style={{ fontSize: 'clamp(32px, 3.0vw, 56px)' }}
             >
               <div className="overflow-hidden leading-[1.1]">
-                {splitLine('When operations break,')}
+                <span className="hero-headline-word inline-block" style={{ marginRight: '0.28em', whiteSpace: 'nowrap' }}>When operations</span><span className="hero-headline-word inline-block">break,</span>
               </div>
               <div className="overflow-hidden leading-[1.1]">
-                {splitLine("they're already handled.")}
+                <span className="hero-headline-word inline-block" style={{ marginRight: '0.28em', whiteSpace: 'nowrap' }}>they're already</span><span className="hero-headline-word inline-block">handled.</span>
               </div>
             </h1>
 
@@ -230,7 +230,7 @@ export default function Hero() {
           {/* Hidden on mobile, visible on lg+ — bleeds past right edge intentionally */}
           <div className="hero-panel-wrapper hidden lg:block">
             <div className="lg:translate-x-8 xl:translate-x-14">
-              <HeroComposition />
+              <HeroOrbit />
             </div>
           </div>
 
