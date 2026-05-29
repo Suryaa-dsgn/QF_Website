@@ -1,7 +1,6 @@
 import { type Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import HowItWorks from '@/components/sections/HowItWorks'
-import CTA from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
@@ -17,7 +16,6 @@ export default function Page() {
       <div style={{ paddingTop: '60px' }}>
         <HowItWorks extended />
       </div>
-      <CTA />
       <Footer />
     </>
   )

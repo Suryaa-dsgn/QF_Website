@@ -169,7 +169,7 @@ function PanelSpotlightEl({ spotlight, delay }: { spotlight: PanelSpotlight; del
         </h3>
         <p className="text-[13px] text-ink3 font-ui leading-relaxed">{spotlight.description}</p>
       </div>
-      <div className="h-[260px] overflow-hidden">
+      <div className="h-[460px] overflow-hidden">
         <Panel />
       </div>
     </motion.div>
