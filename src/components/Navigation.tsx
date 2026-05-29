@@ -16,19 +16,19 @@ const agentSuites = [
   {
     icon: Users,
     title: 'Workforce Agents',
-    subtitle: '8 agents. Scheduling, capacity, call-offs.',
+    subtitle: 'Schedule Optimizer · Call-Off Management · Capacity Planner · StaffAssist · more',
     href: '/workforce',
   },
   {
     icon: DollarSign,
     title: 'Financial Agents',
-    subtitle: '4 agents. AR, collections, revenue cycle.',
+    subtitle: 'AP/AR Matching · Payment Collection · Revenue Cycle Management · REIT Deal Qualifier',
     href: '/financial',
   },
   {
     icon: ShieldCheck,
     title: 'Compliance Agents',
-    subtitle: '3 agents. Credentialing, claims, contracts.',
+    subtitle: 'Provider Credentialing · Claims Compliance · Contract Compliance',
     href: '/compliance',
   },
 ]

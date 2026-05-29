@@ -395,7 +395,7 @@ function MobileWorkforceStack() {
             marginBottom: '10px',
           }}
         >
-          All eight. Running simultaneously.
+          All agents. Running simultaneously.
         </h3>
         <p
           style={{
@@ -475,8 +475,6 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          Eight agents.{' '}
-          <br className="hidden sm:block" />
           One workforce{' '}
           <br className="hidden sm:block" />
           that runs itself.
@@ -536,7 +534,7 @@ function Hero() {
               textTransform: 'uppercase',
             }}
           >
-            8 agents below
+            agents below
           </p>
         </div>
 
@@ -678,7 +676,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             }}
           >
             The 6am callout.
-            <br />Eight agents. Nothing uncovered.
+            <br />Nothing uncovered.
           </h2>
           <p
             style={{
@@ -1045,7 +1043,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
               marginBottom: '24px',
             }}
           >
-            All eight. Running simultaneously.
+            All agents. Running simultaneously.
             <br />While your team focuses on what actually needs them.
           </h3>
           <BookDemoButton className="btn-base btn-primary">

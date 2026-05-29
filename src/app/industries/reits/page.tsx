@@ -91,7 +91,7 @@ const config: IndustryPageConfig = {
 
   suiteHref: '/financial',
   suiteLabel: 'Explore Financial Agents',
-  suiteAgentCount: '4 financial agents',
+  suiteAgentCount: 'Financial agents',
   suiteDescription:
     'AP/AR matching, payment collection, revenue cycle recovery, and REIT deal qualification — pre-configured for your stack.',
   secondarySuiteHref: '/compliance',

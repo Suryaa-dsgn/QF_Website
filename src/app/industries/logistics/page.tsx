@@ -91,7 +91,7 @@ const config: IndustryPageConfig = {
 
   suiteHref: '/workforce',
   suiteLabel: 'Explore Workforce Agents',
-  suiteAgentCount: '8 workforce agents',
+  suiteAgentCount: 'Workforce agents',
   suiteDescription:
     'Scheduling, call-offs, capacity planning, auto-approval, and more — configured for round-the-clock operations from day one.',
 }

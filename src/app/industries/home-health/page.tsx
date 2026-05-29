@@ -91,7 +91,7 @@ const config: IndustryPageConfig = {
 
   suiteHref: '/workforce',
   suiteLabel: 'Explore Workforce Agents',
-  suiteAgentCount: '8 workforce agents',
+  suiteAgentCount: 'Workforce agents',
   suiteDescription:
     'Scheduling, call-offs, EVV, referral intake, capacity planning, and more — configured for healthcare from day one.',
   secondarySuiteHref: '/compliance',

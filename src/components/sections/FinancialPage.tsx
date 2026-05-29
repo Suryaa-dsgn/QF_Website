@@ -363,7 +363,7 @@ function MobileFinancialStack() {
             marginBottom: '10px',
           }}
         >
-          All four. Running simultaneously.
+          All agents. Running simultaneously.
         </h3>
         <p
           style={{
@@ -443,8 +443,6 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          Four agents.{' '}
-          <br className="hidden sm:block" />
           One finance team{' '}
           <br className="hidden sm:block" />
           that closes itself.
@@ -504,7 +502,7 @@ function Hero() {
               textTransform: 'uppercase',
             }}
           >
-            4 agents below
+            agents below
           </p>
         </div>
 
@@ -639,7 +637,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             }}
           >
             Month-end close.
-            <br />Four agents. Nothing leaking.
+            <br />Nothing leaking.
           </h2>
           <p
             style={{
@@ -846,7 +844,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
               marginBottom: '24px',
             }}
           >
-            All four. Running simultaneously.
+            All agents. Running simultaneously.
             <br />While your finance team focuses on what actually needs them.
           </h3>
           <BookDemoButton className="btn-base btn-primary">

@@ -355,7 +355,7 @@ function MobileComplianceStack() {
             marginBottom: '10px',
           }}
         >
-          All three. Running around the clock.
+          All agents. Running around the clock.
         </h3>
         <p
           style={{
@@ -435,8 +435,6 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          Three agents.{' '}
-          <br className="hidden sm:block" />
           Zero compliance{' '}
           <br className="hidden sm:block" />
           gaps.
@@ -496,7 +494,7 @@ function Hero() {
               textTransform: 'uppercase',
             }}
           >
-            3 agents below
+            agents below
           </p>
         </div>
 
@@ -622,7 +620,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
             }}
           >
             Zero compliance gaps.
-            <br />Three agents. Always on.
+            <br />Always on.
           </h2>
           <p
             style={{
@@ -789,7 +787,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
               marginBottom: '24px',
             }}
           >
-            All three. Running around the clock.
+            All agents. Running around the clock.
             <br />While your compliance team focuses on exceptions.
           </h3>
           <BookDemoButton className="btn-base btn-primary">
