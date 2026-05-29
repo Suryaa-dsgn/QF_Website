@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import BookDemoButton from '@/components/BookDemoButton'
 
 export const metadata: Metadata = {
   title: 'Contact Us | Quickflows.ai',
@@ -195,21 +194,6 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="border-t border-[--border-mid] my-6" />
-
-                  <p
-                    className="font-display font-bold text-ink mb-2"
-                    style={{ fontSize: '16px', letterSpacing: '-0.02em' }}
-                  >
-                    Prefer a live demo?
-                  </p>
-                  <p className="text-[13px] text-ink3 font-ui leading-relaxed mb-5">
-                    See three Quickflows agents working live —
-                    20 minutes, no prep needed, tailored to your actual operations.
-                  </p>
-                  <BookDemoButton className="btn-base btn-primary w-full text-center">
-                    Talk to an Expert →
-                  </BookDemoButton>
                 </div>
 
                 {/* Trust note */}

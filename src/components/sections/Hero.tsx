@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import HeroDashboard from '@/components/ui/HeroDashboard'
+import HeroCallOffFlow from '@/components/ui/HeroCallOffFlow'
 import BookDemoButton from '@/components/BookDemoButton'
 
 // ─── ROTATING PHRASES ─────────────────────────────────────────────
@@ -230,7 +230,7 @@ export default function Hero() {
           {/* Hidden on mobile, visible on lg+ — bleeds past right edge intentionally */}
           <div className="hero-panel-wrapper hidden lg:block">
             <div className="lg:translate-x-8 xl:translate-x-14">
-              <HeroDashboard />
+              <HeroCallOffFlow />
             </div>
           </div>
 
