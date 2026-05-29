@@ -45,7 +45,7 @@ export default function CTA() {
           >
             From the 6am callout to the{' '}
             <br className="hidden sm:block" />
-            month-end close — handled.
+            month-end close: handled.
           </motion.h2>
 
           {/* Subhead */}
@@ -89,10 +89,10 @@ export default function CTA() {
             <span className="text-[12px] text-ink4 font-ui">✓ First agent live in under 100 hours</span>
             <span className="hidden sm:block w-px h-3 bg-[--border]" />
             <a
-              href="tel:6782670106"
+              href="mailto:info@quickflows.ai"
               className="text-[12px] text-ink4 font-ui hover:text-ink transition-colors duration-150"
             >
-              678-267-0106
+              info@quickflows.ai
             </a>
           </motion.div>
 
