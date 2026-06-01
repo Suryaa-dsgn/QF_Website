@@ -7,7 +7,6 @@ const platformLinks = [
   { label: 'Workforce Agents',  href: '/workforce'    },
   { label: 'Financial Agents',  href: '/financial'    },
   { label: 'Compliance Agents', href: '/compliance'   },
-  { label: 'Contact',           href: '/contact'      },
 ]
 
 const industryLinks = [
@@ -19,11 +18,8 @@ const industryLinks = [
 ]
 
 const companyLinks = [
-  { label: 'About',             href: '/about'   },
-  { label: 'Contact',           href: '/contact' },
-  { label: 'Talk to an Expert', href: '/contact' },
-  { label: 'Privacy Policy',    href: '/privacy' },
-  { label: 'Terms of Service',  href: '/terms'   },
+  { label: 'About',   href: '/about'   },
+  { label: 'Contact', href: '/contact' },
 ]
 
 // ─── LOGO MARK ────────────────────────────────────────────────────
@@ -130,14 +126,6 @@ export default function Footer() {
                 className="text-[12px] text-ink4 font-ui font-medium hover:text-ink transition-colors duration-150"
               >
                 LinkedIn ↗
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[12px] text-ink4 font-ui font-medium hover:text-ink transition-colors duration-150"
-              >
-                Twitter ↗
               </a>
             </div>
           </div>
