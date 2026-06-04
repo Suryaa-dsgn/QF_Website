@@ -386,6 +386,20 @@ body {
   100% { transform: scale(2.8); opacity: 0;    }
 }
 
+/* Footer card — responsive */
+@media (max-width: 1023px) {
+  .footer-nav-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    padding: 32px 24px 28px 24px !important;
+  }
+  .footer-tagline-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0 24px 36px !important;
+    gap: 24px !important;
+  }
+}
+
 /* ═══════════════════════════════════════════════
    SCROLLBAR (subtle, brand-tinted)
 ═══════════════════════════════════════════════ */
