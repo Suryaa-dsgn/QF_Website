@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRef, useEffect } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CalendarDays, TrendingUp, ShieldCheck } from 'lucide-react'
 
 // ─── TYPES ───────────────────────────────────────────────────────
 
@@ -21,6 +21,7 @@ interface VerticalCardProps {
   agentCount: string
   ctaLabel: string
   ctaHref: string
+  icon: React.ElementType
   delay?: number
 }
 
@@ -28,7 +29,7 @@ interface VerticalCardProps {
 
 function VerticalCard({
   pillLabel, pillColor, pillBg, pillBorder,
-  headline, body, chips, agentCount, ctaLabel, ctaHref, delay = 0,
+  headline, body, chips, agentCount, ctaLabel, ctaHref, icon: Icon, delay = 0,
 }: VerticalCardProps) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -57,18 +58,20 @@ function VerticalCard({
     return () => observer.disconnect()
   }, [delay])
 
+  const agentNum = agentCount.split(' ')[0]
+
   return (
     <div
       ref={ref}
-      className="bg-white rounded-[16px] p-6 border border-[--border] flex flex-col"
+      className="bg-white rounded-[20px] border border-[--border] overflow-hidden flex flex-col"
       style={{
         transition: 'transform 250ms ease-out, border-color 250ms ease-out, box-shadow 250ms ease-out',
       }}
       onMouseEnter={e => {
         const t = e.currentTarget
         t.style.transform = 'translateY(-4px)'
-        t.style.borderColor = 'rgba(107,63,160,0.18)'
-        t.style.boxShadow = '0 12px 40px rgba(107,63,160,0.10)'
+        t.style.borderColor = `${pillColor}30`
+        t.style.boxShadow = `0 14px 44px ${pillColor}22`
       }}
       onMouseLeave={e => {
         const t = e.currentTarget
@@ -77,52 +80,110 @@ function VerticalCard({
         t.style.boxShadow = 'none'
       }}
     >
-      {/* Pill */}
-      <span
-        className="inline-block self-start text-[10px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full mb-4"
-        style={{ color: pillColor, background: pillBg, border: `1px solid ${pillBorder}` }}
+      {/* ── Gradient header ── */}
+      <div
+        style={{
+          position:        'relative',
+          overflow:        'hidden',
+          padding:         '20px 20px 18px',
+          minHeight:       '152px',
+          background:      `radial-gradient(circle, ${pillColor}1A 1px, transparent 1px),
+                            linear-gradient(145deg, ${pillColor}12 0%, ${pillColor}05 100%)`,
+          backgroundSize:  '22px 22px, 100% 100%',
+        }}
       >
-        {pillLabel}
-      </span>
+        {/* Icon box */}
+        <div
+          style={{
+            width:           '38px',
+            height:          '38px',
+            borderRadius:    '10px',
+            background:      `${pillColor}16`,
+            border:          `1px solid ${pillColor}28`,
+            display:         'flex',
+            alignItems:      'center',
+            justifyContent:  'center',
+            marginBottom:    '14px',
+          }}
+        >
+          <Icon size={18} color={pillColor} />
+        </div>
 
-      {/* Headline */}
-      <h3
-        className="font-display font-bold text-ink mb-2"
-        style={{ fontSize: '19px', letterSpacing: '-0.025em', lineHeight: '1.25' }}
-      >
-        {headline.join(' ')}
-      </h3>
+        {/* Suite label pill */}
+        <span
+          className="inline-block text-[10px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full"
+          style={{ color: pillColor, background: pillBg, border: `1px solid ${pillBorder}` }}
+        >
+          {pillLabel}
+        </span>
 
-      {/* Body */}
-      <p
-        className="text-ink3 font-ui mb-4"
-        style={{ fontSize: '13px', lineHeight: '1.6' }}
-      >
-        {body.join(' ')}
-      </p>
-
-      {/* Divider */}
-      <div className="border-t border-[rgba(107,63,160,0.07)] mb-4" />
-
-      {/* Capability chips */}
-      <div className="flex flex-wrap gap-1.5 mb-5">
-        {chips.map(chip => (
-          <span
-            key={chip.label}
-            className="text-[11px] font-medium font-ui px-2 py-[3px] rounded-[5px]"
-            style={{
-              color: '#3D3D3D',
-              background: '#F5F5F7',
-              border: '1px solid rgba(0,0,0,0.06)',
-            }}
-          >
-            {chip.label}
-          </span>
-        ))}
+        {/* Large decorative number — watermark */}
+        <span
+          style={{
+            position:      'absolute',
+            right:         '18px',
+            bottom:        '-4px',
+            fontSize:      '90px',
+            fontWeight:    800,
+            fontFamily:    'var(--font-bricolage)',
+            color:         pillColor,
+            opacity:       0.11,
+            letterSpacing: '-0.05em',
+            lineHeight:    1,
+            pointerEvents: 'none',
+            userSelect:    'none',
+          }}
+        >
+          {agentNum}
+        </span>
       </div>
 
-      {/* Bottom row */}
-      <div className="flex items-center justify-between mt-auto pt-1">
+      {/* ── Content ── */}
+      <div style={{ padding: '20px 20px 0' }}>
+        {/* Headline */}
+        <h3
+          className="font-display font-bold text-ink mb-2"
+          style={{ fontSize: '19px', letterSpacing: '-0.025em', lineHeight: '1.25' }}
+        >
+          {headline.join(' ')}
+        </h3>
+
+        {/* Body */}
+        <p
+          className="text-ink3 font-ui mb-4"
+          style={{ fontSize: '13px', lineHeight: '1.6' }}
+        >
+          {body.join(' ')}
+        </p>
+
+        {/* Capability chips — suite-tinted */}
+        <div className="flex flex-wrap gap-1.5">
+          {chips.map(chip => (
+            <span
+              key={chip.label}
+              className="text-[11px] font-medium font-ui px-2 py-[3px] rounded-[5px]"
+              style={{
+                color:      pillColor,
+                background: `${pillColor}0D`,
+                border:     `1px solid ${pillColor}1F`,
+              }}
+            >
+              {chip.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Footer ── */}
+      <div
+        className="flex items-center justify-between mt-auto"
+        style={{
+          padding:    '12px 20px 20px',
+          marginTop:  'auto',
+          borderTop:  '1px solid rgba(107,63,160,0.07)',
+          marginLeft: '0',
+        }}
+      >
         <span className="font-mono text-[12px] text-ink4">{agentCount}</span>
         <Link
           href={ctaHref}
@@ -212,6 +273,7 @@ export default function VerticalCards() {
             agentCount="8 agents"
             ctaLabel="Explore Workforce"
             ctaHref="/workforce"
+            icon={CalendarDays}
             delay={0}
           />
 
@@ -231,6 +293,7 @@ export default function VerticalCards() {
             agentCount="4 agents"
             ctaLabel="Explore Financial"
             ctaHref="/financial"
+            icon={TrendingUp}
             delay={0.08}
           />
 
@@ -249,6 +312,7 @@ export default function VerticalCards() {
             agentCount="3 agents"
             ctaLabel="Explore Compliance"
             ctaHref="/compliance"
+            icon={ShieldCheck}
             delay={0.16}
           />
 
