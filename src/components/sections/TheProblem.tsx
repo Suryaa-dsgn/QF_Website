@@ -12,13 +12,202 @@ interface IncidentCardProps {
   incident: string[]
   status: string
   statusColor: string
+  panel: React.ReactNode
   delay?: number
+}
+
+// ─── SHARED PANEL STYLES ─────────────────────────────────────────
+
+const PANEL_WRAP: React.CSSProperties = {
+  background:   '#FAFAFA',
+  border:       '1px solid rgba(107,63,160,0.07)',
+  borderRadius: '10px',
+  overflow:     'hidden',
+  fontFamily:   'var(--font-geist-mono)',
+  fontSize:     '11px',
+}
+
+const PANEL_HEADER: React.CSSProperties = {
+  display:        'flex',
+  justifyContent: 'space-between',
+  alignItems:     'center',
+  padding:        '8px 12px',
+  background:     'rgba(107,63,160,0.03)',
+  borderBottom:   '1px solid rgba(107,63,160,0.06)',
+  color:          '#9CA3AF',
+  fontSize:       '10px',
+}
+
+const PANEL_ROW: React.CSSProperties = {
+  display:        'flex',
+  alignItems:     'center',
+  padding:        '7px 12px',
+  gap:            '8px',
+  fontSize:       '11px',
+}
+
+const PANEL_FOOTER: React.CSSProperties = {
+  display:    'flex',
+  alignItems: 'center',
+  gap:        '6px',
+  padding:    '7px 12px',
+  fontSize:   '10px',
+}
+
+// ─── WORKFORCE MINI PANEL ────────────────────────────────────────
+
+function WorkforceMiniPanel() {
+  return (
+    <div style={PANEL_WRAP}>
+      <div style={PANEL_HEADER}>
+        <span>Shifts · Thursday</span>
+        <span style={{ fontSize: '9px' }}>06:00–22:00</span>
+      </div>
+
+      {/* Called-out row */}
+      <div style={{
+        ...PANEL_ROW,
+        background:   'rgba(244,162,97,0.09)',
+        borderBottom: '1px solid rgba(244,162,97,0.14)',
+      }}>
+        <span style={{ color: '#9CA3AF', whiteSpace: 'nowrap', minWidth: '82px' }}>06:00–14:00</span>
+        <span style={{ color: '#C4B5D9', flex: 1 }}>—</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <div style={{
+            width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+            background: '#F4A261',
+            animation: 'eyebrow-pulse 2s ease-in-out infinite',
+          }} />
+          <span style={{ color: '#F4A261', fontWeight: 600, fontSize: '10px', whiteSpace: 'nowrap' }}>
+            CALLED OUT
+          </span>
+        </div>
+      </div>
+
+      {/* Normal rows */}
+      <div style={{ ...PANEL_ROW, borderBottom: '1px solid rgba(107,63,160,0.05)' }}>
+        <span style={{ color: '#C4B5D9', whiteSpace: 'nowrap', minWidth: '82px' }}>14:00–22:00</span>
+        <span style={{ color: '#C4B5D9', flex: 1 }}>Sarah K.</span>
+        <span style={{ color: '#9CA3AF', fontSize: '10px' }}>✓ Confirmed</span>
+      </div>
+      <div style={{ ...PANEL_ROW }}>
+        <span style={{ color: '#C4B5D9', whiteSpace: 'nowrap', minWidth: '82px' }}>22:00–06:00</span>
+        <span style={{ color: '#C4B5D9', flex: 1 }}>Mike T.</span>
+        <span style={{ color: '#9CA3AF', fontSize: '10px' }}>✓ Confirmed</span>
+      </div>
+
+      <div style={{ ...PANEL_FOOTER, borderTop: '1px solid rgba(244,162,97,0.14)', color: '#F4A261' }}>
+        <span>↻ Coordinator: making calls · 47 min</span>
+      </div>
+    </div>
+  )
+}
+
+// ─── FINANCIAL MINI PANEL ────────────────────────────────────────
+
+function FinancialMiniPanel() {
+  return (
+    <div style={PANEL_WRAP}>
+      <div style={PANEL_HEADER}>
+        <span>AP / AR Queue</span>
+        <span style={{ fontSize: '9px' }}>3 items</span>
+      </div>
+
+      {/* Normal rows */}
+      <div style={{ ...PANEL_ROW, borderBottom: '1px solid rgba(107,63,160,0.05)' }}>
+        <span style={{ color: '#C4B5D9', minWidth: '52px' }}>INV-480</span>
+        <span style={{ color: '#C4B5D9', flex: 1, textAlign: 'right', paddingRight: '10px' }}>$2,100</span>
+        <span style={{ color: '#9CA3AF', fontSize: '10px' }}>✓ Matched</span>
+      </div>
+      <div style={{ ...PANEL_ROW, borderBottom: '1px solid rgba(107,63,160,0.05)' }}>
+        <span style={{ color: '#C4B5D9', minWidth: '52px' }}>INV-481</span>
+        <span style={{ color: '#C4B5D9', flex: 1, textAlign: 'right', paddingRight: '10px' }}>$5,800</span>
+        <span style={{ color: '#9CA3AF', fontSize: '10px' }}>✓ Matched</span>
+      </div>
+
+      {/* Flagged row */}
+      <div style={{
+        ...PANEL_ROW,
+        background:   'rgba(244,162,97,0.09)',
+        borderBottom: '1px solid rgba(244,162,97,0.14)',
+      }}>
+        <span style={{ color: '#D97706', fontWeight: 600, minWidth: '52px' }}>INV-482</span>
+        <span style={{ color: '#C4B5D9', flex: 1, textAlign: 'right', paddingRight: '10px' }}>$4,280</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <div style={{
+            width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+            background: '#F4A261',
+            animation: 'eyebrow-pulse 2s ease-in-out infinite',
+          }} />
+          <span style={{ color: '#F4A261', fontWeight: 600, fontSize: '10px', whiteSpace: 'nowrap' }}>
+            SHORT PAY −$380
+          </span>
+        </div>
+      </div>
+
+      <div style={{ ...PANEL_FOOTER, borderTop: '1px solid rgba(244,162,97,0.14)', color: '#F4A261' }}>
+        <span>● Day 4 · Manual cross-reference in progress</span>
+      </div>
+    </div>
+  )
+}
+
+// ─── COMPLIANCE MINI PANEL ───────────────────────────────────────
+
+function ComplianceMiniPanel() {
+  return (
+    <div style={PANEL_WRAP}>
+      <div style={PANEL_HEADER}>
+        <span>Provider Credentials</span>
+        <span style={{ fontSize: '9px' }}>3 providers</span>
+      </div>
+
+      {/* Normal rows */}
+      <div style={{ ...PANEL_ROW, borderBottom: '1px solid rgba(107,63,160,0.05)' }}>
+        <span style={{ color: '#C4B5D9', minWidth: '72px' }}>Dr. Garcia</span>
+        <span style={{ color: '#C4B5D9', flex: 1 }}>DEA Reg.</span>
+        <span style={{ color: '#C4B5D9', marginRight: '8px', fontSize: '10px' }}>Mar 2027</span>
+        <span style={{ color: '#9CA3AF', fontSize: '10px' }}>✓ Current</span>
+      </div>
+      <div style={{ ...PANEL_ROW, borderBottom: '1px solid rgba(107,63,160,0.05)' }}>
+        <span style={{ color: '#C4B5D9', minWidth: '72px' }}>Dr. Chen</span>
+        <span style={{ color: '#C4B5D9', flex: 1 }}>NPI</span>
+        <span style={{ color: '#C4B5D9', marginRight: '8px', fontSize: '10px' }}>Jun 2026</span>
+        <span style={{ color: '#9CA3AF', fontSize: '10px' }}>✓ Current</span>
+      </div>
+
+      {/* Expiring row */}
+      <div style={{
+        ...PANEL_ROW,
+        background:   'rgba(230,57,70,0.06)',
+        borderBottom: '1px solid rgba(230,57,70,0.12)',
+      }}>
+        <span style={{ color: '#E63946', fontWeight: 600, minWidth: '72px' }}>Dr. Patel</span>
+        <span style={{ color: '#C4B5D9', flex: 1 }}>DEA Reg.</span>
+        <span style={{ color: '#E63946', fontWeight: 600, marginRight: '8px', fontSize: '10px' }}>
+          11 days
+        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <div style={{
+            width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+            background: '#E63946',
+            animation: 'eyebrow-pulse 2s ease-in-out infinite',
+          }} />
+          <span style={{ color: '#E63946', fontWeight: 600, fontSize: '10px' }}>EXPIRING</span>
+        </div>
+      </div>
+
+      <div style={{ ...PANEL_FOOTER, borderTop: '1px solid rgba(230,57,70,0.12)', color: '#E63946' }}>
+        <span>● Renewal not initiated · Audit: next month</span>
+      </div>
+    </div>
+  )
 }
 
 // ─── INCIDENT CARD ───────────────────────────────────────────────
 
 function IncidentCard({
-  tag, tagColor, tagBg, timestamp, incident, status, statusColor, delay = 0,
+  tag, tagColor, tagBg, timestamp, incident, status, statusColor, panel, delay = 0,
 }: IncidentCardProps) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -50,7 +239,7 @@ function IncidentCard({
   return (
     <div
       ref={ref}
-      className="bg-white rounded-[14px] p-6 border border-[--border] cursor-default"
+      className="bg-white rounded-[14px] border border-[--border] overflow-hidden cursor-default"
       style={{ transition: 'transform 200ms ease-out, box-shadow 200ms ease-out' }}
       onMouseEnter={e => {
         const t = e.currentTarget
@@ -63,35 +252,49 @@ function IncidentCard({
         t.style.boxShadow = 'none'
       }}
     >
-      {/* Tag */}
-      <span
-        className="inline-block text-[10px] font-semibold uppercase tracking-[0.07em] px-2 py-0.5 rounded-[4px] mb-3"
-        style={{ color: tagColor, background: tagBg }}
-      >
-        {tag}
-      </span>
+      {/* ── Text section ── */}
+      <div style={{ padding: '20px 20px 16px' }}>
 
-      {/* Timestamp */}
-      <p className="font-mono text-[11px] text-ink4 mb-2">{timestamp}</p>
+        {/* Tag + Timestamp */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <span
+            className="inline-block text-[10px] font-semibold uppercase tracking-[0.07em] px-2 py-0.5 rounded-[4px]"
+            style={{ color: tagColor, background: tagBg }}
+          >
+            {tag}
+          </span>
+          <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '10px', color: '#9CA3AF' }}>
+            {timestamp}
+          </span>
+        </div>
 
-      {/* Incident lines */}
-      <div className="mb-4 mt-2">
-        {incident.map((line, i) => (
-          <p key={i} className="text-[15px] font-semibold text-ink leading-snug font-ui">
-            {line}
-          </p>
-        ))}
+        {/* Incident lines */}
+        <div className="mb-3">
+          {incident.map((line, i) => (
+            <p key={i} className="text-[15px] font-semibold text-ink leading-snug font-ui">
+              {line}
+            </p>
+          ))}
+        </div>
+
+        {/* Status indicator */}
+        <div className="flex items-center gap-1.5">
+          <div
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+            style={{ background: statusColor }}
+          />
+          <span className="font-mono text-[11px]" style={{ color: statusColor }}>
+            {status}
+          </span>
+        </div>
       </div>
 
-      {/* Status indicator */}
-      <div className="flex items-center gap-1.5">
-        <div
-          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-          style={{ background: statusColor }}
-        />
-        <span className="font-mono text-[11px]" style={{ color: statusColor }}>
-          {status}
-        </span>
+      {/* ── Divider ── */}
+      <div style={{ borderTop: '1px solid rgba(107,63,160,0.07)' }} />
+
+      {/* ── Visual mini-panel ── */}
+      <div style={{ padding: '14px' }}>
+        {panel}
       </div>
     </div>
   )
@@ -148,8 +351,6 @@ export default function TheProblem() {
   const subRef    = useRef<HTMLDivElement>(null)
   const bridgeRef = useRef<HTMLParagraphElement>(null)
 
-  // Animate sub-copy and bridge line — fixed: each gets its own observer,
-  // all observers collected and disconnected together in cleanup
   useEffect(() => {
     const targets: { el: HTMLElement; delay: number }[] = [
       { el: subRef.current!,    delay: 0.1 },
@@ -191,10 +392,10 @@ export default function TheProblem() {
         {/* Label */}
         <p className="text-label text-center mb-5">THE OPERATIONAL GAP</p>
 
-        {/* Headline — flat, no colour accent (intentional) */}
+        {/* Headline */}
         <AnimatedHeadline />
 
-        {/* Sub-copy — single flowing paragraph, no forced line breaks */}
+        {/* Sub-copy */}
         <div
           ref={subRef}
           className="text-center mx-auto mt-6 mb-14"
@@ -221,6 +422,7 @@ export default function TheProblem() {
             ]}
             status="Still unresolved — 47 minutes later"
             statusColor="#F4A261"
+            panel={<WorkforceMiniPanel />}
             delay={0}
           />
           <IncidentCard
@@ -234,6 +436,7 @@ export default function TheProblem() {
             ]}
             status="Awaiting manual resolution"
             statusColor="#F4A261"
+            panel={<FinancialMiniPanel />}
             delay={0.08}
           />
           <IncidentCard
@@ -247,6 +450,7 @@ export default function TheProblem() {
             ]}
             status="No action taken"
             statusColor="#E63946"
+            panel={<ComplianceMiniPanel />}
             delay={0.16}
           />
         </div>
