@@ -286,6 +286,7 @@ function MobileDrawer({
               {/* Simple nav links */}
               {[
                 { label: 'How It Works', href: '/how-it-works' },
+                { label: 'FAQ',          href: '/faq'          },
                 { label: 'Contact Us',   href: '/contact' },
               ].map(({ label, href }) => (
                 <Link
@@ -409,6 +410,7 @@ export default function Navigation() {
             </div>
 
             <NavLink href="/how-it-works">How It Works</NavLink>
+            <NavLink href="/faq">FAQ</NavLink>
             <NavLink href="/contact">Contact Us</NavLink>
           </nav>
 
