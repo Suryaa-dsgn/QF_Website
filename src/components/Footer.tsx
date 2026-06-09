@@ -13,7 +13,7 @@ const platformLinks = [
 
 const industryLinks = [
   { label: 'Healthcare',            href: '/industries/home-health' },
-  { label: 'Finance & Real Estate', href: '/industries/reits'       },
+  { label: 'Finance',               href: '/industries/reits' },
   { label: 'Logistics & Ops',       href: '/industries/logistics'   },
   { label: 'Home Health',           href: '/industries/home-health' },
   { label: 'Staffing Agencies',     href: '/industries/logistics'   },
@@ -61,6 +61,7 @@ function NavCol({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="footer-nav-link"
                 style={{
                   display:        'inline-flex',
                   alignItems:     'center',
@@ -82,6 +83,7 @@ function NavCol({
             <li key={link.label}>
               <Link
                 href={link.href}
+                className="footer-nav-link"
                 style={{
                   fontSize:   '13px',
                   color:      'rgba(255,255,255,0.75)',
@@ -113,6 +115,7 @@ export default function Footer() {
 
         {/* ── Notch mask — covers top-left of card so page background shows through ── */}
         <div
+          className="footer-notch-mask"
           style={{
             position:                'absolute',
             top:                     0,
@@ -129,6 +132,7 @@ export default function Footer() {
         {/* ── Q logo — sits directly on page background in the notch ── */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          className="footer-notch-logo"
           src="/qf-logo-purple.svg"
           alt=""
           aria-hidden="true"
@@ -153,6 +157,30 @@ export default function Footer() {
             background:   'linear-gradient(155deg, #5C10AA 0%, #3B0764 30%, #1A0545 60%, #0D021F 100%)',
           }}
         >
+
+          {/* ── Mobile-only logo row (hidden on desktop) ── */}
+          <div
+            className="footer-mobile-logo-row"
+            style={{ display: 'none' }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/qf-logo-white.svg"
+              alt="Quickflows"
+              style={{ width: '28px', height: 'auto' }}
+            />
+            <span
+              style={{
+                color:         '#FFFFFF',
+                fontSize:      '14px',
+                fontWeight:    600,
+                fontFamily:    'var(--font-geist-sans)',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Quickflows.ai
+            </span>
+          </div>
 
           {/* ── Section 1: Nav columns ── */}
           <div
@@ -187,8 +215,8 @@ export default function Footer() {
             <h2
               style={{
                 fontFamily:    'var(--font-bricolage)',
-                fontSize:      'clamp(36px, 4.5vw, 66px)',
-                fontWeight:    500,
+                fontSize:      'clamp(20px, 4.5vw, 66px)',
+                fontWeight:    400,
                 color:         '#FFFFFF',
                 letterSpacing: '0.01em',
                 lineHeight:    1.05,
@@ -202,6 +230,7 @@ export default function Footer() {
 
             <Link
               href="/workforce"
+              className="footer-explore-btn"
               style={{
                 display:         'inline-flex',
                 alignItems:      'center',

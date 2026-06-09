@@ -390,13 +390,39 @@ body {
 @media (max-width: 1023px) {
   .footer-nav-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    padding: 32px 24px 28px 24px !important;
+    padding: 24px 24px 40px 24px !important;
+    row-gap: 40px !important;
   }
   .footer-tagline-row {
     flex-direction: column !important;
     align-items: flex-start !important;
-    padding: 0 24px 36px !important;
+    padding: 8px 24px 40px !important;
     gap: 24px !important;
+  }
+
+  /* Hide desktop notch + logo — replaced by inline mobile logo */
+  .footer-notch-mask { display: none !important; }
+  .footer-notch-logo { display: none !important; }
+
+  /* Show inline mobile logo row */
+  .footer-mobile-logo-row {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    padding: 28px 24px 8px;
+  }
+
+  /* Arrow prefix on every nav link */
+  .footer-nav-link::before {
+    content: '→  ';
+    font-size: 11px;
+    opacity: 0.5;
+  }
+
+  /* Full-width Explore Agents button */
+  .footer-explore-btn {
+    width: 100% !important;
+    justify-content: center !important;
   }
 }
 
