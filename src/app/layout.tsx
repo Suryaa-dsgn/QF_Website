@@ -5,6 +5,7 @@ import { Bricolage_Grotesque } from 'next/font/google'
 import { LenisProvider } from '@/components/LenisProvider'
 import Navigation from '@/components/Navigation'
 import DemoModal  from '@/components/DemoModal'
+import PageLoader from '@/components/PageLoader'
 import './globals.css'
 
 // Bricolage Grotesque — display only.
@@ -36,6 +37,7 @@ export default function RootLayout({
       className={`${bricolage.variable} ${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className={GeistSans.className}>
+        <PageLoader />
         <LenisProvider>
           <Navigation />
           <main>{children}</main>

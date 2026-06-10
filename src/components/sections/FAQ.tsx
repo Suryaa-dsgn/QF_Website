@@ -527,8 +527,91 @@ export default function FAQ() {
       </div>
       </div>
 
+      {/* ── Download CTA ────────────────────────────────────────────── */}
+      <div
+        className="max-w-[860px] mx-auto"
+        style={{ paddingLeft: '24px', paddingRight: '24px', paddingTop: '32px' }}
+      >
+        <div
+          style={{
+            background:    'linear-gradient(135deg, rgba(107,63,160,0.06) 0%, rgba(107,63,160,0.02) 100%)',
+            border:        '1px solid rgba(107,63,160,0.12)',
+            borderRadius:  '16px',
+            padding:       '28px 32px',
+            display:       'flex',
+            alignItems:    'center',
+            justifyContent: 'space-between',
+            gap:           '24px',
+            flexWrap:      'wrap',
+          }}
+        >
+          <div>
+            <p
+              style={{
+                fontSize:   '13px',
+                fontWeight: 600,
+                color:      '#6B3FA0',
+                fontFamily: 'var(--font-geist-sans)',
+                margin:     '0 0 4px',
+                letterSpacing: '0.01em',
+              }}
+            >
+              QUICKFLOWS FAQ
+            </p>
+            <p
+              style={{
+                fontSize:   '15px',
+                fontWeight: 500,
+                color:      '#0A0A0A',
+                fontFamily: 'var(--font-geist-sans)',
+                margin:     '0 0 2px',
+              }}
+            >
+              Download the full FAQ as a PDF
+            </p>
+            <p
+              style={{
+                fontSize:   '13px',
+                color:      '#6B7280',
+                fontFamily: 'var(--font-geist-sans)',
+                margin:     0,
+              }}
+            >
+              23 questions across 6 categories — share with your team.
+            </p>
+          </div>
+          <a
+            href="/quickflows-faq.pdf"
+            download="Quickflows-FAQ.pdf"
+            style={{
+              display:        'inline-flex',
+              alignItems:     'center',
+              gap:            '8px',
+              padding:        '12px 22px',
+              background:     '#6B3FA0',
+              color:          '#FFFFFF',
+              borderRadius:   '10px',
+              fontSize:       '14px',
+              fontWeight:     600,
+              fontFamily:     'var(--font-geist-sans)',
+              textDecoration: 'none',
+              whiteSpace:     'nowrap',
+              flexShrink:     0,
+              transition:     'opacity 150ms ease',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1v8M7 9l-3-3M7 9l3-3M2 12h10" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Download PDF
+          </a>
+        </div>
+      </div>
+
       {/* Bottom spacing before CTA */}
-      <div style={{ height: '80px' }} />
+      <div style={{ height: '64px' }} />
     </section>
   )
 }
