@@ -22,7 +22,9 @@ export const metadata: Metadata = {
   description:
     'Quickflows agents run across your workforce and your finances — catching missed shifts, flagging expirations, reconciling invoices.',
   icons: {
-    icon: '/qf-logo-purple.svg',
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
   },
 }
 
