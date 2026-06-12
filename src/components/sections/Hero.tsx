@@ -215,13 +215,18 @@ export default function Hero() {
               <BookDemoButton className="hero-cta-primary btn-base btn-primary">
                 Talk to an Expert
               </BookDemoButton>
-              <BookDemoButton className="hero-cta-ghost btn-base btn-ghost group">
-                Watch it run
+              <a
+                href="https://qf-agent-prototype.pages.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-cta-ghost btn-base btn-ghost group"
+              >
+                Explore Agents
                 <ArrowRight
                   size={15}
-                  className="arrow-icon text-ink3 group-hover:text-ink"
+                  className="arrow-icon"
                 />
-              </BookDemoButton>
+              </a>
             </div>
 
           </div>

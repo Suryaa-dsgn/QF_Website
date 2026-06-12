@@ -254,33 +254,43 @@ body {
 }
 
 .btn-primary {
-  background: #6B3FA0;
+  background: linear-gradient(135deg, #4A1A88 0%, #6B3FA0 100%);
   color: #FFFFFF;
   border: none;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(107, 63, 160, 0.25);
 }
 .btn-primary:hover {
+  background: linear-gradient(135deg, #5C2B99 0%, #7B50B8 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(107, 63, 160, 0.35);
+  box-shadow: 0 6px 22px rgba(107, 63, 160, 0.42);
+  opacity: 1;
 }
 .btn-primary:active {
   transform: translateY(0);
 }
 
 .btn-ghost {
-  background: transparent;
-  color: #0A0A0A;
-  border: 1px solid rgba(107, 63, 160, 0.18);
+  background:
+    linear-gradient(#F9F8FF, #F9F8FF) padding-box,
+    linear-gradient(135deg, #6B3FA0 0%, #A855F7 100%) border-box;
+  border: 1.5px solid transparent;
+  color: #6B3FA0;
 }
 .btn-ghost:hover {
-  border-color: rgba(107, 63, 160, 0.40);
+  background:
+    linear-gradient(#EDE8FF, #EDE8FF) padding-box,
+    linear-gradient(135deg, #6B3FA0 0%, #A855F7 100%) border-box;
+  border: 1.5px solid transparent;
+  opacity: 1;
 }
 
 .btn-ghost .arrow-icon {
-  transition: transform 200ms ease;
+  transition: transform 200ms ease, color 200ms ease;
   display: inline-block;
+  color: #6B3FA0;
 }
 .btn-ghost:hover .arrow-icon {
+  color: #A855F7;
   transform: translateX(4px);
 }
 
