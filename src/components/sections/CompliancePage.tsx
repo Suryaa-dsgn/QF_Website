@@ -8,7 +8,6 @@ import {
   useMotionValueEvent,
   type MotionValue,
 } from 'framer-motion'
-import Link from 'next/link'
 import BookDemoButton from '@/components/BookDemoButton'
 import Footer from '@/components/Footer'
 
@@ -336,8 +335,8 @@ function MobileComplianceStack() {
       {/* Closing CTA card */}
       <div
         style={{
-          marginTop: '24px',
-          marginBottom: '64px',
+          marginTop: '48px',
+          marginBottom: '96px',
           padding: '40px 28px',
           background: '#0A0A0A',
           borderRadius: '20px',
@@ -368,7 +367,17 @@ function MobileComplianceStack() {
         >
           While your compliance team focuses on exceptions.
         </p>
-        <BookDemoButton className="btn-base btn-primary">Talk to an Expert</BookDemoButton>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <BookDemoButton className="btn-base btn-primary">Talk to an Expert</BookDemoButton>
+          <a
+            href="https://qf-agent-prototype.pages.dev/gate/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-base btn-ghost group"
+          >
+            Explore Agents <span className="arrow-icon">→</span>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -459,9 +468,6 @@ function Hero() {
           <BookDemoButton className="btn-base btn-primary">
             Talk to an Expert
           </BookDemoButton>
-          <Link href="/workforce" className="btn-base btn-ghost group">
-            Explore Workforce <span className="arrow-icon">→</span>
-          </Link>
         </div>
 
         {/* Scroll cue */}
@@ -761,7 +767,7 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
           ref={closingRef}
           style={{
             position: 'absolute',
-            top: '2400px',
+            top: '2550px',
             left: '50%',
             maxWidth: '680px',
             textAlign: 'center',
@@ -784,15 +790,25 @@ function ScrollSection({ sv }: { sv: MotionValue<number> }) {
               color: '#0A0A0A',
               letterSpacing: '-0.035em',
               lineHeight: 1.1,
-              marginBottom: '24px',
+              marginBottom: '36px',
             }}
           >
             All agents. Running around the clock.
             <br />While your compliance team focuses on exceptions.
           </h3>
-          <BookDemoButton className="btn-base btn-primary">
-            Talk to an Expert
-          </BookDemoButton>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <BookDemoButton className="btn-base btn-primary">
+              Talk to an Expert
+            </BookDemoButton>
+            <a
+              href="https://qf-agent-prototype.pages.dev/gate/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-base btn-ghost group"
+            >
+              Explore Agents <span className="arrow-icon">→</span>
+            </a>
+          </div>
         </div>
 
       </div>
@@ -845,6 +861,9 @@ export default function CompliancePage() {
       >
         <ScrollSection sv={scrollYProgress} />
       </section>
+
+      {/* Desktop-only spacer — gives closing card clearance above footer */}
+      <div className="hidden lg:block" style={{ height: '320px' }} />
 
       <Footer />
     </div>

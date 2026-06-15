@@ -32,7 +32,7 @@ export const PATH_D = `
   L 1000,1930
   L 1000,2400
   L 600,2400
-  L 600,2600
+  L 600,2700
 `
 
 // ── Scroll progress thresholds (0–1 mapped to 0–2800px) ──────────
@@ -49,5 +49,5 @@ export const THRESHOLDS = {
   label1: 1130 / 2800,   // 0.404 — between step 1 and 2
   label2: 1830 / 2800,   // 0.654 — between step 2 and 3
 
-  closing: 2400 / 2800,  // 0.857
+  closing: 2550 / 2800,  // 0.911
 } as const

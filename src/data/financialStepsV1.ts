@@ -37,7 +37,7 @@ export const PATH_D = `
   L 200,2630
   L 200,3100
   L 600,3100
-  L 600,3300
+  L 600,3400
 `
 
 // ── Scroll progress thresholds (0–1 mapped to 0–3400px) ──────────
@@ -51,7 +51,7 @@ export const THRESHOLDS = {
   step4Pill:  2630 / 3400,   // 0.774
 
   // Prototypes appear slightly BEFORE the pill
-  step1Proto: 515  / 3400,   // 0.152
+  step1Proto: 515  / 3400,   // 0.151
   step2Proto: 1215 / 3400,   // 0.357
   step3Proto: 1915 / 3400,   // 0.563
   step4Proto: 2615 / 3400,   // 0.769

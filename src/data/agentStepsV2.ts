@@ -52,7 +52,7 @@ export const PATH_D = `
   L 200,5430
   L 200,5850
   L 600,5850
-  L 600,6050
+  L 600,6150
 `
 
 // Element positions — all proto tops = bridge_y + 30
@@ -93,5 +93,5 @@ export const THRESHOLDS = {
   label6: 4630 / 6200,   // 0.747 — between step 6 and 7
   label7: 5330 / 6200,   // 0.860 — between step 7 and 8
 
-  closing: 5850 / 6200,  // 0.944
+  closing: 6000 / 6200,  // 0.968
 } as const
