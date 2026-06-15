@@ -22,18 +22,21 @@ const missionParagraphs = [
 const values = [
   {
     icon: Zap,
+    tag: 'SPEED',
     title: 'Speed over process',
     description:
       "Operations don't pause for onboarding. Standard environments go live in under 100 hours — no consultants, no scripting phase, no project team required.",
   },
   {
     icon: Users,
+    tag: 'OPERATORS',
     title: 'Operators first',
     description:
       "Every feature is designed for the person who needs a shift filled at 6am — not the person who reviews the report about it on Friday.",
   },
   {
     icon: ShieldCheck,
+    tag: 'TRUST',
     title: 'AI that earns trust',
     description:
       'Every decision is logged, auditable, and visible to your team. Nothing happens in a black box. Your team sets the rules. Agents follow them.',
@@ -232,7 +235,7 @@ function PrinciplesSection() {
         </motion.div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {values.map((v, i) => {
             const Icon = v.icon
             return (
@@ -243,53 +246,111 @@ function PrinciplesSection() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: i * 0.08, ease: EASE }}
                 style={{
-                  background:   '#FFFFFF',
-                  border:       '1px solid var(--border)',
-                  borderRadius: '20px',
-                  padding:      '32px',
-                  boxShadow:    'var(--shadow-1)',
+                  background:     'radial-gradient(circle, rgba(107,63,160,0.07) 1px, transparent 1px), linear-gradient(145deg, rgba(107,63,160,0.04) 0%, #FFFFFF 55%)',
+                  backgroundSize: '20px 20px, 100% 100%',
+                  border:        '1px solid rgba(107,63,160,0.09)',
+                  borderRadius:  '20px',
+                  padding:       '32px',
+                  position:      'relative',
+                  overflow:      'hidden',
+                  display:       'flex',
+                  flexDirection: 'column',
+                  boxShadow:     '0 2px 12px rgba(107,63,160,0.06)',
+                  transition:    'transform 250ms ease-out, box-shadow 250ms ease-out, border-color 250ms ease-out, background 250ms ease-out',
+                  cursor:        'default',
+                }}
+                onMouseEnter={e => {
+                  const t = e.currentTarget
+                  t.style.transform      = 'translateY(-4px)'
+                  t.style.borderColor    = 'rgba(107,63,160,0.20)'
+                  t.style.boxShadow      = '0 16px 48px rgba(107,63,160,0.10), 0 4px 12px rgba(107,63,160,0.05)'
+                  t.style.background     = 'radial-gradient(circle, rgba(107,63,160,0.09) 1px, transparent 1px), linear-gradient(145deg, rgba(107,63,160,0.07) 0%, #FFFFFF 55%)'
+                  t.style.backgroundSize = '20px 20px, 100% 100%'
+                }}
+                onMouseLeave={e => {
+                  const t = e.currentTarget
+                  t.style.transform      = 'translateY(0)'
+                  t.style.borderColor    = 'rgba(107,63,160,0.09)'
+                  t.style.boxShadow      = '0 2px 12px rgba(107,63,160,0.06)'
+                  t.style.background     = 'radial-gradient(circle, rgba(107,63,160,0.07) 1px, transparent 1px), linear-gradient(145deg, rgba(107,63,160,0.04) 0%, #FFFFFF 55%)'
+                  t.style.backgroundSize = '20px 20px, 100% 100%'
                 }}
               >
-                {/* Numbered badge */}
-                <p
-                  className="font-mono mb-4"
-                  style={{
-                    fontSize:      '11px',
-                    fontWeight:    600,
-                    letterSpacing: '0.05em',
-                    color:         'rgba(107,63,160,0.25)',
-                  }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </p>
+                {/* Accent mark — short top-edge line */}
+                <div style={{
+                  position:     'absolute',
+                  top:          0,
+                  left:         '32px',
+                  width:        '28px',
+                  height:       '2px',
+                  background:   '#6B3FA0',
+                  borderRadius: '0 0 2px 2px',
+                }} />
 
-                {/* Icon ring */}
-                <div
-                  className="flex items-center justify-center mb-5"
-                  style={{
-                    width:        '48px',
-                    height:       '48px',
-                    borderRadius: '12px',
-                    background:   'var(--brand-08)',
-                    border:       '1px solid var(--border)',
-                    flexShrink:   0,
-                  }}
-                >
-                  <Icon size={20} style={{ color: 'var(--brand)' }} />
+                {/* Ghost icon watermark */}
+                <div style={{
+                  position:      'absolute',
+                  bottom:        '20px',
+                  right:         '20px',
+                  pointerEvents: 'none',
+                  userSelect:    'none',
+                  lineHeight:    0,
+                }}>
+                  <Icon size={88} style={{ color: 'rgba(107,63,160,0.07)' }} />
+                </div>
+
+                {/* 3D icon badge */}
+                <div style={{
+                  width:          '48px',
+                  height:         '48px',
+                  borderRadius:   '14px',
+                  background:     'linear-gradient(145deg, rgba(107,63,160,0.16) 0%, rgba(107,63,160,0.09) 100%)',
+                  border:         '1px solid rgba(107,63,160,0.18)',
+                  boxShadow:      'inset 0 1px 0 rgba(255,255,255,0.80), 0 4px 14px rgba(107,63,160,0.20), 0 1px 3px rgba(107,63,160,0.10)',
+                  display:        'flex',
+                  alignItems:     'center',
+                  justifyContent: 'center',
+                  marginBottom:   '24px',
+                  flexShrink:     0,
+                }}>
+                  <Icon size={22} style={{ color: '#6B3FA0' }} />
                 </div>
 
                 {/* Title */}
                 <h3
-                  className="font-display font-bold text-ink mb-3"
-                  style={{ fontSize: '17px', letterSpacing: '-0.025em', lineHeight: '1.2' }}
+                  className="font-display font-bold text-ink"
+                  style={{ fontSize: '18px', letterSpacing: '-0.03em', lineHeight: '1.2', marginBottom: '12px' }}
                 >
                   {v.title}
                 </h3>
 
                 {/* Description */}
-                <p className="font-ui text-ink3 leading-[1.7]" style={{ fontSize: '14px' }}>
+                <p
+                  className="font-ui"
+                  style={{ fontSize: '14px', color: '#6B7280', lineHeight: '1.75', flex: 1 }}
+                >
                   {v.description}
                 </p>
+
+                {/* Footer tag */}
+                <div style={{
+                  marginTop:    '28px',
+                  paddingTop:   '20px',
+                  borderTop:    '1px solid rgba(107,63,160,0.07)',
+                }}>
+                  <span
+                    className="font-mono"
+                    style={{
+                      fontSize:      '9px',
+                      fontWeight:    600,
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      color:         'rgba(107,63,160,0.40)',
+                    }}
+                  >
+                    {v.tag}
+                  </span>
+                </div>
               </motion.div>
             )
           })}
