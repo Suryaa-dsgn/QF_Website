@@ -22,6 +22,7 @@ const config: IndustryPageConfig = {
       agentColor: '#059669',
       resolution: 'Reworked and resubmitted in 4 min. Recovery in progress.',
       metric: '4 min · $760 recovery initiated',
+      panelKey: 'rcm',
     },
     {
       time: 'Invoice #A-2291',
@@ -31,6 +32,7 @@ const config: IndustryPageConfig = {
       agentColor: '#0891B2',
       resolution: '$420 in revenue leakage flagged before payment cleared.',
       metric: '$420 saved · Pre-payment flag',
+      panelKey: 'compliance',
     },
     {
       time: 'Friday deadline',
@@ -40,6 +42,7 @@ const config: IndustryPageConfig = {
       agentColor: '#059669',
       resolution: 'All 47 criteria screened in 8 min. 3 red flags surfaced.',
       metric: '8 min · 3 flags raised',
+      panelKey: 'reit',
     },
   ],
 

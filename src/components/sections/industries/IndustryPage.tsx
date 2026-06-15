@@ -1,8 +1,9 @@
 ﻿'use client'
 
-import { motion } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Building2, Heart, Activity, Brain, Laptop, Factory, Landmark, Users, Plane, Shield, type LucideIcon } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Building2, Heart, Activity, Brain, Laptop, Factory, Landmark, Users, Plane, Shield, type LucideIcon } from 'lucide-react'
 import BookDemoButton from '@/components/BookDemoButton'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -10,9 +11,14 @@ import Footer from '@/components/Footer'
 // Panel components (all imports live in the client component)
 import CallOffManagementPanel from '@/components/ui/panels/CallOffManagementPanel'
 import ScheduleOptimizerPanel from '@/components/ui/panels/ScheduleOptimizerPanel'
-import RCMPanel from '@/components/ui/panels/RCMPanel'
-import APARPanel from '@/components/ui/panels/APARPanel'
-import CapacityPlannerPanel from '@/components/ui/panels/CapacityPlannerPanel'
+import RCMPanel               from '@/components/ui/panels/RCMPanel'
+import APARPanel               from '@/components/ui/panels/APARPanel'
+import CapacityPlannerPanel    from '@/components/ui/panels/CapacityPlannerPanel'
+import CredentialingPanel      from '@/components/ui/panels/CredentialingPanel'
+import EVVPanel                from '@/components/ui/panels/EVVPanel'
+import CompliancePanel         from '@/components/ui/panels/CompliancePanel'
+import REITPanel               from '@/components/ui/panels/REITPanel'
+import AutoApprovalPanel       from '@/components/ui/panels/AutoApprovalPanel'
 
 // ─── KEY MAPS (all serializable from server pages) ────────────────
 
@@ -22,6 +28,11 @@ export type PanelKey =
   | 'rcm'
   | 'apar'
   | 'capacity-planner'
+  | 'credentialing'
+  | 'evv'
+  | 'compliance'
+  | 'reit'
+  | 'auto-approval'
 
 export type IconKey =
   | 'building2' | 'heart' | 'activity' | 'brain'
@@ -34,6 +45,11 @@ const PANEL_MAP: Record<PanelKey, React.ComponentType> = {
   'rcm':                 RCMPanel,
   'apar':                APARPanel,
   'capacity-planner':    CapacityPlannerPanel,
+  'credentialing':       CredentialingPanel,
+  'evv':                 EVVPanel,
+  'compliance':          CompliancePanel,
+  'reit':                REITPanel,
+  'auto-approval':       AutoApprovalPanel,
 }
 
 const ICON_MAP: Record<IconKey, LucideIcon> = {
@@ -59,6 +75,7 @@ export interface ScenarioCard {
   agentColor: string
   resolution: string
   metric: string
+  panelKey: PanelKey
 }
 
 export interface PanelSpotlight {
@@ -82,7 +99,7 @@ export interface IndustryPageConfig {
   headline: string
   subtext: string
   scenarios: ScenarioCard[]
-  panels: PanelSpotlight[]
+  panels?: PanelSpotlight[]
   subIndustries: SubIndustry[]
   suiteHref: string
   suiteLabel: string
@@ -92,85 +109,189 @@ export interface IndustryPageConfig {
   secondarySuiteLabel?: string
 }
 
-// ─── SCENARIO CARD ────────────────────────────────────────────────
+// ─── SCENARIO CAROUSEL ───────────────────────────────────────────
 
-function ScenarioCardEl({ card, delay }: { card: ScenarioCard; delay: number }) {
+function ScenarioCarousel({ scenarios, accentColor }: { scenarios: ScenarioCard[]; accentColor: string }) {
+  const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  const advance = useCallback(
+    () => setActive(i => (i + 1) % scenarios.length),
+    [scenarios.length]
+  )
+
+  useEffect(() => {
+    if (paused) return
+    const id = setInterval(advance, 5000)
+    return () => clearInterval(id)
+  }, [advance, paused, active])
+
+  const goTo = (i: number) => setActive(i)
+  const prev = () => goTo((active - 1 + scenarios.length) % scenarios.length)
+  const next = () => goTo((active + 1) % scenarios.length)
+
+  const card = scenarios[active]
+  const Panel = PANEL_MAP[card.panelKey]
+
+  const navBtnStyle: React.CSSProperties = {
+    width: '32px', height: '32px', borderRadius: '50%',
+    border: '1px solid rgba(107,63,160,0.15)',
+    background: 'rgba(107,63,160,0.04)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    cursor: 'pointer',
+  }
+
   return (
     <motion.div
-      className="bg-white rounded-[16px] border border-[--border] overflow-hidden flex flex-col"
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {/* Incident header */}
-      <div
-        className="px-5 py-3 flex items-center gap-2 flex-wrap"
-        style={{ background: 'rgba(220,38,38,0.05)', borderBottom: '1px solid rgba(220,38,38,0.08)' }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#DC2626' }} />
-        <span className="text-[11px] font-mono font-semibold" style={{ color: '#DC2626' }}>{card.time}</span>
-        <span className="text-[11px] text-ink4 font-ui">—</span>
-        <span className="text-[11px] text-ink4 font-ui">{card.event}</span>
-      </div>
-
-      {/* Problem */}
-      <div className="px-5 pt-4 pb-3 flex-1">
-        <p className="font-display font-semibold text-ink leading-snug" style={{ fontSize: '14px', letterSpacing: '-0.015em' }}>
-          {card.problem}
-        </p>
-      </div>
-
-      {/* Divider */}
-      <div className="mx-5 border-t border-[--border]" />
-
-      {/* Agent + Resolution */}
-      <div className="px-5 py-4 flex flex-col gap-2.5">
-        <div className="flex items-center gap-2">
-          <span
-            className="text-[10px] font-semibold font-mono px-2 py-[3px] rounded-[4px]"
-            style={{ color: card.agentColor, background: card.agentColor + '14' }}
-          >
-            {card.agent}
-          </span>
-          <span className="text-[11px] text-ink4 font-ui">activated</span>
-        </div>
-        <div className="flex items-start gap-1.5">
-          <span className="text-[#16A34A] text-[12px] font-semibold mt-[1px] flex-shrink-0">✓</span>
-          <p className="text-[13px] text-ink font-ui leading-snug">{card.resolution}</p>
-        </div>
-        <span className="text-[11px] font-mono text-ink4">{card.metric}</span>
-      </div>
-    </motion.div>
-  )
-}
-
-// ─── PANEL SPOTLIGHT CARD ─────────────────────────────────────────
-
-function PanelSpotlightEl({ spotlight, delay }: { spotlight: PanelSpotlight; delay: number }) {
-  const Panel = PANEL_MAP[spotlight.panelKey]
-  return (
-    <motion.div
-      className="bg-white rounded-[20px] border border-[--border] overflow-hidden"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      style={{
+        background: '#FFFFFF',
+        border: '1px solid rgba(107,63,160,0.08)',
+        borderRadius: '24px',
+        overflow: 'hidden',
+        boxShadow: '0 2px 16px rgba(107,63,160,0.05)',
+      }}
     >
-      <div className="p-5 border-b border-[--border]">
-        <span
-          className="inline-block text-[10px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full mb-3"
-          style={{ color: spotlight.suiteColor, background: spotlight.suiteColor + '12', border: `1px solid ${spotlight.suiteColor}20` }}
-        >
-          {spotlight.suiteLabel}
-        </span>
-        <h3 className="font-display font-bold text-ink mb-1" style={{ fontSize: '16px', letterSpacing: '-0.02em' }}>
-          {spotlight.agentName}
-        </h3>
-        <p className="text-[13px] text-ink3 font-ui leading-relaxed">{spotlight.description}</p>
-      </div>
-      <div className="h-[460px] overflow-hidden">
-        <Panel />
+      <div className="grid grid-cols-1 lg:grid-cols-[42%_58%]">
+
+        {/* ── LEFT: story text ── */}
+        <div style={{
+          padding: '40px 36px',
+          display: 'flex',
+          flexDirection: 'column',
+          background: 'rgba(107,63,160,0.015)',
+          borderRight: '1px solid rgba(107,63,160,0.06)',
+        }}>
+          {/* Slide counter */}
+          <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: 'rgba(107,63,160,0.35)', marginBottom: '20px', letterSpacing: '0.06em' }}>
+            {String(active + 1).padStart(2, '0')} / {String(scenarios.length).padStart(2, '0')}
+          </p>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+            >
+              {/* Incident badge */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
+                <span className="animate-pulse" style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#DC2626', flexShrink: 0 }} />
+                <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: '#DC2626', fontWeight: 600 }}>{card.time}</span>
+                <span style={{ color: 'rgba(107,63,160,0.25)', fontSize: '11px' }}>—</span>
+                <span style={{ fontFamily: 'var(--font-geist-sans)', fontSize: '11px', color: '#6B7280' }}>{card.event}</span>
+              </div>
+
+              {/* Problem headline */}
+              <h3 style={{
+                fontFamily: 'var(--font-bricolage)',
+                fontSize: 'clamp(17px, 1.8vw, 22px)',
+                fontWeight: 700,
+                color: '#0A0A0A',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.25,
+                marginBottom: '20px',
+              }}>
+                {card.problem}
+              </h3>
+
+              {/* Agent badge */}
+              <div style={{ marginBottom: '16px' }}>
+                <span style={{
+                  fontFamily: 'var(--font-geist-mono)',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  color: card.agentColor,
+                  background: card.agentColor + '12',
+                  border: `1px solid ${card.agentColor}25`,
+                  borderRadius: '20px',
+                  padding: '3px 10px',
+                }}>
+                  {card.agent}
+                </span>
+              </div>
+
+              {/* Resolution */}
+              <p style={{ fontFamily: 'var(--font-geist-sans)', fontSize: '13px', color: '#4B5563', lineHeight: 1.7, marginBottom: '12px' }}>
+                <span style={{ color: '#16A34A', fontWeight: 600, marginRight: '4px' }}>✓</span>
+                {card.resolution}
+              </p>
+
+              {/* Metric */}
+              <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: 'rgba(107,63,160,0.50)', marginBottom: '28px' }}>
+                {card.metric}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Progress bar */}
+          <div style={{ height: '2px', background: 'rgba(107,63,160,0.08)', borderRadius: '2px', overflow: 'hidden', marginBottom: '16px' }}>
+            <motion.div
+              key={`bar-${active}-${paused}`}
+              initial={{ width: '0%' }}
+              animate={{ width: paused ? '0%' : '100%' }}
+              transition={{ duration: 5, ease: 'linear' }}
+              style={{ height: '100%', background: accentColor, borderRadius: '2px' }}
+            />
+          </div>
+
+          {/* Navigation: dots + arrows */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* Dots */}
+            <div style={{ display: 'flex', gap: '5px' }}>
+              {scenarios.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  style={{
+                    width: i === active ? '18px' : '6px',
+                    height: '6px',
+                    borderRadius: '3px',
+                    background: i === active ? accentColor : 'rgba(107,63,160,0.18)',
+                    transition: 'all 250ms ease',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                  }}
+                />
+              ))}
+            </div>
+
+            <div style={{ flex: 1 }} />
+
+            {/* Arrow buttons */}
+            <button onClick={prev} style={navBtnStyle}>
+              <ChevronLeft size={14} style={{ color: 'rgba(107,63,160,0.55)' }} />
+            </button>
+            <button onClick={next} style={navBtnStyle}>
+              <ChevronRight size={14} style={{ color: 'rgba(107,63,160,0.55)' }} />
+            </button>
+          </div>
+        </div>
+
+        {/* ── RIGHT: animated panel ── */}
+        <div style={{ minHeight: '500px', overflow: 'hidden', position: 'relative' }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`panel-${active}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{ position: 'absolute', inset: 0 }}
+            >
+              {Panel && <Panel />}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
       </div>
     </motion.div>
   )
@@ -263,42 +384,11 @@ export default function IndustryPage({ config }: { config: IndustryPageConfig })
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {config.scenarios.map((card, i) => (
-              <ScenarioCardEl key={i} card={card} delay={i * 0.1} />
-            ))}
-          </div>
+          <ScenarioCarousel scenarios={config.scenarios} accentColor={config.categoryColor} />
         </div>
       </section>
 
-      {/* ── 3. AGENT PANEL SPOTLIGHT ── */}
-      <section className="section-padding">
-        <div className="max-w-[1120px] mx-auto px-6 sm:px-10">
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <p className="text-label">AGENTS IN ACTION</p>
-            <h2
-              className="font-display font-bold text-ink mt-2"
-              style={{ fontSize: 'clamp(20px, 2.4vw, 28px)', letterSpacing: '-0.03em', lineHeight: '1.2' }}
-            >
-              See exactly what runs, in real time.
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {config.panels.map((spotlight, i) => (
-              <PanelSpotlightEl key={i} spotlight={spotlight} delay={i * 0.12} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. SUB-INDUSTRY TILES ── */}
+      {/* ── 3. WHO WE SERVE ── */}
       <section className="section-padding" style={{ background: 'rgba(255,255,255,0.55)' }}>
         <div className="max-w-[1120px] mx-auto px-6 sm:px-10">
           <motion.div
@@ -325,7 +415,7 @@ export default function IndustryPage({ config }: { config: IndustryPageConfig })
         </div>
       </section>
 
-      {/* ── 5. SUITE BRIDGE CTA ── */}
+      {/* ── 4. SUITE BRIDGE CTA ── */}
       <section className="section-padding">
         <div className="max-w-[1120px] mx-auto px-6 sm:px-10">
           <motion.div

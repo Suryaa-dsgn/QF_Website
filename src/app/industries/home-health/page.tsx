@@ -22,6 +22,7 @@ const config: IndustryPageConfig = {
       agentColor: '#0284C7',
       resolution: 'Maria confirmed as replacement. Shift filled in 4 min.',
       metric: '4 min · No coordinator required',
+      panelKey: 'call-off-management',
     },
     {
       time: '11 days remaining',
@@ -31,6 +32,7 @@ const config: IndustryPageConfig = {
       agentColor: '#0891B2',
       resolution: 'Renewal queued at 90, 60, and today. Audit log updated.',
       metric: 'Flagged 90 days out · Zero lapse risk',
+      panelKey: 'credentialing',
     },
     {
       time: '9:28 AM',
@@ -40,6 +42,7 @@ const config: IndustryPageConfig = {
       agentColor: '#0284C7',
       resolution: 'Discrepancy flagged before claim submission. Corrected in the system.',
       metric: 'Pre-submission · Denial prevented',
+      panelKey: 'evv',
     },
   ],
 

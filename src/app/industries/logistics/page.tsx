@@ -22,6 +22,7 @@ const config: IndustryPageConfig = {
       agentColor: '#7C3AED',
       resolution: 'Replacement contacted and confirmed. Shift filled in 6 min.',
       metric: '6 min · Zero coordinator involvement',
+      panelKey: 'call-off-management',
     },
     {
       time: '7 days out',
@@ -31,6 +32,7 @@ const config: IndustryPageConfig = {
       agentColor: '#7C3AED',
       resolution: 'Understaffing flagged. Coverage arranged before the week begins.',
       metric: '7 days early · Proactive resolution',
+      panelKey: 'capacity-planner',
     },
     {
       time: '11:48 PM',
@@ -40,6 +42,7 @@ const config: IndustryPageConfig = {
       agentColor: '#7C3AED',
       resolution: 'Request validated against policy and approved instantly.',
       metric: 'Instant · Fully compliant',
+      panelKey: 'auto-approval',
     },
   ],
 
