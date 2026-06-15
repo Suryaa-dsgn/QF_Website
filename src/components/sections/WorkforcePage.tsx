@@ -484,9 +484,9 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          One workforce{' '}
+          Your ops team makes decisions.{' '}
           <br className="hidden sm:block" />
-          that runs itself.
+          Agents handle the rest.
         </h1>
 
         {/* Subhead */}
@@ -499,8 +499,8 @@ function Hero() {
             marginBottom: '32px',
           }}
         >
-          From the 6am callout to the last shift of the month.
-          Every shift, credential, and approval — handled.
+          A coverage gap opens at 3am. A credential lapses with no alert.
+          An approval sits in a queue overnight. By the time your team logs in, each one is closed.
         </p>
 
         {/* CTAs */}

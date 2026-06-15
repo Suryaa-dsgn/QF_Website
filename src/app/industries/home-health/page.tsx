@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 const config: IndustryPageConfig = {
   category: 'Healthcare',
   categoryColor: '#0284C7',
-  headline: 'Operations that never stop: covered.',
+  headline: 'Your coordinator catches the 6am callout on a good week. An agent catches it every time.',
   subtext:
-    'From hospital scheduling to home health EVV compliance: Quickflows agents handle every shift, credential, and visit verification before anyone notices a gap.',
+    'The callout comes at 6am. The credential expires during a busy month. The EVV timestamp doesn\'t match billing. Your team catches these when they can. Quickflows catches them before they become incidents.',
 
   scenarios: [
     {

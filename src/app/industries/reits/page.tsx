@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 const config: IndustryPageConfig = {
   category: 'Finance & Real Estate',
   categoryColor: '#059669',
-  headline: 'Every invoice. Every deal. Handled.',
+  headline: 'Your billing team will get to that denied claim. Eventually.',
   subtext:
-    'From AP/AR reconciliation to RCM recovery and REIT deal qualification: Quickflows financial agents close the loop before your team opens it.',
+    'The denied claim sits in your billing queue for days. The invoice that doesn\'t match clause 3b gets paid anyway. The REIT criteria get reviewed Monday, not Friday. Quickflows closes these gaps before your team opens their inbox.',
 
   scenarios: [
     {

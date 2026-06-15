@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 const config: IndustryPageConfig = {
   category: 'Operations & Logistics',
   categoryColor: '#7C3AED',
-  headline: '24/7 operations. Zero coverage gaps.',
+  headline: 'Coverage gaps don\'t wait for 9am. Neither does the agent covering them.',
   subtext:
-    'Quickflows workforce agents handle shift coverage, capacity planning, and compliance across staffing agencies, airports, plants, and security firms, automatically.',
+    'At 3am, a coverage gap opens at Gate 14. The coordinator is asleep. The shift is filled in six minutes. These are the incidents your team never has to touch.',
 
   scenarios: [
     {

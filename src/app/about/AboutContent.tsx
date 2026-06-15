@@ -88,18 +88,17 @@ function HeroSection() {
               lineHeight:    '1.05',
             }}
           >
-            Operations software was built for reviewers.
+            Most software reports the problem.
             <br />
-            We built this for operators.
+            Quickflows closes it.
           </h1>
           <p
             className="font-ui leading-[1.75]"
             style={{ fontSize: '16px', color: '#6B6B6B', maxWidth: '520px', margin: '0 auto' }}
           >
-            Founded and led by industry veterans with 24+ years of expertise in
-            technology consulting, digital transformation, cloud architecture, and
-            AI/ML innovation — building intelligent systems that handle the
-            operational work your team shouldn&apos;t have to.
+            We spent years inside operations teams watching coordinators, billing
+            staff, and compliance officers burn hours on work that a well-configured
+            system should handle. Quickflows is what we built instead.
           </p>
         </motion.div>
 

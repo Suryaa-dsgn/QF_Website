@@ -444,9 +444,9 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          Zero compliance{' '}
+          The credential expired.{' '}
           <br className="hidden sm:block" />
-          gaps.
+          The agent flagged it three months prior.
         </h1>
 
         {/* Subhead */}
@@ -459,8 +459,9 @@ function Hero() {
             marginBottom: '32px',
           }}
         >
-          From provider credentialing to contract terms.
-          Every credential, claim, and clause — verified automatically.
+          The DEA lapses without a renewal notice. The modifier conflict goes out
+          with the claim instead of before it. The contract clause gets missed on a
+          cleared invoice. Agents closing gaps before your auditor opens them.
         </p>
 
         {/* CTAs */}

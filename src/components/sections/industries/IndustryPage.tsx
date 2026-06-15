@@ -375,12 +375,12 @@ export default function IndustryPage({ config }: { config: IndustryPageConfig })
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-label">REAL OPERATIONAL SCENARIOS</p>
+            <p className="text-label">IN YOUR OPERATIONS</p>
             <h2
               className="font-display font-bold text-ink mt-2"
               style={{ fontSize: 'clamp(20px, 2.4vw, 28px)', letterSpacing: '-0.03em', lineHeight: '1.2' }}
             >
-              The moments that matter — handled automatically.
+              What this actually looks like when an agent handles it instead of your team.
             </h2>
           </motion.div>
 
@@ -398,12 +398,12 @@ export default function IndustryPage({ config }: { config: IndustryPageConfig })
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-label">WHO WE SERVE</p>
+            <p className="text-label">THE ORGANIZATIONS</p>
             <h2
               className="font-display font-bold text-ink mt-2"
               style={{ fontSize: 'clamp(20px, 2.4vw, 28px)', letterSpacing: '-0.03em', lineHeight: '1.2' }}
             >
-              Every segment. Every edge case.
+              Industries where gaps have consequences.
             </h2>
           </motion.div>
 

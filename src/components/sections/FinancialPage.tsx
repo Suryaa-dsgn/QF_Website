@@ -452,9 +452,9 @@ function Hero() {
             marginBottom: '20px',
           }}
         >
-          One finance team{' '}
+          The denied claim{' '}
           <br className="hidden sm:block" />
-          that closes itself.
+          doesn't wait for your billing team.
         </h1>
 
         {/* Subhead */}
@@ -467,8 +467,9 @@ function Hero() {
             marginBottom: '32px',
           }}
         >
-          From invoice matching to deal qualification.
-          Every transaction, contract, and collection — automated.
+          An invoice clears that clause 3b says it shouldn't. A claim goes out with
+          the wrong modifier. A REIT deal sits unscreened over the weekend.
+          Agents running constantly while your team isn't.
         </p>
 
         {/* CTAs */}
