@@ -96,9 +96,9 @@ function HeroSection() {
             className="font-ui leading-[1.75]"
             style={{ fontSize: '16px', color: '#6B6B6B', maxWidth: '520px', margin: '0 auto' }}
           >
-            We spent years inside operations teams watching coordinators, billing
-            staff, and compliance officers burn hours on work that a well-configured
-            system should handle. Quickflows is what we built instead.
+            Quickflows is founded and led by industry veterans with 24+ years of
+            expertise in technology consulting, digital transformation, cloud
+            architecture, AI/ML innovation, and Agentic AI development.
           </p>
         </motion.div>
 

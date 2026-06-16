@@ -1,6 +1,8 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 // ─── TYPES ───────────────────────────────────────────────────────
 
@@ -13,7 +15,6 @@ interface IncidentCardProps {
   status: string
   statusColor: string
   panel: React.ReactNode
-  delay?: number
 }
 
 // ─── SHARED PANEL STYLES ─────────────────────────────────────────
@@ -204,23 +205,24 @@ function ComplianceMiniPanel() {
   )
 }
 
-// ─── INCIDENT CARD ───────────────────────────────────────────────
+// ─── INCIDENT SLIDER ──────────────────────────────────────────────
 
-function IncidentCard({
-  tag, tagColor, tagBg, timestamp, incident, status, statusColor, panel, delay = 0,
-}: IncidentCardProps) {
-  const ref = useRef<HTMLDivElement>(null)
+function IncidentSlider({ slides }: { slides: IncidentCardProps[] }) {
+  const [idx, setIdx]       = useState(0)
+  const [paused, setPaused] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  // Entrance animation for the whole slider
   useEffect(() => {
-    const el = ref.current
+    const el = wrapRef.current
     if (!el) return
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
     el.style.opacity = '0'
     el.style.transform = 'translateY(24px)'
-    el.style.transition = `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}s,
-                           transform 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}s`
+    el.style.transition = 'opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)'
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -234,67 +236,144 @@ function IncidentCard({
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [delay])
+  }, [])
+
+  // Auto-advance
+  useEffect(() => {
+    if (paused) return
+    intervalRef.current = setInterval(() => setIdx(i => (i + 1) % slides.length), 4500)
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+  }, [paused, slides.length])
+
+  const handlePrev = () => {
+    setIdx(i => (i - 1 + slides.length) % slides.length)
+    setPaused(true)
+  }
+  const handleNext = () => {
+    setIdx(i => (i + 1) % slides.length)
+    setPaused(true)
+  }
+
+  const active = slides[idx]
 
   return (
     <div
-      ref={ref}
+      ref={wrapRef}
       className="bg-white rounded-[14px] border border-[--border] overflow-hidden cursor-default"
-      style={{ transition: 'transform 200ms ease-out, box-shadow 200ms ease-out' }}
-      onMouseEnter={e => {
-        const t = e.currentTarget
-        t.style.transform = 'translateY(-3px)'
-        t.style.boxShadow = '0 6px 24px rgba(107,63,160,0.08)'
-      }}
-      onMouseLeave={e => {
-        const t = e.currentTarget
-        t.style.transform = 'translateY(0)'
-        t.style.boxShadow = 'none'
-      }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
-      {/* ── Text section ── */}
-      <div style={{ padding: '20px 20px 16px' }}>
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr]">
 
-        {/* Tag + Timestamp */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-          <span
-            className="inline-block text-[10px] font-semibold uppercase tracking-[0.07em] px-2 py-0.5 rounded-[4px]"
-            style={{ color: tagColor, background: tagBg }}
-          >
-            {tag}
-          </span>
-          <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '10px', color: '#9CA3AF' }}>
-            {timestamp}
-          </span>
+        {/* ── Left: contextual copy ── */}
+        <div
+          className="flex flex-col justify-center"
+          style={{ padding: '36px 32px', minHeight: '220px' }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* Tag + Timestamp */}
+              <div className="flex items-center justify-between mb-4">
+                <span
+                  className="inline-block text-[10px] font-semibold uppercase tracking-[0.07em] px-2 py-0.5 rounded-[4px]"
+                  style={{ color: active.tagColor, background: active.tagBg }}
+                >
+                  {active.tag}
+                </span>
+                <span className="font-mono" style={{ fontSize: '10px', color: '#9CA3AF' }}>
+                  {active.timestamp}
+                </span>
+              </div>
+
+              {/* Incident lines */}
+              <div className="mb-4">
+                {active.incident.map((line, i) => (
+                  <p
+                    key={i}
+                    className="font-display font-bold text-ink leading-snug"
+                    style={{ fontSize: 'clamp(17px, 1.8vw, 20px)', letterSpacing: '-0.01em' }}
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+
+              {/* Status indicator */}
+              <div className="flex items-center gap-1.5">
+                <div
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: active.statusColor, animation: 'eyebrow-pulse 2s ease-in-out infinite' }}
+                />
+                <span className="font-mono text-[12px]" style={{ color: active.statusColor }}>
+                  {active.status}
+                </span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Navigation: arrows + dots */}
+          <div className="flex items-center gap-3 mt-8">
+            <button
+              onClick={handlePrev}
+              aria-label="Previous incident"
+              className="w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-150"
+              style={{ background: active.tagColor + '14', color: active.tagColor }}
+            >
+              <ChevronLeft size={14} />
+            </button>
+
+            <div className="flex items-center gap-[5px]">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setIdx(i); setPaused(true) }}
+                  aria-label={`Incident ${i + 1}`}
+                  className="rounded-full transition-all duration-200"
+                  style={{
+                    width:      i === idx ? '16px' : '6px',
+                    height:     '6px',
+                    background: i === idx ? active.tagColor : active.tagColor + '28',
+                  }}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={handleNext}
+              aria-label="Next incident"
+              className="w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-150"
+              style={{ background: active.tagColor + '14', color: active.tagColor }}
+            >
+              <ChevronRight size={14} />
+            </button>
+          </div>
         </div>
 
-        {/* Incident lines */}
-        <div className="mb-3">
-          {incident.map((line, i) => (
-            <p key={i} className="text-[15px] font-semibold text-ink leading-snug font-ui">
-              {line}
-            </p>
-          ))}
+        {/* ── Right: animated mini-panel ── */}
+        <div
+          className="flex items-center border-t md:border-t-0 md:border-l border-[--border]"
+          style={{ padding: '28px', background: 'rgba(107,63,160,0.015)' }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={idx}
+              className="w-full"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {active.panel}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* Status indicator */}
-        <div className="flex items-center gap-1.5">
-          <div
-            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-            style={{ background: statusColor }}
-          />
-          <span className="font-mono text-[11px]" style={{ color: statusColor }}>
-            {status}
-          </span>
-        </div>
-      </div>
-
-      {/* ── Divider ── */}
-      <div style={{ borderTop: '1px solid rgba(107,63,160,0.07)' }} />
-
-      {/* ── Visual mini-panel ── */}
-      <div style={{ padding: '14px' }}>
-        {panel}
       </div>
     </div>
   )
@@ -409,51 +488,50 @@ export default function TheProblem() {
           </p>
         </div>
 
-        {/* Three incident cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <IncidentCard
-            tag="WORKFORCE"
-            tagColor="#0284C7"
-            tagBg="rgba(2,132,199,0.07)"
-            timestamp="06:03 AM — Thursday"
-            incident={[
-              'Amanda W. called in sick for the 7:00 shift.',
-              'No backup scheduled. Coordinator making calls.',
-            ]}
-            status="Still unresolved — 47 minutes later"
-            statusColor="#F4A261"
-            panel={<WorkforceMiniPanel />}
-            delay={0}
-          />
-          <IncidentCard
-            tag="FINANCIAL"
-            tagColor="#059669"
-            tagBg="rgba(5,150,105,0.07)"
-            timestamp="Day 4 in review queue"
-            incident={[
-              'Invoice INV-482 — short-pay unresolved.',
-              'AR team is manually cross-referencing the contract.',
-            ]}
-            status="Awaiting manual resolution"
-            statusColor="#F4A261"
-            panel={<FinancialMiniPanel />}
-            delay={0.08}
-          />
-          <IncidentCard
-            tag="COMPLIANCE"
-            tagColor="#7C3AED"
-            tagBg="rgba(124,58,237,0.07)"
-            timestamp="11 days to expiry"
-            incident={[
-              'Dr. Patel — DEA Registration.',
-              'Renewal not initiated. Audit next month.',
-            ]}
-            status="No action taken"
-            statusColor="#E63946"
-            panel={<ComplianceMiniPanel />}
-            delay={0.16}
-          />
-        </div>
+        {/* Incident slider */}
+        <IncidentSlider
+          slides={[
+            {
+              tag: 'WORKFORCE',
+              tagColor: '#0284C7',
+              tagBg: 'rgba(2,132,199,0.07)',
+              timestamp: '06:03 AM — Thursday',
+              incident: [
+                'Amanda W. called in sick for the 7:00 shift.',
+                'No backup scheduled. Coordinator making calls.',
+              ],
+              status: 'Still unresolved — 47 minutes later',
+              statusColor: '#F4A261',
+              panel: <WorkforceMiniPanel />,
+            },
+            {
+              tag: 'FINANCIAL',
+              tagColor: '#059669',
+              tagBg: 'rgba(5,150,105,0.07)',
+              timestamp: 'Day 4 in review queue',
+              incident: [
+                'Invoice INV-482 — short-pay unresolved.',
+                'AR team is manually cross-referencing the contract.',
+              ],
+              status: 'Awaiting manual resolution',
+              statusColor: '#F4A261',
+              panel: <FinancialMiniPanel />,
+            },
+            {
+              tag: 'COMPLIANCE',
+              tagColor: '#7C3AED',
+              tagBg: 'rgba(124,58,237,0.07)',
+              timestamp: '11 days to expiry',
+              incident: [
+                'Dr. Patel — DEA Registration.',
+                'Renewal not initiated. Audit next month.',
+              ],
+              status: 'No action taken',
+              statusColor: '#E63946',
+              panel: <ComplianceMiniPanel />,
+            },
+          ]}
+        />
 
         {/* Bridge line */}
         <p

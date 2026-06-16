@@ -534,37 +534,52 @@ function EngagementModels() {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-white rounded-[16px] border border-[--border] p-7 flex flex-col"
+                className="relative bg-white rounded-[16px] border border-[--border] p-7 flex flex-col overflow-hidden"
                 style={{ boxShadow: 'var(--shadow-1)' }}
               >
-                {/* Icon container */}
+                {/* Subtle dotted backdrop */}
                 <div
-                  className="w-10 h-10 rounded-[10px] flex items-center justify-center mb-5 flex-shrink-0"
-                  style={{ background: model.accentColor + '12' }}
-                >
-                  <Icon size={18} style={{ color: model.accentColor }} />
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    backgroundImage: 'radial-gradient(circle, rgba(107,63,160,0.05) 1px, transparent 1px)',
+                    backgroundSize: '20px 20px',
+                  }}
+                />
+
+                <div className="relative z-10 flex flex-col flex-1">
+                  {/* Icon container — 3D treatment */}
+                  <div
+                    className="w-10 h-10 rounded-[10px] flex items-center justify-center mb-5 flex-shrink-0"
+                    style={{
+                      background: `linear-gradient(145deg, ${model.accentColor}1f, ${model.accentColor}0a)`,
+                      border: `1px solid ${model.accentColor}20`,
+                      boxShadow: `0 4px 10px ${model.accentColor}26, 0 1px 2px ${model.accentColor}33, inset 0 1px 0 rgba(255,255,255,0.6)`,
+                    }}
+                  >
+                    <Icon size={18} style={{ color: model.accentColor }} />
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="font-display font-bold text-ink mb-1.5"
+                    style={{ fontSize: '17px', letterSpacing: '-0.02em' }}
+                  >
+                    {model.title}
+                  </h3>
+
+                  {/* Objective label */}
+                  <p
+                    className="text-[11px] font-semibold font-ui mb-3 uppercase tracking-[0.05em]"
+                    style={{ color: model.accentColor }}
+                  >
+                    {model.objective}
+                  </p>
+
+                  {/* Description */}
+                  <p className="text-[13px] text-ink3 font-ui leading-relaxed">
+                    {model.description}
+                  </p>
                 </div>
-
-                {/* Title */}
-                <h3
-                  className="font-display font-bold text-ink mb-1.5"
-                  style={{ fontSize: '17px', letterSpacing: '-0.02em' }}
-                >
-                  {model.title}
-                </h3>
-
-                {/* Objective label */}
-                <p
-                  className="text-[11px] font-semibold font-ui mb-3 uppercase tracking-[0.05em]"
-                  style={{ color: model.accentColor }}
-                >
-                  {model.objective}
-                </p>
-
-                {/* Description */}
-                <p className="text-[13px] text-ink3 font-ui leading-relaxed">
-                  {model.description}
-                </p>
               </motion.div>
             )
           })}

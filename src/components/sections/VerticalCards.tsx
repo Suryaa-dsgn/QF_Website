@@ -176,7 +176,7 @@ function VerticalCard({
 
       {/* ── Footer ── */}
       <div
-        className="flex items-center justify-between mt-auto"
+        className="flex items-center justify-end mt-auto"
         style={{
           padding:    '12px 20px 20px',
           marginTop:  'auto',
@@ -184,7 +184,6 @@ function VerticalCard({
           marginLeft: '0',
         }}
       >
-        <span className="font-mono text-[12px] text-ink4">{agentCount}</span>
         <Link
           href={ctaHref}
           className="flex items-center gap-1.5 text-[13px] font-medium text-brand font-ui group"

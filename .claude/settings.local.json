@@ -19,7 +19,8 @@
       "Bash(Select-Object Name)",
       "Bash(ls -la \"C:\\\\Users\\\\SURYAKANTA JENA\\\\Desktop\\\\quickflows-web\\\\src\\\\components\\\\ui\\\\panels\\\\\" | grep -E '\\\\.tsx$')",
       "Bash(node -e ' *)",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(node -e \"console.log\\(require.resolve\\('geist/font/mono'\\)\\)\")"
     ]
   }
 }
