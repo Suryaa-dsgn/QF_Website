@@ -12,11 +12,11 @@ const platformLinks = [
 ]
 
 const industryLinks = [
-  { label: 'Healthcare',            href: '/industries/home-health' },
-  { label: 'Finance',               href: '/industries/reits' },
-  { label: 'Logistics & Ops',       href: '/industries/logistics'   },
-  { label: 'Home Health',           href: '/industries/home-health' },
-  { label: 'Staffing Agencies',     href: '/industries/logistics'   },
+  { label: 'Healthcare',        href: '/industries/home-health' },
+  { label: 'Finance',           href: '/industries/reits'       },
+  { label: 'Logistics & Ops',   href: '/industries/logistics'   },
+  { label: 'Home Health',       href: '/industries/home-health' },
+  { label: 'Staffing Agencies', href: '/industries/logistics'   },
 ]
 
 const companyLinks = [
@@ -26,7 +26,7 @@ const companyLinks = [
 ]
 
 const socialsLinks = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/quickflows-ai-llc/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/quickflows-ai-llc/', external: true },
 ]
 
 // ─── NAV COLUMN ────────────────────────────────────────────────────
@@ -61,7 +61,6 @@ function NavCol({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer-nav-link"
                 style={{
                   display:        'inline-flex',
                   alignItems:     'center',
@@ -83,13 +82,12 @@ function NavCol({
             <li key={link.label}>
               <Link
                 href={link.href}
-                className="footer-nav-link"
                 style={{
-                  fontSize:   '13px',
-                  color:      'rgba(255,255,255,0.75)',
-                  fontFamily: 'var(--font-geist-sans)',
+                  fontSize:       '13px',
+                  color:          'rgba(255,255,255,0.75)',
+                  fontFamily:     'var(--font-geist-sans)',
                   textDecoration: 'none',
-                  transition: 'color 150ms ease',
+                  transition:     'color 150ms ease',
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
@@ -104,148 +102,169 @@ function NavCol({
   )
 }
 
+// ─── QUICKFLOWS MARQUEE BAND ──────────────────────────────────────
+
+const TRACK_TEXT = 'Quickflows                    Quickflows                    Quickflows                    '
+
+function MarqueeSVG({ first }: { first: boolean }) {
+  return (
+    <svg
+      width="10000"
+      height="180"
+      style={{ display: 'block', flexShrink: 0 }}
+      aria-hidden="true"
+    >
+      {first && (
+        <defs>
+          <linearGradient
+            id="qfFooterGrad"
+            gradientUnits="userSpaceOnUse"
+            x1="0" y1="0" x2="0" y2="163"
+          >
+            {/* Top of letters: transparent — merges with dark background */}
+            <stop offset="0%"   stopColor="#040010" stopOpacity="0" />
+            {/* Bottom of letters: soft muted purple glow */}
+            <stop offset="100%" stopColor="#7B28CC" stopOpacity="0.65" />
+          </linearGradient>
+        </defs>
+      )}
+
+      {/* Ghost layer: barely-there dark-purple body */}
+      <text
+        y="163"
+        fill="none"
+        stroke="rgba(80,25,150,0.18)"
+        strokeWidth="2.5"
+        style={{
+          fontFamily:    'var(--font-bricolage)',
+          fontSize:      '220px',
+          fontWeight:    800,
+          letterSpacing: '6px',
+        }}
+      >
+        {TRACK_TEXT}
+      </text>
+
+      {/* Gradient stroke layer — zero fill, faded emergence */}
+      <text
+        y="163"
+        fill="none"
+        stroke="url(#qfFooterGrad)"
+        strokeWidth="2"
+        style={{
+          fontFamily:    'var(--font-bricolage)',
+          fontSize:      '220px',
+          fontWeight:    800,
+          letterSpacing: '6px',
+        }}
+      >
+        {TRACK_TEXT}
+      </text>
+    </svg>
+  )
+}
+
+function QuickflowsMarquee() {
+  return (
+    <div style={{ overflow: 'hidden' }}>
+      <div style={{ opacity: 0.8, overflow: 'hidden', height: 'clamp(120px, 13vw, 155px)' }}>
+        <div className="footer-marquee">
+          <MarqueeSVG first={true}  />
+          <MarqueeSVG first={false} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ─── MAIN FOOTER ──────────────────────────────────────────────────
 
 export default function Footer() {
   return (
-    <footer style={{ padding: '0 24px 32px', background: 'transparent' }}>
+    <footer style={{ padding: 0, background: 'transparent' }}>
 
-      {/* ── Outer wrapper — position:relative lets logo bleed outside card ── */}
-      <div style={{ position: 'relative' }}>
-
-        {/* ── Notch mask — covers top-left of card so page background shows through ── */}
+      {/* ── Dark card — full edge-to-edge, rounded top corners only ── */}
+      <div
+        style={{
+          position:     'relative',
+          borderRadius: '20px 20px 0 0',
+          overflow:     'hidden',
+          background:   'linear-gradient(170deg, #230858 0%, #100220 35%, #070016 65%, #020008 100%)',
+        }}
+      >
+        {/* Dither dot-grid overlay */}
         <div
-          className="footer-notch-mask"
           style={{
-            position:                'absolute',
-            top:                     0,
-            left:                    0,
-            width:                   '264px',
-            height:                  '230px',
-            background:              '#F9F8FF',
-            borderBottomRightRadius: '24px',
-            zIndex:                  2,
-            pointerEvents:           'none',
+            position:        'absolute',
+            inset:           0,
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.08) 1.5px, transparent 1.5px)',
+            backgroundSize:  '18px 18px',
+            opacity:         0.8,
+            zIndex:          0,
+            pointerEvents:   'none',
           }}
         />
 
-        {/* ── Q logo — sits directly on page background in the notch ── */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="footer-notch-logo"
-          src="/qf-logo-purple.svg"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position:      'absolute',
-            top:           '16px',
-            left:          '16px',
-            width:         '224px',
-            height:        'auto',
-            display:       'block',
-            zIndex:        3,
-            pointerEvents: 'none',
-            userSelect:    'none',
-          }}
-        />
-
-        {/* ── Card ── */}
+        {/* ── Two-column body ── */}
         <div
+          className="footer-body"
           style={{
-            borderRadius: '20px',
-            overflow:     'hidden',
-            background:   'linear-gradient(155deg, #5C10AA 0%, #3B0764 30%, #1A0545 60%, #0D021F 100%)',
+            display:  'flex',
+            padding:  '44px 48px 40px 48px',
+            gap:      '48px',
+            position: 'relative',
+            zIndex:   1,
           }}
         >
-
-          {/* ── Mobile-only logo row (hidden on desktop) ── */}
+          {/* LEFT: logo + tagline + CTA */}
           <div
-            className="footer-mobile-logo-row"
-            style={{ display: 'none' }}
+            style={{
+              width:         '36%',
+              flexShrink:    0,
+              display:       'flex',
+              flexDirection: 'column',
+              gap:           '28px',
+            }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/qf-logo-white.svg"
               alt="Quickflows"
-              style={{ width: '28px', height: 'auto' }}
+              style={{ width: '36px', height: 'auto', display: 'block' }}
             />
-            <span
+
+            <p
               style={{
-                color:         '#FFFFFF',
-                fontSize:      '14px',
-                fontWeight:    600,
-                fontFamily:    'var(--font-geist-sans)',
-                letterSpacing: '-0.02em',
+                fontFamily: 'var(--font-bricolage)',
+                fontSize:   'clamp(16px, 1.5vw, 22px)',
+                fontWeight: 400,
+                color:      '#FFFFFF',
+                lineHeight: 1.4,
+                margin:     0,
               }}
             >
-              Quickflows.ai
-            </span>
-          </div>
-
-          {/* ── Section 1: Nav columns ── */}
-          <div
-            style={{
-              padding: '44px 48px 36px 312px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '32px',
-            }}
-            className="footer-nav-grid"
-          >
-            <NavCol label="Platform"   links={platformLinks} />
-            <NavCol label="Industries" links={industryLinks} />
-            <NavCol label="Company"    links={companyLinks}  />
-            <NavCol
-              label="Socials"
-              links={socialsLinks.map(l => ({ ...l, external: true }))}
-            />
-          </div>
-
-          {/* ── Section 2: Tagline + CTA ── */}
-          <div
-            style={{
-              padding:        '0 48px 44px',
-              display:        'flex',
-              justifyContent: 'space-between',
-              alignItems:     'flex-end',
-              gap:            '32px',
-            }}
-            className="footer-tagline-row"
-          >
-            <h2
-              style={{
-                fontFamily:    'var(--font-bricolage)',
-                fontSize:      'clamp(20px, 4.5vw, 66px)',
-                fontWeight:    400,
-                color:         '#FFFFFF',
-                letterSpacing: '0.01em',
-                lineHeight:    1.05,
-                margin:        0,
-              }}
-            >
-              Quickflows helps
-              <br />your team work smarter
-              <br />without spending a lot of time
-            </h2>
+              Quickflows helps<br />
+              <em>your team work smarter</em><br />
+              without spending <em>a lot of time</em>
+            </p>
 
             <Link
               href="/workforce"
-              className="footer-explore-btn"
               style={{
-                display:         'inline-flex',
-                alignItems:      'center',
-                justifyContent:  'center',
-                padding:         '14px 28px',
-                background:      '#FFFFFF',
-                color:           '#0A0A0A',
-                borderRadius:    '12px',
-                fontSize:        '15px',
-                fontWeight:      600,
-                fontFamily:      'var(--font-geist-sans)',
-                whiteSpace:      'nowrap',
-                flexShrink:      0,
-                textDecoration:  'none',
-                transition:      'opacity 150ms ease',
+                display:        'inline-flex',
+                alignItems:     'center',
+                justifyContent: 'center',
+                padding:        '11px 22px',
+                background:     '#FFFFFF',
+                color:          '#0A0A0A',
+                borderRadius:   '10px',
+                fontSize:       '14px',
+                fontWeight:     600,
+                fontFamily:     'var(--font-geist-sans)',
+                whiteSpace:     'nowrap',
+                width:          'fit-content',
+                textDecoration: 'none',
+                transition:     'opacity 150ms ease',
               }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
@@ -254,33 +273,67 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* ── Section 3: Bottom bar ── */}
+          {/* RIGHT: 4 nav columns */}
           <div
+            className="footer-nav-grid"
             style={{
-              borderTop:      '1px solid rgba(255,255,255,0.12)',
-              padding:        '18px 48px',
-              display:        'flex',
-              justifyContent: 'space-between',
-              alignItems:     'center',
-              gap:            '16px',
-              flexWrap:       'wrap',
+              flex:                1,
+              display:             'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap:                 '32px',
+              alignContent:        'start',
             }}
           >
-            {/* Copyright */}
-            <p
-              style={{
-                fontSize:   '12px',
-                color:      'rgba(255,255,255,0.45)',
-                fontFamily: 'var(--font-geist-sans)',
-                margin:     0,
-              }}
-            >
-              © 2026 Quickflows AI Solutions. All rights reserved.
-            </p>
+            <NavCol label="Platform"   links={platformLinks} />
+            <NavCol label="Industries" links={industryLinks} />
+            <NavCol label="Company"    links={companyLinks}  />
+            <NavCol label="Socials"    links={socialsLinks}  />
+          </div>
+        </div>
 
-            {/* Email */}
-            <a
-              href="mailto:info@quickflows.ai"
+        {/* ── Bottom bar ── */}
+        <div
+          style={{
+            borderTop:      '1px solid rgba(255,255,255,0.12)',
+            padding:        '18px 48px',
+            display:        'flex',
+            justifyContent: 'space-between',
+            alignItems:     'center',
+            gap:            '16px',
+            flexWrap:       'wrap',
+            position:       'relative',
+            zIndex:         1,
+          }}
+        >
+          <p
+            style={{
+              fontSize:   '12px',
+              color:      'rgba(255,255,255,0.45)',
+              fontFamily: 'var(--font-geist-sans)',
+              margin:     0,
+            }}
+          >
+            © 2026 Quickflows AI Solutions. All rights reserved.
+          </p>
+
+          <a
+            href="mailto:info@quickflows.ai"
+            style={{
+              fontSize:       '12px',
+              color:          'rgba(255,255,255,0.45)',
+              fontFamily:     'var(--font-geist-sans)',
+              textDecoration: 'none',
+              transition:     'color 150ms ease',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+          >
+            info@quickflows.ai
+          </a>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Link
+              href="/privacy"
               style={{
                 fontSize:       '12px',
                 color:          'rgba(255,255,255,0.45)',
@@ -291,45 +344,31 @@ export default function Footer() {
               onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
               onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
             >
-              info@quickflows.ai
-            </a>
-
-            {/* Privacy + Terms */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Link
-                href="/privacy"
-                style={{
-                  fontSize:       '12px',
-                  color:          'rgba(255,255,255,0.45)',
-                  fontFamily:     'var(--font-geist-sans)',
-                  textDecoration: 'none',
-                  transition:     'color 150ms ease',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
-              >
-                Privacy Policy
-              </Link>
-              <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '10px' }}>·</span>
-              <Link
-                href="/terms"
-                style={{
-                  fontSize:       '12px',
-                  color:          'rgba(255,255,255,0.45)',
-                  fontFamily:     'var(--font-geist-sans)',
-                  textDecoration: 'none',
-                  transition:     'color 150ms ease',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
-              >
-                Terms of Services
-              </Link>
-            </div>
+              Privacy Policy
+            </Link>
+            <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '10px' }}>·</span>
+            <Link
+              href="/terms"
+              style={{
+                fontSize:       '12px',
+                color:          'rgba(255,255,255,0.45)',
+                fontFamily:     'var(--font-geist-sans)',
+                textDecoration: 'none',
+                transition:     'color 150ms ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+            >
+              Terms of Services
+            </Link>
           </div>
-
         </div>
+
+        {/* ── Quickflows marquee band — inside card, unified layer ── */}
+        <QuickflowsMarquee />
+
       </div>
+
     </footer>
   )
 }
