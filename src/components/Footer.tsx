@@ -249,7 +249,9 @@ export default function Footer() {
             </p>
 
             <Link
-              href="/workforce"
+              href="https://qf-agent-prototype.pages.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 display:        'inline-flex',
                 alignItems:     'center',
